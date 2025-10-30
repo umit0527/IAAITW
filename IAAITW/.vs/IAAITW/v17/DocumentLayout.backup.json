@@ -1,0 +1,139 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|c:\\users\\\u856D\u5B87\u5B8F\\desktop\\iaaitw\\iaaitw\\iaaitw\\areas\\front\\views\\contacts\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|solutionrelative:iaaitw\\areas\\front\\views\\contacts\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|c:\\users\\\u856D\u5B87\u5B8F\\desktop\\iaaitw\\iaaitw\\iaaitw\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|solutionrelative:iaaitw\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|c:\\users\\\u856D\u5B87\u5B8F\\desktop\\iaaitw\\iaaitw\\iaaitw\\areas\\front\\controllers\\contactscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|solutionrelative:iaaitw\\areas\\front\\controllers\\contactscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|c:\\users\\\u856D\u5B87\u5B8F\\desktop\\iaaitw\\iaaitw\\iaaitw\\models\\contact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|solutionrelative:iaaitw\\models\\contact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\iaaitw\\areas\\front\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|solutionrelative:iaaitw\\areas\\front\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\iaaitw\\app_start\\bundleconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|solutionrelative:iaaitw\\app_start\\bundleconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\iaaitw\\areas\\front\\frontarearegistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D45C1EC3-DB61-4A33-9D8C-1C84F1A8463C}|IAAITW\\IAAITW.csproj|solutionrelative:iaaitw\\areas\\front\\frontarearegistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Web.config",
+              "DocumentMoniker": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Web.config",
+              "RelativeDocumentMoniker": "IAAITW\\Web.config",
+              "ToolTip": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Web.config",
+              "RelativeToolTip": "IAAITW\\Web.config",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-10-30T07:12:27.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ContactsController.cs",
+              "DocumentMoniker": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Areas\\Front\\Controllers\\ContactsController.cs",
+              "RelativeDocumentMoniker": "IAAITW\\Areas\\Front\\Controllers\\ContactsController.cs",
+              "ToolTip": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Areas\\Front\\Controllers\\ContactsController.cs",
+              "RelativeToolTip": "IAAITW\\Areas\\Front\\Controllers\\ContactsController.cs",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAgwIAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T06:58:35.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Contact.cs",
+              "DocumentMoniker": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Models\\Contact.cs",
+              "RelativeDocumentMoniker": "IAAITW\\Models\\Contact.cs",
+              "ToolTip": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Models\\Contact.cs",
+              "RelativeToolTip": "IAAITW\\Models\\Contact.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBIAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T06:51:49.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BundleConfig.cs",
+              "DocumentMoniker": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\App_Start\\BundleConfig.cs",
+              "RelativeDocumentMoniker": "IAAITW\\App_Start\\BundleConfig.cs",
+              "ToolTip": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\App_Start\\BundleConfig.cs",
+              "RelativeToolTip": "IAAITW\\App_Start\\BundleConfig.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAgwBsAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T05:44:49.267Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Areas\\Front\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "IAAITW\\Areas\\Front\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Areas\\Front\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "IAAITW\\Areas\\Front\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAACAAAAAAAAAAAAAUwBEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-30T05:32:45.989Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Areas\\Front\\Views\\Contacts\\Create.cshtml",
+              "RelativeDocumentMoniker": "IAAITW\\Areas\\Front\\Views\\Contacts\\Create.cshtml",
+              "ToolTip": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Areas\\Front\\Views\\Contacts\\Create.cshtml",
+              "RelativeToolTip": "IAAITW\\Areas\\Front\\Views\\Contacts\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-30T05:40:26.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FrontAreaRegistration.cs",
+              "DocumentMoniker": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Areas\\Front\\FrontAreaRegistration.cs",
+              "RelativeDocumentMoniker": "IAAITW\\Areas\\Front\\FrontAreaRegistration.cs",
+              "ToolTip": "C:\\Users\\\u856D\u5B87\u5B8F\\Desktop\\IAAITW\\IAAITW\\IAAITW\\Areas\\Front\\FrontAreaRegistration.cs",
+              "RelativeToolTip": "IAAITW\\Areas\\Front\\FrontAreaRegistration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T05:31:28.601Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

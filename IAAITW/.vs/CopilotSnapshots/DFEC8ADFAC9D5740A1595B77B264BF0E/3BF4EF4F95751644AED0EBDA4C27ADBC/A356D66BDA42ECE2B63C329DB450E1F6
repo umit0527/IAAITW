@@ -1,0 +1,186 @@
+﻿@model IAAITW.Models.Contact
+@using GoogleRecaptchaMvc
+
+@{
+    ViewBag.Title = "Create";
+    // --- 麵包屑設定開始 ---
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("聯絡我們",null),
+        new Tuple<string, string>("聯絡我們", Url.Action("Create", "Contacts", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
+}
+
+<section id="main-container" class="main-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="sidebar sidebar-right">
+                    <div class="widget">
+                        <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>聯絡我們</h2>
+                        <ul class="arrow nav nav-tabs nav-stacked">
+                            <li class="active"><a href="#">聯絡我們</a></li>
+                        </ul>
+                    </div>
+                    <!-- Categories end -->
+                </div>
+                <!-- Sidebar end -->
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <h2 class="page-title">聯絡我們 </h2>
+                <hr class="botmargin-min">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @* 姓名 *@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入姓名" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @* 性別 *@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-8">
+                                <div class="radiobox d-flex">
+                                    <label class="me-3">
+                                        @Html.RadioButtonFor(model => model.Gender, "男")男
+                                    </label>
+                                    <label>
+                                        @Html.RadioButtonFor(model => model.Gender, "女")女
+                                    </label>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @* 聯絡電話 *@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入聯絡電話" } })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @* Email *@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入E-mail" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @* 詢問標題 *@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入詢問標題" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @* 詢問內容 *@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-10">
+                                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", rows = "10", placeholder = "請輸入詢問內容" })
+                                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @* 驗證碼 *@
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">驗證碼：</label>
+                            <div class="col-sm-8">
+                                @Html.RecaptchaV2("6LevbPArAAAAAFy0-tvdGQ0kcxmiCnQjKSBS36EF")
+                                @Html.ValidationMessage("ReCaptcha", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input type="submit" value="送 出" class="btn btn-primary solid blank" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+
+            // 專門處理錯誤圖示邏輯
+            function updateValidationIcons() {
+                $('span.field-validation-error').each(function () {
+                    if (!$(this).find('i.fa-exclamation-circle').length) {
+                        $(this).prepend('<i class="fa fa-exclamation-circle text-danger me-1"></i>');
+                    }
+                });
+                $('span.field-validation-valid i.fa-exclamation-circle').remove();
+            }
+
+            // 初始載入檢查一次（避免第一次送出後不更新）
+            updateValidationIcons();
+
+            // 綁定輸入事件（keyup/change/blur 都觸發）
+            $('form').on('keyup change blur', 'input, textarea, select', function () {
+                updateValidationIcons();
+            });
+
+            // 綁定 jQuery Validate 的全域事件
+            $('form').on('invalid-form.validate', function () {
+                updateValidationIcons();
+            });
+
+            $('form').on('submit', function () {
+                setTimeout(updateValidationIcons, 100); // 延遲讓驗證更新完再加 icon
+            });
+        });
+    </script>
+
+    @* 通知訊息 *@
+    <script>
+$(function() {
+    var message = @Html.Raw(Json.Encode(TempData["ToastMessage"]));
+    var type = @Html.Raw(Json.Encode(TempData["ToastType"])); // "success" / "danger"
+
+    if(message) {
+        var $toast = $('#toastMessage');
+        var $toastBody = $('#toastBody');
+
+        // 設定顏色
+        $toast.removeClass('alert-success alert-danger');
+        if(type === "success") {
+            $toast.addClass('alert-success');
+        } else {
+            $toast.addClass('alert-danger');
+        }
+
+        $toastBody.text(message);
+
+        // 顯示並自動隱藏
+        $toast.fadeIn(300).delay(3000).fadeOut(500);
+    }
+});
+    </script>
+
+}

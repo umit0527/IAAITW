@@ -1,0 +1,45 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Form specific styles */
+.form-horizontal .form-control {
+    width: 100%;
+    max-width: none;
+}
+
+/* 特定欄位寬度設定 */
+.form-horizontal .form-group input[type="text"],
+.form-horizontal .form-group input[type="email"],
+.form-horizontal .form-group input[type="tel"] {
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-horizontal .form-group textarea {
+    width: 100%;
+    max-width: 600px;
+}
+
+/* 保持某些特定輸入框較窄 */
+.form-horizontal .form-group input[type="number"],
+.form-horizontal .form-group input[type="date"] {
+    width: 100%;
+    max-width: 280px;
+}
+
+/* 確保驗證訊息位置正確 */
+.field-validation-error {
+    margin-left: 10px;
+    display: inline-block;
+}
