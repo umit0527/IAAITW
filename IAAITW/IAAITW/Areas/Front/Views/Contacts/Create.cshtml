@@ -39,7 +39,7 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @* 姓名 *@
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            @Html.LabelFor(model => model.Name,"姓  名：",htmlAttributes: new { @class = "control-label col-sm-2" })
                             <div class="col-sm-7">
                                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入姓名" } })
                             </div>
@@ -50,7 +50,7 @@
 
                         @* 性別 *@
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            @Html.LabelFor(model => model.Gender, "性  別：", htmlAttributes: new { @class = "control-label col-sm-2" })
                             <div class="col-sm-7">
                                 <div class="radiobox d-flex">
                                     <label>
@@ -67,7 +67,7 @@
 
                         @* 聯絡電話 *@
                         <div class="form-group">
-                            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            @Html.LabelFor(model => model.PhoneNumber, "聯絡電話：", htmlAttributes: new { @class = "control-label col-sm-2" })
                             <div class="col-sm-7">
                                 @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入聯絡電話" } })
                             </div><div class="col-sm-3">
@@ -77,7 +77,7 @@
 
                         @* Email *@
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            @Html.LabelFor(model => model.Email, "Email：", htmlAttributes: new { @class = "control-label col-sm-2" })
                             <div class="col-sm-7">
                                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入E-mail" } })
                             </div><div class="col-sm-3">
@@ -88,7 +88,7 @@
 
                         @* 詢問標題 *@
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            @Html.LabelFor(model => model.Title, "詢問標題：", htmlAttributes: new { @class = "control-label col-sm-2" })
                             <div class="col-sm-7">
                                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入詢問標題" } })
                             </div>
@@ -96,7 +96,7 @@
 
                         @* 詢問內容 *@
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-sm-2" })
+                            @Html.LabelFor(model => model.Content, "詢問內容：", htmlAttributes: new { @class = "control-label col-sm-2" })
                             <div class="col-sm-10">
                                 @Html.TextAreaFor(model => model.Content, new { @class = "form-control", cols = "80", rows = "10", placeholder = "請輸入詢問內容" })
                             </div>

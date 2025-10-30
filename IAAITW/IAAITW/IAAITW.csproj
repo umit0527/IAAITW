@@ -136,6 +136,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Back\BackAreaRegistration.cs" />
+    <Compile Include="Areas\Back\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -186,6 +187,14 @@
     <Content Include="Areas\Front\Views\Contacts\Details.cshtml" />
     <Content Include="Areas\Front\Views\Contacts\Edit.cshtml" />
     <Content Include="Areas\Front\Views\Contacts\Index.cshtml" />
+    <Content Include="Areas\Back\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Back\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Back\Views\Contacts\Create.cshtml" />
+    <Content Include="Areas\Back\Views\Contacts\Delete.cshtml" />
+    <Content Include="Areas\Back\Views\Contacts\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Contacts\Edit.cshtml" />
+    <Content Include="Areas\Back\Views\Contacts\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Calendar.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -214,9 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Back\Controllers\" />
     <Folder Include="Areas\Back\Data\" />
-    <Folder Include="Areas\Back\Views\Shared\" />
     <Folder Include="Areas\Front\Data\" />
   </ItemGroup>
   <ItemGroup>

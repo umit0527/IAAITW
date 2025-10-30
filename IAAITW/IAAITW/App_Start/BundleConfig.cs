@@ -41,18 +41,38 @@ namespace IAAITW
             //前台js
             bundles.Add(new ScriptBundle("~/bundles/Front").Include(
                       "~/js/jquery.js",
-                      "~/js/bootstrap.min.js","~/js/owl.carousel.min.js",
-                      "~/js/jquery.counterup.min.js","~/js/waypoints.min.js","~/js/html5shiv.js",
-                      "~/js/jquery.colorbox.js","~/js/isotope.js","~/js/ini.isotope.js",
-                      "~/js/gmap3.min.js","~/js/custom.js", "~/js/respond.min.js",
-
-
-
-
-
-
+                      "~/js/bootstrap.min.js",
+                      "~/js/owl.carousel.min.js",
+                      "~/js/jquery.counterup.min.js",
+                      "~/js/waypoints.min.js",
+                      "~/js/html5shiv.js",
+                      "~/js/jquery.colorbox.js",
+                      "~/js/isotope.js",
+                      "~/js/ini.isotope.js",
+                      "~/js/gmap3.min.js",
+                      "~/js/custom.js", 
+                      "~/js/respond.min.js",
                       "~/js/wow.min.js"
                       ));
+
+            // 後台 JavaScript bundle
+            bundles.Add(new ScriptBundle("~/bundles/back").Include(
+                "~/Back/vendors/js/vendor.bundle.base.js",
+                "~/Back/js/off-canvas.js",
+                "~/Back/js/template.js",
+                "~/Back/js/settings.js",
+                "~/Back/js/todolist.js"
+            ));
+
+            // 後台 Plugin JavaScript bundle
+            bundles.Add(new ScriptBundle("~/bundles/back-plugins").Include(
+                "~/Back/vendors/chart.js/chart.umd.js",
+                "~/Back/vendors/datatables.net/jquery.dataTables.js",
+                "~/Back/vendors/datatables.net-bs5/dataTables.bootstrap5.js",
+                "~/Back/js/dataTables.select.min.js",
+                "~/Back/js/jquery.cookie.js",
+                "~/Back/js/dashboard.js"
+            ));
         }
     }
 }
