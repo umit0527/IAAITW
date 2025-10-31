@@ -136,6 +136,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Back\BackAreaRegistration.cs" />
+    <Compile Include="Areas\Back\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Back\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Front\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
@@ -196,6 +197,7 @@
     <Content Include="Areas\Back\Views\Contacts\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Contacts\Index.cshtml" />
     <Content Include="Areas\Front\Views\Calendar\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Calendar\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

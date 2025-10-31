@@ -20967,7 +20967,8 @@ code {
 .footer {
   background: #F5F7FF;
   color: color(dark);
-  padding: 30px 2.45rem;
+  padding: 0px 2.45rem;
+  padding-top: 20px;
   transition: all 0.25s ease;
   -moz-transition: all 0.25s ease;
   -webkit-transition: all 0.25s ease;
@@ -20975,7 +20976,7 @@ code {
   font-size: calc(0.875rem - 0.05rem);
   font-family: "Nunito", sans-serif;
   font-weight: 400;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  /* border-top: 1px solid rgba(0, 0, 0, 0.06); */
 }
 .footer a {
   color: #4B49AC;
