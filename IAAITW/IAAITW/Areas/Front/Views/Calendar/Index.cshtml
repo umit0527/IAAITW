@@ -1,6 +1,13 @@
 ﻿
 @{
     ViewBag.Title = "行事曆";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("行事曆",null),
+        new Tuple<string, string>("協會行事曆", Url.Action("Index", "Calendar", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
 }
 
 <section id="main-container" class="main-container">

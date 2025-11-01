@@ -59,6 +59,9 @@
       <HintPath>..\packages\GoogleRecaptchaMvc.1.0.1\lib\GoogleRecaptchaMvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcPaging, Version=2.1.13.46, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcPaging.2.1.13\lib\net40\MvcPaging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -141,6 +144,7 @@
     <Compile Include="Areas\Back\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Front\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
+    <Compile Include="Areas\Front\Controllers\KnowledgeController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -219,6 +223,7 @@
     <Content Include="Areas\Back\Views\Knowledges\Details.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Knowledge\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

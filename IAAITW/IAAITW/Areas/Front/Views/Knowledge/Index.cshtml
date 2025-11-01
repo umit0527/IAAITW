@@ -1,0 +1,87 @@
+﻿@using MvcPaging
+@model MvcPaging.IPagedList<IAAITW.Models.Knowledge>
+
+@{
+    ViewBag.Title = "知識庫";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("知識庫",null),
+        new Tuple<string, string>("知識庫下載", Url.Action("Index", "Knowledge", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
+}
+
+<!-- Banner area end -->
+<section id="main-container" class="main-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="sidebar sidebar-right">
+                    <div class="widget">
+                        <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>知識庫</h2>
+                        <ul class="arrow nav nav-tabs nav-stacked">
+                            <li class="active"><a href="#">知識庫下載</a></li>
+                        </ul>
+                    </div>
+                    <!-- Categories end -->
+                </div>
+                <!-- Sidebar end -->
+            </div>
+            <!-- Sidebar Col end -->
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <h2 class="page-title">知識庫下載</h2>
+                <hr class="botmargin-min">
+                <!-- 內容開始 -->
+                <table class="table table-striped career-table download-table">
+
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th><span class="text-left">標題</span></th>
+                            <th>檔案</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.UploadDate.ToString("yyyy-MM-dd")
+                                </td>
+                                <td style="text-align:start;">
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Download", "Knowledge", new { fileName = item.FilePath })"
+                                       class="btn btn-primary btn-sm">
+                                        <i class="fa fa-download"></i> 下載
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="pager text-center">
+                    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+                    @*<ul class="pagination">
+                            <li><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                        </ul>*@
+                </div>
+
+            </div>
+            <!-- Content Col end -->
+            <!-- 內容結束 -->
+        </div>
+        <!-- Main row end -->
+    </div>
+    <!-- Conatiner end -->
+</section>
+<!-- Main container end -->
