@@ -24,7 +24,9 @@
 
     <!-- endinject -->
     <link rel="shortcut icon" href="~/Back/images/favicon.png" />
+    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
     <div class="container-scroller">
@@ -226,7 +228,7 @@
                 </ul>
             </nav>
             <div class="main-panel mt-5">
-                <div class="content-wrapper">
+                <div class="content-wrapper d-flex flex-column justify-content-between">
 
                     @RenderBody()
 

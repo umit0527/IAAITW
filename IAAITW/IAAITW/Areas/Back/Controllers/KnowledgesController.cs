@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IAAITW.Models;
+using MvcPaging;
 
 namespace IAAITW.Areas.Back.Controllers
 {
@@ -15,10 +16,32 @@ namespace IAAITW.Areas.Back.Controllers
         private DBMdoelContext db = new DBMdoelContext();
 
         // GET: Back/Knowledges
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var knowledges = db.Knowledges.Include(k => k.Admin);
-            return View(knowledges.ToList());
+            //指令化
+            var knowledges = db.Knowledges.AsQueryable();
+
+            //一頁幾筆資料
+            var pageSize = 10;
+
+            //目前第幾頁
+            ///避免page是null的時候
+            ///page-1是為了與後端的值對齊
+            ///當前端是第一頁 value=1、後端value應該要是0，從0開始計算
+            if (page.HasValue)
+            {
+                page = page - 1;
+            }
+            else
+            {
+                page = 0;
+            }
+
+            //用套件一定要有 orderby 排序
+            var result = knowledges.OrderBy(x => x.Id).ToPagedList(page.Value, pageSize);
+
+            //var knowledges = db.Knowledges.Include(k => k.Admin);
+            return View(result);
         }
 
         // GET: Back/Knowledges/Details/5
