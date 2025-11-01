@@ -1,0 +1,84 @@
+工程師網站 wordpress
+CMS content management system 內容管理器
+RDBMS 關聯式資料庫
+
+url→路由→DNS(將url轉換為(對應網站的)ip)→server
+server原意是指硬體，伺服器
+
+伺服器有多台，有資金的做法 : 進伺服器前，發出請求→Load Balance負載平衡→web server→回傳 response
+
+伺服器只有一台，無資金的作法 :  進伺服器前，發出請求→port埠號(港口)→中控台reverse proxy反向代理→進入對應web server→回傳 response
+----
+TCP/IP
+1.應用層 : 不同顏色的信封，http.ftp
+2.傳輸層 : 不同的方式傳輸，掛號/平信，tcp(必須有，較慢)/udp(不見沒關係，較快)
+3.網路層 : 收件者位置.地址，ip
+4.連接層 : 郵差.郵局，如何送達，背後的運作方式，光纖
+一層一層包起來，封裝1.然後封裝2....，傳遞厚一層一層解封裝
+----
+協議
+http/https : 網站傳輸協議，html
+ftp/sftp : 檔案傳輸，雲端空間
+telnet : http之前的網站傳輸協議，ptt
+smtp/pop3 : email
+ws/wss : 長連接，發請要求並同意建立通道，速度快、接口有限、成本高，所以遊戲有分伺服器
+ssh : 金鑰，連進伺服器
+rtsp/rtmp : 處理即時串流，將影片分割成數個檔案分別傳輸
+----
+http
+header→因為有要求，給資料的部分都在header
+動詞 : get拿資料/post更改資料、put/delet ....
+路徑 : 埠號的後面，? search，例如q=123
+host : 
+orirgin 來源 : 寄件者地址
+user-agent : 寄件者
+以上為meta infomation，讓伺服器知道你的基本資訊
+content-type : 告訴body的檔案形式
+
+body→希望伺服器處理的內容
+application/json : json格式檔案 
+multipart : 傳檔案
+text : 傳文字
+----
+權限
+client to server : 
+1.使用者從瀏覽器或app登入
+2.第三方登入-使用者透過第三方登入，伺服器向第三方請求資料，第三方給token，伺服器以token拿到資料
+
+server to server : 使用到第三方服務，例如金流.物流
+---
+Authentication : 驗證 
+
+
+Authorization : 授權
+
+http status code
+2xx : 與成功有關
+3xx : 與導向有關
+4xx : 與對方失敗(用戶)有關
+401-not found(驗證失敗) 403-unAuthorized(授權失敗) 404-forbidden
+5xx : 與伺服器失敗有關
+502-bad getway網路斷掉 504-timeout
+---
+token權杖/令牌，表明身分
+event-base : 被事件觸發，例如用戶收到驗證碼簡訊，拿到一個token，通常為一次性OTP
+time-base : 時效性，例如時間到就過期的驗證連結，通常稱為token
+static : 自行設定，不會改變，例如密碼
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

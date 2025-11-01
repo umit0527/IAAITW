@@ -1,75 +1,82 @@
-﻿@model IAAITW.Models.Knowledge
+﻿@model IAAITW.Models.KnowledgeViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "編輯 | 知識庫下載";
 }
 
-<h2>Edit</h2>
+<h2>編輯</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Knowledges", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Knowledge</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>知識庫下載</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsTop, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsTop, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            原檔案
+            <div class="col-md-10">
+                @Html.TextBox("FilePath", Path.GetFileName(Model.FilePath), new { @class = "form-control text-secondary", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.FileUpload, new { @class = "form-control", type = "file" })
+                @Html.ValidationMessageFor(model => model.FileUpload, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Admin.Name, "上傳人員", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("AdminName", Model.Admin.Name, htmlAttributes: new { @class = "form-control text-secondary", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.UploadUserId, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.UploadUserId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UploadDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UploadDate, new { htmlAttributes = new { @class = "form-control text-secondary", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.UploadDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        原檔案
-        <div class="col-md-10">
-            @Html.TextBox("FilePath", Path.GetFileName(Model.FilePath), new { @class = "form-control text-secondary", @readonly = "readonly" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.FilePath, new { @class = "form-control", type = "file" })
-            @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Admin.Name, "上傳人員", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("UploadUserId", Model.Admin.Name, htmlAttributes: new { @class = "form-control text-secondary", @readonly = "readonly" })
-            @Html.ValidationMessageFor(model => model.UploadUserId, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.UploadUserId)
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.UploadDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UploadDate, new { htmlAttributes = new { @class = "form-control text-secondary", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.UploadDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>

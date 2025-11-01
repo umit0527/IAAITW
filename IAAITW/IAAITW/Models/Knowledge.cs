@@ -22,7 +22,10 @@ namespace IAAITW.Models
 
         [Display(Name = "檔案")]
         public string FilePath { get; set; }
-        
+
+        [Display(Name = "置頂")]
+        public bool IsTop { get; set; } = false;    
+
         public int UploadUserId { get; set; }=1;
         [ForeignKey("UploadUserId")]
         public virtual Admin Admin { get; set; }

@@ -38,7 +38,9 @@ namespace IAAITW.Areas.Back.Controllers
             }
 
             //用套件一定要有 orderby 排序
-            var result = knowledges.OrderBy(x => x.Id).ToPagedList(page.Value, pageSize);
+            var result = knowledges.OrderByDescending(x => x.IsTop)       
+                                   .ThenByDescending(x => x.UploadDate)
+                                   .ToPagedList(page.Value, pageSize);
 
             //var knowledges = db.Knowledges.Include(k => k.Admin);
             return View(result);
@@ -71,7 +73,7 @@ namespace IAAITW.Areas.Back.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,FilePath,FileUpload,UploadUserId,UploadDate")] KnowledgeViewModel model)
+        public ActionResult Create([Bind(Include = "Id,Title,Description,IsTop,FilePath,FileUpload,UploadUserId,UploadDate")] KnowledgeViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -79,6 +81,7 @@ namespace IAAITW.Areas.Back.Controllers
                 {
                     Title = model.Title,
                     Description = model.Description,
+                    IsTop= model.IsTop,
                     FilePath = model.FilePath,
                     UploadUserId = model.UploadUserId,
                     UploadDate = model.UploadDate
@@ -132,13 +135,30 @@ namespace IAAITW.Areas.Back.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Knowledge knowledge = db.Knowledges.Find(id);
+
+            var knowledge = db.Knowledges
+                              .Include(k => k.Admin)
+                              .FirstOrDefault(k => k.Id == id);
             if (knowledge == null)
             {
                 return HttpNotFound();
             }
+
+            // 將 Knowledge 轉換為 KnowledgeViewModel
+            var viewModel = new KnowledgeViewModel
+            {
+                Id = knowledge.Id,
+                Title = knowledge.Title,
+                Description = knowledge.Description,
+                IsTop = knowledge.IsTop,
+                FilePath = knowledge.FilePath,
+                UploadUserId = knowledge.UploadUserId,
+                UploadDate = knowledge.UploadDate,
+                Admin = knowledge.Admin
+            };
+
             ViewBag.UploadUserId = new SelectList(db.Admins, "Id", "Account", knowledge.UploadUserId);
-            return View(knowledge);
+            return View(viewModel);
         }
 
         // POST: Back/Knowledges/Edit/5
@@ -146,16 +166,64 @@ namespace IAAITW.Areas.Back.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,FileName,FilePath,UploadUserId,UploadDate")] Knowledge knowledge)
+        public ActionResult Edit(KnowledgeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(knowledge).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    var existingKnowledge = db.Knowledges
+                        .Include(k => k.Admin)
+                        .FirstOrDefault(k => k.Id == model.Id);
+
+                    if (existingKnowledge == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    // 更新基本欄位
+                    existingKnowledge.Title = model.Title;
+                    existingKnowledge.Description = model.Description;
+                    existingKnowledge.IsTop = model.IsTop;
+                    existingKnowledge.UploadUserId = model.UploadUserId;
+
+                    // 處理檔案上傳
+                    if (model.FileUpload != null && model.FileUpload.ContentLength > 0)
+                    {
+                        var uploadsFolder = Server.MapPath("~/Uploads/Knowledge");
+                        if (!System.IO.Directory.Exists(uploadsFolder))
+                            System.IO.Directory.CreateDirectory(uploadsFolder);
+
+                        // 刪掉舊檔案
+                        if (!string.IsNullOrEmpty(existingKnowledge.FilePath))
+                        {
+                            var oldFile = Server.MapPath(existingKnowledge.FilePath);
+                            if (System.IO.File.Exists(oldFile))
+                                System.IO.File.Delete(oldFile);
+                        }
+
+                        // 儲存新檔案
+                        var fileName = System.IO.Path.GetFileName(model.FileUpload.FileName);
+                        var path = System.IO.Path.Combine(uploadsFolder, fileName);
+                        model.FileUpload.SaveAs(path);
+                        existingKnowledge.FilePath = "/Uploads/Knowledge/" + fileName;
+                    }
+
+                    // 更新修改時間
+                    existingKnowledge.UploadDate = DateTime.Now;
+
+                    db.Entry(existingKnowledge).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "更新失敗: " + ex.Message);
+                }
             }
-            ViewBag.UploadUserId = new SelectList(db.Admins, "Id", "Account", knowledge.UploadUserId);
-            return View(knowledge);
+
+            ViewBag.UploadUserId = new SelectList(db.Admins, "Id", "Account", model.UploadUserId);
+            return View(model);
         }
 
         // GET: Back/Knowledges/Delete/5

@@ -10,6 +10,8 @@ namespace IAAITW.Models
     public class KnowledgeViewModel
     {
         //資料資訊
+        public int Id { get; set; }
+
         [Display(Name = "標題")]
         public string Title { get; set; }
         [Display(Name = "描述")]
@@ -17,6 +19,9 @@ namespace IAAITW.Models
 
         [Display(Name = "檔案")]
         public string FilePath { get; set; }
+
+        [Display(Name = "置頂")]
+        public bool IsTop { get; set; } = false;
 
         [Display(Name = "上傳日期")]
         public DateTime UploadDate { get; set; } = DateTime.Now;
@@ -28,5 +33,7 @@ namespace IAAITW.Models
         //上傳人員
         [Display(Name = "上傳人員")]
         public int UploadUserId { get; set; } = 1;
+
+        public virtual Admin Admin { get; set; }
     }
 }

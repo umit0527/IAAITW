@@ -14,7 +14,9 @@
         @Html.AntiForgeryToken()
         <table class="table">
             <tr>
-
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().IsTop)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
                 </th>
@@ -36,6 +38,9 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsTop)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
