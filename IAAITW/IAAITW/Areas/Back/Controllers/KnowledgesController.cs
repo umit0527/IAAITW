@@ -150,15 +150,42 @@ namespace IAAITW.Areas.Back.Controllers
             return View(knowledge);
         }
 
-        // POST: Back/Knowledges/Delete/5
-        [HttpPost, ActionName("Delete")]
+        //// POST: Back/Knowledges/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Knowledge knowledge = db.Knowledges.Find(id);
+        //    db.Knowledges.Remove(knowledge);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+
+        //POST: Back/Knowledges/Delete/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Knowledge knowledge = db.Knowledges.Find(id);
+            var knowledge = db.Knowledges.Find(id);
+            if (knowledge == null)
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
+
+            // 刪除實體檔案
+            if (!string.IsNullOrEmpty(knowledge.FilePath))
+            {
+                var filePath = Server.MapPath(knowledge.FilePath);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+
             db.Knowledges.Remove(knowledge);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Json(new { success = true });
         }
 
         protected override void Dispose(bool disposing)
