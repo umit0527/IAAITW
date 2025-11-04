@@ -141,6 +141,7 @@
     <Compile Include="Areas\Back\BackAreaRegistration.cs" />
     <Compile Include="Areas\Back\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Back\Controllers\ContactsController.cs" />
+    <Compile Include="Areas\Back\Controllers\JobsController.cs" />
     <Compile Include="Areas\Back\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Front\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
@@ -170,10 +171,15 @@
     <Compile Include="Migrations\202511011401285_add feild in knowledge.Designer.cs">
       <DependentUpon>202511011401285_add feild in knowledge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511030522162_add table jod.cs" />
+    <Compile Include="Migrations\202511030522162_add table jod.Designer.cs">
+      <DependentUpon>202511030522162_add table jod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DBMdoelContext.cs" />
+    <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Knowledge.cs" />
     <Compile Include="Models\KnowledgeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -215,10 +221,6 @@
     <Content Include="Areas\Front\Views\Contacts\Index.cshtml" />
     <Content Include="Areas\Back\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Back\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Back\Views\Contacts\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Contacts\Delete.cshtml" />
-    <Content Include="Areas\Back\Views\Contacts\Details.cshtml" />
-    <Content Include="Areas\Back\Views\Contacts\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Contacts\Index.cshtml" />
     <Content Include="Areas\Front\Views\Calendar\Index.cshtml" />
     <Content Include="Areas\Back\Views\Calendar\Index.cshtml" />
@@ -228,6 +230,11 @@
     <Content Include="Areas\Back\Views\Knowledges\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Index.cshtml" />
     <Content Include="Areas\Front\Views\Knowledge\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Jobs\Create.cshtml" />
+    <Content Include="Areas\Back\Views\Jobs\Delete.cshtml" />
+    <Content Include="Areas\Back\Views\Jobs\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Jobs\Edit.cshtml" />
+    <Content Include="Areas\Back\Views\Jobs\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -301,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511011401285_add feild in knowledge.resx">
       <DependentUpon>202511011401285_add feild in knowledge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511030522162_add table jod.resx">
+      <DependentUpon>202511030522162_add table jod.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

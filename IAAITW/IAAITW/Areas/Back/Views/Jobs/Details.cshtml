@@ -1,0 +1,46 @@
+﻿@model IAAITW.Models.Job
+
+@{
+    ViewBag.Title = "協會業務";
+}
+
+<div>
+    <h2>協會業務</h2>
+
+    <div>
+        <h4>Job</h4>
+        <hr />
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+
+            <dt>
+                建立人員
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Admin.Account)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+    </p>
+</div>
