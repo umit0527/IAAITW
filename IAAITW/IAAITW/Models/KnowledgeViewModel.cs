@@ -26,14 +26,20 @@ namespace IAAITW.Models
         [Display(Name = "上傳日期")]
         public DateTime UploadDate { get; set; } = DateTime.Now;
 
+        [Display(Name = "最後更新時間")]
+        public DateTime UpdatedDate { get; set; } = DateTime.Now;
+
         [NotMapped]
         [Display(Name = "檔案上傳")]    
         public HttpPostedFileBase FileUpload { get; set; }
 
         //上傳人員
         [Display(Name = "上傳人員")]
-        public int UploadUserId { get; set; } = 1;
+        public int AdminId { get; set; } = 1;
+        public virtual Admin Admin { get; set; }  //讓view可以直接使用admin的name
 
-        public virtual Admin Admin { get; set; }
+        [Display(Name = "最後更新人員")]
+        public int UpdatedAdminId { get; set; } = 1;
+        public virtual Admin UpdatedAdmin { get; set; }  //讓view可以直接使用admin的name
     }
 }

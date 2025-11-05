@@ -2,14 +2,18 @@
 
 @{
     ViewBag.Title = "協會業務";
+    bool hasData = Model != null && Model.Any(); // 判斷是否已有資料
 }
 
 <div>
     <h2>協會業務</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    @if (!hasData)
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+        </p>
+    }
     <table class="table">
         <tr>
 

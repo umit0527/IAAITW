@@ -26,11 +26,19 @@ namespace IAAITW.Models
         [Display(Name = "置頂")]
         public bool IsTop { get; set; } = false;    
 
-        public int UploadUserId { get; set; }=1;
-        [ForeignKey("UploadUserId")]
+        public int AdminId { get; set; }=1;
+        [ForeignKey("AdminId")]
         public virtual Admin Admin { get; set; }
+
+        [Display(Name = "最後更新人員")]
+        public int UpdatedAdminId { get; set; } = 1;
+        [ForeignKey("UpdatedAdminId")]
+        public virtual Admin UpdatedAdmin { get; set; }
 
         [Display(Name = "上傳日期")]
         public DateTime UploadDate { get; set; } = DateTime.Now;
+
+        [Display(Name = "最後更新時間")]
+        public DateTime UpdatedDate { get; set; } = DateTime.Now;
     }
 }

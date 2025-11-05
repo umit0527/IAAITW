@@ -73,18 +73,20 @@ namespace IAAITW.Areas.Back.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,IsTop,FilePath,FileUpload,UploadUserId,UploadDate")] KnowledgeViewModel model)
+        public ActionResult Create(KnowledgeViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var knowledge = new Knowledge
                 {
                     Title = model.Title,
-                    Description = model.Description,
+                    //Description = model.Description,
                     IsTop= model.IsTop,
                     FilePath = model.FilePath,
-                    UploadUserId = model.UploadUserId,
-                    UploadDate = model.UploadDate
+                    AdminId = model.AdminId,
+                    UploadDate = model.UploadDate,
+                    UpdatedDate = model.UpdatedDate,
+
                 };
 
                 // 檔案上傳
@@ -108,7 +110,7 @@ namespace IAAITW.Areas.Back.Controllers
                     catch (Exception ex)
                     {
                         ModelState.AddModelError("", "檔案上傳失敗: " + ex.Message);
-                        ViewBag.UploadUserId = new SelectList(db.Admins, "Id", "Account", model.UploadUserId);
+                        ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
                         return View(model);
                     }
                     // 存到資料庫
@@ -124,7 +126,7 @@ namespace IAAITW.Areas.Back.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UploadUserId = new SelectList(db.Admins, "Id", "Account", model.UploadUserId);
+            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
             return View(model);
         }
 
@@ -152,12 +154,12 @@ namespace IAAITW.Areas.Back.Controllers
                 Description = knowledge.Description,
                 IsTop = knowledge.IsTop,
                 FilePath = knowledge.FilePath,
-                UploadUserId = knowledge.UploadUserId,
+                AdminId = knowledge.AdminId,
                 UploadDate = knowledge.UploadDate,
                 Admin = knowledge.Admin
             };
 
-            ViewBag.UploadUserId = new SelectList(db.Admins, "Id", "Account", knowledge.UploadUserId);
+            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", knowledge.AdminId);
             return View(viewModel);
         }
 
@@ -185,7 +187,7 @@ namespace IAAITW.Areas.Back.Controllers
                     existingKnowledge.Title = model.Title;
                     existingKnowledge.Description = model.Description;
                     existingKnowledge.IsTop = model.IsTop;
-                    existingKnowledge.UploadUserId = model.UploadUserId;
+                    existingKnowledge.AdminId = model.AdminId;
 
                     // 處理檔案上傳
                     if (model.FileUpload != null && model.FileUpload.ContentLength > 0)
@@ -210,7 +212,7 @@ namespace IAAITW.Areas.Back.Controllers
                     }
 
                     // 更新修改時間
-                    existingKnowledge.UploadDate = DateTime.Now;
+                    existingKnowledge.UpdatedDate = DateTime.Now;
 
                     db.Entry(existingKnowledge).State = EntityState.Modified;
                     db.SaveChanges();
@@ -222,7 +224,7 @@ namespace IAAITW.Areas.Back.Controllers
                 }
             }
 
-            ViewBag.UploadUserId = new SelectList(db.Admins, "Id", "Account", model.UploadUserId);
+            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
             return View(model);
         }
 

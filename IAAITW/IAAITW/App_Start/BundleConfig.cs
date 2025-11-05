@@ -73,6 +73,11 @@ namespace IAAITW
                 "~/Back/js/jquery.cookie.js",
                 "~/Back/js/dashboard.js"
             ));
+
+            // ckeditor
+            bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
+                "~/Scripts/ckeditor_4.22.1_full/ckeditor/ckeditor.js"
+            ));
         }
     }
 }

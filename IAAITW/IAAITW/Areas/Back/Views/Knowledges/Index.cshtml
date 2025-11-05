@@ -1,76 +1,90 @@
 ﻿@using MvcPaging
+@using IAAITW.Helper
 @model MvcPaging.IPagedList<IAAITW.Models.Knowledge>
 
 @{
     ViewBag.Title = "Knowledge";
 }
-    <div>
-        <h2>知識庫下載</h2>
+<div>
+    <h2>知識庫下載</h2>
 
-        <p>
-            @Html.ActionLink("新  增", "Create")
-        </p>
+    <p>
+        @Html.ActionLink("新  增", "Create")
+    </p>
 
-        @Html.AntiForgeryToken()
-        <table class="table">
+    @Html.AntiForgeryToken()
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsTop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Description)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FilePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UploadDate)
+            </th>
+            <th>
+                上傳人員
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UpdatedDate)
+            </th>
+            <th>
+                最後更新人員
+<th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().IsTop)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().FilePath)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().UploadDate)
-                </th>
-                <th>
-                    上傳人員
-                </th>
-                <th></th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsTop)
+                </td>
+                <td>
+                    @item.Title.TruncateWithChinese(30)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>*@
+            <td>
+                @(Path.GetFileName(item.FilePath)?.TruncateWithChinese(20) ?? "")
+            </td>
+                <td>
+                    @item.UploadDate.ToString("yyyy/MM/dd HH:mm")
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Admin.Name)*@
+                    @item.Admin.Name.TruncateWithChinese(12)
+                </td>
+                <td>
+                    @item.UpdatedDate.ToString("yyyy/MM/dd HH:mm")
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Admin.Name)*@
+                    @item.UpdatedAdmin.Name.TruncateWithChinese(12)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    <button class="delete-btn" data-id="@item.Id">刪除</button>
+                </td>
             </tr>
+        }
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsTop)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Path.GetFileName(item.FilePath)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UploadDate, "{yyyy/MM/dd HH:mm}")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Admin.Name)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
-                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                        <button class="" data-id="@item.Id">刪除</button>
-                    </td>
-                </tr>
-            }
+    </table>
+</div>
 
-        </table>
-    </div>
-
-    <div class="pager text-center pt-5" >
-        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
-    </div>
+<div class="pager text-center pt-5">
+    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+</div>
 
 
 @section scripts {

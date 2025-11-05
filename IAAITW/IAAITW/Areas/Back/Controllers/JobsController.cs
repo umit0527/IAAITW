@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ganss.Xss;
+using IAAITW.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using IAAITW.Models;
 
 namespace IAAITW.Areas.Back.Controllers
 {
@@ -18,6 +19,12 @@ namespace IAAITW.Areas.Back.Controllers
         public ActionResult Index()
         {
             var data = db.Jobs.FirstOrDefault();
+
+            // 若沒有資料，導向 Details（會讓它顯示「Create New」）
+            if (data == null)
+            {
+                return RedirectToAction("Details"); // 不帶 id，讓 Details 自行判斷
+            }
             //導轉到 Details
             return RedirectToAction("Details", new { id = data.Id });
         }
@@ -25,16 +32,17 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Jobs/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            var data = db.Jobs.FirstOrDefault();
+
+            if (data == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                // 沒資料，給 View 顯示空畫面
+                ViewBag.HasData = false;
+                return View();
             }
-            Job job = db.Jobs.Find(id);
-            if (job == null)
-            {
-                return HttpNotFound();
-            }
-            return View(job);
+
+            ViewBag.HasData = true;
+            return View(data);
         }
 
         // GET: Back/Jobs/Create
@@ -49,10 +57,15 @@ namespace IAAITW.Areas.Back.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Content,CreatedDate,AdminId")] Job job)
+        public ActionResult Create( Job job)
         {
             if (ModelState.IsValid)
             {
+                // 安全過濾 HTML
+                var sanitizer = new HtmlSanitizer();
+                sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
+                job.Content = sanitizer.Sanitize(job.Content);
+
                 db.Jobs.Add(job);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -83,13 +96,26 @@ namespace IAAITW.Areas.Back.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Content,CreatedDate,AdminId")] Job job)
+        public ActionResult Edit([Bind(Include = "Id,Content,UpdatedDate,AdminId")] Job job)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(job).State = EntityState.Modified;
+                var existingJob = db.Jobs.Find(job.Id);
+                if (existingJob == null)
+                {
+                    return HttpNotFound();
+                }
+                // 安全過濾 HTML 並更新內容
+                var sanitizer = new HtmlSanitizer();
+                sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
+                existingJob.Content = sanitizer.Sanitize(job.Content);
+                
+                // 設定最後更新時間
+                existingJob.UpdatedDate = DateTime.Now;
+
+                db.Entry(existingJob).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", job.AdminId);
             return View(job);
