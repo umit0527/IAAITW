@@ -100,7 +100,7 @@
                 var token = $('input[name="__RequestVerificationToken"]').val();
 
                 $.ajax({
-                    url: '@Url.Action("DeleteConfirmed", "Knowledges", new { area = "Back" })', // 若 Controller 不在 Area Back，移除 new { area = "Back" }
+                    url: '@Url.Action("DeleteConfirmed", "Knowledges", new { area = "Back" })', 
                     type: 'POST',
                     dataType: 'json',
                     data: {

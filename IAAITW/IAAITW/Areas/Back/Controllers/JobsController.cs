@@ -137,14 +137,20 @@ namespace IAAITW.Areas.Back.Controllers
         }
 
         // POST: Back/Jobs/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Job job = db.Jobs.Find(id);
+            var job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
+
             db.Jobs.Remove(job);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Json(new { success = true });
         }
 
         protected override void Dispose(bool disposing)
