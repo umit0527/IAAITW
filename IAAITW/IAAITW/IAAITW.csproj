@@ -171,6 +171,7 @@
     <Compile Include="Areas\Back\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Back\Controllers\JobsController.cs" />
     <Compile Include="Areas\Back\Controllers\KnowledgesController.cs" />
+    <Compile Include="Areas\Back\Controllers\LisencesController.cs" />
     <Compile Include="Areas\Back\Controllers\ViewHelper.cs" />
     <Compile Include="Areas\Front\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
@@ -296,6 +297,7 @@
     <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Scripts\ckeditor\SECURITY.md" />
     <Content Include="Scripts\ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="Areas\Back\Views\Lisences\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
