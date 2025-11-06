@@ -10,15 +10,15 @@ using IAAITW.Models;
 
 namespace IAAITW.Areas.Front.Controllers
 {
-    public class JobsController : Controller
+    public class RefersController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
 
-        // GET: Front/Jobs
+        // GET: Front/Refers
         public ActionResult Index()
         {
-            var jobs = db.Jobs.Include(j => j.Admin).Include(j => j.UpdatedAdmin);
-            return View(jobs.ToList());
+            var refers = db.Refers.Include(j => j.Admin).Include(j => j.UpdatedAdmin);
+            return View(refers.ToList());
         }
     }
 }
