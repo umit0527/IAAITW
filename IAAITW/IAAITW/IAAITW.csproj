@@ -178,6 +178,7 @@
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Front\Controllers\JobsController.cs" />
     <Compile Include="Areas\Front\Controllers\KnowledgeController.cs" />
+    <Compile Include="Areas\Front\Controllers\RefersController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -311,6 +312,7 @@
     <Content Include="Areas\Back\Views\Refers\Details.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Refers\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
