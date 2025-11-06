@@ -285,14 +285,14 @@
     <Content Include="Areas\Back\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Back\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Back\Views\Contacts\Index.cshtml" />
-    <Content Include="Areas\Front\Views\Calendar\Index.cshtml" />
-    <Content Include="Areas\Back\Views\Calendar\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Calendars\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Calendars\Index.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Create.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Details.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Index.cshtml" />
-    <Content Include="Areas\Front\Views\Knowledge\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Knowledges\Index.cshtml" />
     <Content Include="Areas\Back\Views\Jobs\Create.cshtml" />
     <Content Include="Areas\Back\Views\Jobs\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Jobs\Details.cshtml" />
