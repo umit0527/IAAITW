@@ -1,0 +1,51 @@
+﻿@*@model IEnumerable<IAAITW.Models.Job>*@
+
+@{
+    ViewBag.Title = "協會業務";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("協會業務",null),
+        new Tuple<string, string>("訓練、認證、發照", Url.Action("Index", "Jobs", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
+}
+
+<!-- Banner area end -->
+<section id="main-container" class="main-container">
+    <div class="container" style="padding-bottom:50px">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="sidebar sidebar-right">
+                    <div class="widget">
+                        <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>協會業務</h2>
+                        <ul class="arrow nav nav-tabs nav-stacked">
+                            <li class="active"><a href="#">協會業務</a></li>
+                            <li><a href="#">訓練、認證、發照</a></li>
+                            <li><a href="#">諮詢、顧問</a></li>
+                            <li><a href="#">縱火調查</a></li>
+                        </ul>
+                    </div>
+                    <!-- Categories end -->
+                </div>
+                <!-- Sidebar end -->
+            </div>
+            <!-- Sidebar Col end -->
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <h2 class="page-title">訓練、認證、發照</h2>
+                <hr class="botmargin-min">
+                <!-- 內容開始 -->
+                <div>
+                    <p>目前不開放此業務</p>
+                </div>
+
+
+            </div>
+            <!-- Content Col end -->
+            <!-- 內容結束 -->
+        </div>
+        <!-- Main row end -->
+    </div>
+    <!-- Conatiner end -->
+</section>
+<!-- Main container end -->

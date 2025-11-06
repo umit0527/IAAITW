@@ -177,6 +177,7 @@
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Front\Controllers\JobsController.cs" />
     <Compile Include="Areas\Front\Controllers\KnowledgeController.cs" />
+    <Compile Include="Areas\Front\Controllers\LisencesController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -300,6 +301,7 @@
     <Content Include="Scripts\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Areas\Front\Views\Jobs\Index.cshtml" />
     <Content Include="Areas\Back\Views\Lisences\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Lisences\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
