@@ -11,14 +11,14 @@ using System.Web.Mvc;
 
 namespace IAAITW.Areas.Back.Controllers
 {
-    public class RefersController : Controller
+    public class SurveysController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
 
-        // GET: Back/Refers
+        // GET: Back/Surveys
         public ActionResult Index()
         {
-            var data = db.Refers.FirstOrDefault();
+            var data = db.Surveys.FirstOrDefault();
 
             // 若沒有資料，導向 Details（會讓它顯示「Create New」）
             if (data == null)
@@ -29,10 +29,10 @@ namespace IAAITW.Areas.Back.Controllers
             return RedirectToAction("Details", new { id = data.Id });
         }
 
-        // GET: Back/Refers/Details/5
+        // GET: Back/Surveys/Details/5
         public ActionResult Details(int? id)
         {
-            var data = db.Refers.FirstOrDefault();
+            var data = db.Surveys.FirstOrDefault();
 
             if (data == null)
             {
@@ -45,97 +45,97 @@ namespace IAAITW.Areas.Back.Controllers
             return View(data);
         }
 
-        // GET: Back/Refers/Create
+        // GET: Back/Surveys/Create
         public ActionResult Create()
         {
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
             return View();
         }
 
-        // POST: Back/Refers/Create
+        // POST: Back/Surveys/Create
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Refer refer)
+        public ActionResult Create(Survey survey)
         {
             if (ModelState.IsValid)
             {
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
-                refer.Content = sanitizer.Sanitize(refer.Content);
+                survey.Content = sanitizer.Sanitize(survey.Content);
 
-                db.Refers.Add(refer);
+                db.Surveys.Add(survey);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", refer.AdminId);
-            return View(refer);
+            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", survey.AdminId);
+            return View(survey);
         }
 
-        // GET: Back/Refers/Edit/5
+        // GET: Back/Surveys/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Refer refer = db.Refers.Find(id);
-            if (refer == null)
+            Survey survey = db.Surveys.Find(id);
+            if (survey == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account", refer.UpdatedAdminId);
-            return View(refer);
+            ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account", survey.UpdatedAdminId);
+            return View(survey);
         }
 
-        // POST: Back/Refers/Edit/5
+        // POST: Back/Surveys/Edit/5
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Refer refer)
+        public ActionResult Edit(Survey survey)
         {
             if (ModelState.IsValid)
             {
-                var existingRefer = db.Refers.Find(refer.Id);
-                if (existingRefer == null)
+                var existingSurvey = db.Surveys.Find(survey.Id);
+                if (existingSurvey == null)
                 {
                     return HttpNotFound();
                 }
                 // 安全過濾 HTML 並更新內容
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
-                existingRefer.Content = sanitizer.Sanitize(refer.Content);
+                existingSurvey.Content = sanitizer.Sanitize(survey.Content);
 
                 // 設定最後更新時間
-                existingRefer.UpdatedDate = DateTime.Now;
+                existingSurvey.UpdatedDate = DateTime.Now;
 
-                db.Entry(existingRefer).State = EntityState.Modified;
+                db.Entry(existingSurvey).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Details");
             }
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", refer.AdminId);
-            return View(refer);
+            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", survey.AdminId);
+            return View(survey);
         }
 
-        // POST: Back/Refers/Delete/5
+        // POST: Back/Surveys/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var refer = db.Refers.Find(id);
-            if (refer == null)
+            var survey = db.Surveys.Find(id);
+            if (survey == null)
             {
                 return Json(new { success = false, message = "找不到資料" });
             }
 
-            db.Refers.Remove(refer);
+            db.Surveys.Remove(survey);
             db.SaveChanges();
 
             return Json(new { success = true });
-        }
+        }    
     }
 }

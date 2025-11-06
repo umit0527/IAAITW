@@ -1,0 +1,119 @@
+﻿@model IAAITW.Models.Survey
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    @Html.AntiForgeryToken()
+    <h2>協會業務</h2>
+
+    <div>
+        <h4>縱火調查</h4>
+        <hr />
+        @if (ViewBag.HasData == false)
+        {
+            <p>
+                @Html.ActionLink("Create New", "Create", null, new { @class = "" })
+            </p>
+        }
+        @if (ViewBag.HasData == true)
+        {
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Content)
+                </dt>
+
+                <dd>
+                    @Html.Raw(Model.Content)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+
+                <dd>
+                    @Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")
+                </dd>
+
+                <dt>
+                    建立人員
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Admin.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UpdatedDate)
+                </dt>
+
+                <dd>
+                    @Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")
+
+                </dd>
+
+                <dt>
+                    最後更新人員
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UpdatedAdmin.Name)
+                </dd>
+            </dl>
+        }
+        else
+        {
+            <p>目前沒有資料</p>
+        }
+    </div>
+    @if (ViewBag.HasData == true)
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            <button class="delete-btn" data-id="@Model.Id">刪除</button>
+        </p>
+    }
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $('.delete-btn').on('click', function () {
+                if (!confirm('確定要刪除這筆資料嗎？')) return;
+
+                var id = $(this).data('id');
+                var row = $('#row-' + id);
+                // 讀取 AntiForgery token（由 @Html.AntiForgeryToken() 產生）
+                var token = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    url: '@Url.Action("DeleteConfirmed", "Surveys", new { area = "Back" })',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id: id,
+                        __RequestVerificationToken: token
+                    },
+                    success: function (res) {
+                        if (res && res.success) {
+                            row.fadeOut(300, function () { $(this).remove(); });
+                            // 可改成更漂亮的提示元件（toast）
+                            alert('刪除成功！');
+                            location.reload();
+                        } else {
+                            var msg = (res && res.message) ? res.message : '刪除失敗';
+                            alert('刪除失敗: ' + msg);
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        // 更完整的錯誤資訊，有助 debug
+                        console.error('刪除錯誤', status, err, xhr.responseText);
+                        alert('刪除時發生錯誤，請稍後再試。');
+                    }
+                });
+            });
+        });
+    </script>
+}
