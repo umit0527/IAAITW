@@ -172,6 +172,7 @@
     <Compile Include="Areas\Back\Controllers\JobsController.cs" />
     <Compile Include="Areas\Back\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Back\Controllers\LisencesController.cs" />
+    <Compile Include="Areas\Back\Controllers\RefersController.cs" />
     <Compile Include="Areas\Back\Controllers\ViewHelper.cs" />
     <Compile Include="Areas\Front\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
@@ -223,6 +224,10 @@
     <Compile Include="Migrations\202511050724431_adjust feild content in job table.Designer.cs">
       <DependentUpon>202511050724431_adjust feild content in job table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511060727131_add refer table.cs" />
+    <Compile Include="Migrations\202511060727131_add refer table.Designer.cs">
+      <DependentUpon>202511060727131_add refer table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Contact.cs" />
@@ -230,6 +235,7 @@
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Knowledge.cs" />
     <Compile Include="Models\KnowledgeViewModel.cs" />
+    <Compile Include="Models\Refer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -300,6 +306,11 @@
     <Content Include="Scripts\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Areas\Front\Views\Jobs\Index.cshtml" />
     <Content Include="Areas\Back\Views\Lisences\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Refers\Create.cshtml" />
+    <Content Include="Areas\Back\Views\Refers\Delete.cshtml" />
+    <Content Include="Areas\Back\Views\Refers\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Refers\Edit.cshtml" />
+    <Content Include="Areas\Back\Views\Refers\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -699,6 +710,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511050724431_adjust feild content in job table.resx">
       <DependentUpon>202511050724431_adjust feild content in job table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511060727131_add refer table.resx">
+      <DependentUpon>202511060727131_add refer table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
