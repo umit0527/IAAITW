@@ -10,7 +10,7 @@ using System.Web.UI;
 
 namespace IAAITW.Areas.Front.Controllers
 {
-    public class KnowledgeController : Controller
+    public class KnowledgesController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
 

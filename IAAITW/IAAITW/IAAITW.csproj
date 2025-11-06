@@ -167,7 +167,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Back\BackAreaRegistration.cs" />
-    <Compile Include="Areas\Back\Controllers\CalendarController.cs" />
+    <Compile Include="Areas\Back\Controllers\CalendarsController.cs" />
     <Compile Include="Areas\Back\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Back\Controllers\JobsController.cs" />
     <Compile Include="Areas\Back\Controllers\KnowledgesController.cs" />
@@ -175,12 +175,13 @@
     <Compile Include="Areas\Back\Controllers\RefersController.cs" />
     <Compile Include="Areas\Back\Controllers\SurveysController.cs" />
     <Compile Include="Areas\Back\Controllers\ViewHelper.cs" />
-    <Compile Include="Areas\Front\Controllers\CalendarController.cs" />
+    <Compile Include="Areas\Front\Controllers\CalendarsController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Front\Controllers\JobsController.cs" />
-    <Compile Include="Areas\Front\Controllers\KnowledgeController.cs" />
+    <Compile Include="Areas\Front\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Front\Controllers\LisencesController.cs" />
     <Compile Include="Areas\Front\Controllers\RefersController.cs" />
+    <Compile Include="Areas\Front\Controllers\SurveysController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -326,6 +327,7 @@
     <Content Include="Areas\Back\Views\Surveys\Details.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Surveys\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
