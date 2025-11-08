@@ -180,7 +180,6 @@
     <Compile Include="Areas\Front\Controllers\ArticleController.cs" />
     <Compile Include="Areas\Front\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Front\Controllers\MemberController.cs" />
-    <Compile Include="Areas\Front\Controllers\SurveysController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
