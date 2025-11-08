@@ -1,0 +1,144 @@
+﻿@model IAAITW.Models.MemberAccount
+
+
+@{
+    ViewBag.Title = "會員登入";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("會員專區",null),
+        new Tuple<string, string>("會員登入", Url.Action("Login", "Member", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
+}
+
+<!-- Banner area end -->
+<section id="main-container" class="main-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="sidebar sidebar-right">
+                    <div class="widget">
+                        <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
+                        <ul class="arrow nav nav-tabs nav-stacked">
+                            <li class="active"><a href="#">會員登入</a></li>
+                        </ul>
+                    </div>
+                    <!-- Categories end -->
+                </div>
+                <!-- Sidebar end -->
+            </div>
+            <!-- Sidebar Col end -->
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <h2 class="page-title">會員登入</h2>
+                <hr class="botmargin-min">
+                <h3 class="title-normal">請輸入您的帳號及密碼</h3>
+                <!-- 內容開始 -->
+                @using (Html.BeginForm("Login", "MemberLogin", FormMethod.Post, new { @class = "form-horizontal comments-form", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Account, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(m => m.Account, new { @class = "form-control", placeholder = "請輸入帳號" })
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.ValidationMessageFor(m => m.Account, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-7">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "請輸入密碼" })
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button class="btn btn-primary solid blank" type="submit">登 入</button>
+                        </div>
+                    </div>
+                }
+
+                <hr>
+
+                <div class="text-left">
+                    @*<a href="#">忘記密碼</a> &nbsp;&nbsp;/&nbsp;&nbsp;*@
+                    <a href="#">尚未註冊</a>
+                </div>
+
+            </div>
+            <!-- Content Col end -->
+            <!-- 內容結束 -->
+        </div>
+        <!-- Main row end -->
+    </div>
+    <!-- Conatiner end -->
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+
+            // 專門處理錯誤圖示邏輯
+            function updateValidationIcons() {
+                $('span.field-validation-error').each(function () {
+                    if (!$(this).find('i.fa-exclamation-circle').length) {
+                        $(this).prepend('<i class="fa fa-exclamation-circle text-danger me-1"></i>');
+                    }
+                });
+                $('span.field-validation-valid i.fa-exclamation-circle').remove();
+            }
+
+            // 初始載入檢查一次（避免第一次送出後不更新）
+            updateValidationIcons();
+
+            // 綁定輸入事件（keyup/change/blur 都觸發）
+            $('form').on('keyup change blur', 'input, textarea, select', function () {
+                updateValidationIcons();
+            });
+
+            // 綁定 jQuery Validate 的全域事件
+            $('form').on('invalid-form.validate', function () {
+                updateValidationIcons();
+            });
+
+            $('form').on('submit', function () {
+                setTimeout(updateValidationIcons, 100); // 延遲讓驗證更新完再加 icon
+            });
+        });
+    </script>
+
+    @* 通知訊息 *@
+    <script>
+$(function() {
+    var message = @Html.Raw(Json.Encode(TempData["ToastMessage"]));
+    var type = @Html.Raw(Json.Encode(TempData["ToastType"])); // "success" / "danger"
+
+    if(message) {
+        var $toast = $('#toastMessage');
+        var $toastBody = $('#toastBody');
+
+        // 設定顏色
+        $toast.removeClass('alert-success alert-danger');
+        if(type === "success") {
+            $toast.addClass('alert-success');
+        } else {
+            $toast.addClass('alert-danger');
+        }
+
+        $toastBody.text(message);
+
+        // 顯示並自動隱藏
+        $toast.fadeIn(300).delay(3000).fadeOut(500);
+    }
+});
+    </script>
+}

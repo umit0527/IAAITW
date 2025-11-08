@@ -11,12 +11,14 @@ namespace IAAITW.Models
         [Key] // 主鍵
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="帳號必填")]
         [StringLength(50)]
+        [Display(Name ="帳  號")]
         public string Account { get; set; } // 帳號
 
-        [Required]
+        [Required(ErrorMessage = "密碼必填")]
         [StringLength(255)]
+        [Display(Name ="密  碼")]
         public string Password { get; set; } // 密碼 (建議存 Hash)
 
         [Required]

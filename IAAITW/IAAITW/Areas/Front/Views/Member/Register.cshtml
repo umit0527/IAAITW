@@ -4,6 +4,13 @@
 
 @{
     ViewBag.Title = "會員註冊";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("會員專區",null),
+        new Tuple<string, string>("會員註冊", Url.Action("Register", "Member", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
 }
 
 <section id="main-container" class="main-container">
@@ -27,7 +34,7 @@
                 <hr class="botmargin-min">
                 <!-- 內容開始 -->
 
-                @using (Html.BeginForm("Create", "MemberRegister", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Register", "MemberRegister", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -325,8 +332,10 @@
     <!-- Conatiner end -->
 </section>
 <!-- Main container end -->
+
 @*驗證碼*@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 

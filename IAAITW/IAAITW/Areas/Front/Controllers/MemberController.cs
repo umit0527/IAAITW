@@ -13,42 +13,67 @@ using System.Web.Mvc;
 
 namespace IAAITW.Areas.Front.Controllers
 {
-    public class MemberRegisterController : Controller
+    public class MemberController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
 
-        // GET: Front/MemberRegister
+        // GET: Front/Member
+        [HttpGet]
         public ActionResult Index()
         {
-            var model = new MemberRegisterViewModel
-            {
-                ServiceExperiences = new List<ServiceExpViewModel>
-        {
-            new ServiceExpViewModel(),
-            new ServiceExpViewModel(),
-            new ServiceExpViewModel()
+
+            return View();
         }
-            };
+
+        // POST: Front/Member
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(MemberAccount model) 
+        {
+            return View();
+        }
+
+        // GET: Front/Member
+        [HttpGet]
+        public ActionResult Login()
+        {
+            
+            return View();
+        }
+
+        // POST: Front/Member
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(MemberAccount model)
+        {
+            if (ModelState.IsValid)
+            {
+                // 驗證帳號密碼
+                var user = db.MemberAccounts.FirstOrDefault(
+                             m => m.Account == model.Account && 
+                             m.Password == model.Password);
+
+                if (user != null)
+                {
+                    // 登入成功，設定 Session 
+                    Session["Member"] = user;
+
+                    // 跳轉到會員首頁或指定頁
+                    return RedirectToAction("Index", "Member");
+                }
+                else
+                {
+                    // 帳號或密碼錯誤
+                    ModelState.AddModelError("", "帳號或密碼錯誤");
+                }
+            }
+
+            // 驗證失敗或登入失敗，回傳原頁面
             return View(model);
         }
 
-        // GET: Front/MemberRegister/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MemberAccount memberAccount = db.MemberAccounts.Find(id);
-            if (memberAccount == null)
-            {
-                return HttpNotFound();
-            }
-            return View(memberAccount);
-        }
-
-        // GET: Front/MemberRegister/Create
-        public ActionResult Create()
+        // GET: Front/Member/Register
+        public ActionResult Register()
         {
             var model = new MemberRegisterViewModel
             {
@@ -62,12 +87,12 @@ namespace IAAITW.Areas.Front.Controllers
             return View(model);
         }
 
-        // POST: Front/MemberRegister/Create
+        // POST: Front/Member/Register
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MemberRegisterViewModel model)
+        public ActionResult Register(MemberRegisterViewModel model)
         {
             IRecaptcha<RecaptchaV2Result> recaptcha = new RecaptchaV2(new RecaptchaV2Data()
             {
