@@ -10,31 +10,31 @@ using IAAITW.Models;
 
 namespace IAAITW.Areas.Front.Controllers
 {
-    public class ArticleController : Controller
+    public class JobController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
 
-        // GET: Front/Article/Job
+        // GET: Front/Job/Job
         public ActionResult Job()
         {
             var jobs = db.Jobs.Include(j => j.Admin).Include(j => j.UpdatedAdmin);
             return View(jobs.ToList());
         }
 
-        // GET: Front/Article/Lisences
+        // GET: Front/Job/Lisences
         public ActionResult Lisences()
         {
             return View();
         }
 
-        // GET: Front/Article/Refers
+        // GET: Front/Job/Refers
         public ActionResult Refer()
         {
             var refers = db.Refers.Include(j => j.Admin).Include(j => j.UpdatedAdmin);
             return View(refers.ToList());
         }
 
-        // GET: Front/Article/Survey
+        // GET: Front/Job/Survey
         public ActionResult Survey()
         {
             var surveys = db.Surveys.Include(j => j.Admin).Include(j => j.UpdatedAdmin);
