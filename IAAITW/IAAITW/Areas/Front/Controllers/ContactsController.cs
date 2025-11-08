@@ -33,7 +33,7 @@ namespace IAAITW.Areas.Front.Controllers
         {
             IRecaptcha<RecaptchaV2Result> recaptcha = new RecaptchaV2(new RecaptchaV2Data()
             {
-                Secret = "6LevbPArAAAAAAohr_aWHrvgyvtJKZiY7FqZz2S5"
+                Secret = ConfigurationManager.AppSettings["RecaptchaSecret"]
             });
 
             var result = recaptcha.Verify();
@@ -41,6 +41,7 @@ namespace IAAITW.Areas.Front.Controllers
             if (!result.Success)
             {
                 ModelState.AddModelError("ReCaptcha", "請勾選「我不是機器人」");
+                return View(contact);
             }
 
             if (ModelState.IsValid)

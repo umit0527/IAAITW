@@ -86,7 +86,6 @@ namespace IAAITW.Areas.Back.Controllers
                     AdminId = model.AdminId,
                     UploadDate = model.UploadDate,
                     UpdatedDate = model.UpdatedDate,
-
                 };
 
                 // 檔案上傳

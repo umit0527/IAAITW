@@ -18,6 +18,9 @@ namespace IAAITW.Models
         public virtual DbSet<Job> Jobs { get; set; }
         public virtual DbSet<Refer> Refers { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
+        public virtual DbSet<MemberAccount> MemberAccounts { get; set; }
+        public virtual DbSet<MemberInfo> MemberInfoes { get; set; }
+        public virtual DbSet<MemberServiceExp> MemberServiceExps { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
