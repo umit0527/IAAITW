@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IAAITW.Models.Refer>
+﻿@*@model IEnumerable<IAAITW.Models.Job>*@
 
 @{
     ViewBag.Title = "協會業務";
@@ -6,7 +6,7 @@
 {
      // Tuple<顯示文字, 連結URL>
         new Tuple<string, string>("協會業務",null),
-        new Tuple<string, string>("諮詢、顧問", Url.Action("Index", "Jobs", new { area = "Front" }))
+        new Tuple<string, string>("訓練、認證、發照", Url.Action("Lisences", "Article", new { area = "Front" }))
     };
     // --- 麵包屑設定結束 ---
 }
@@ -21,8 +21,8 @@
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>協會業務</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
                             <li ><a href="#">協會業務</a></li>
-                            <li><a href="#">訓練、認證、發照</a></li>
-                            <li class="active"><a href="#">諮詢、顧問</a></li>
+                            <li class="active"><a href="#">訓練、認證、發照</a></li>
+                            <li><a href="#">諮詢、顧問</a></li>
                             <li><a href="#">縱火調查</a></li>
                         </ul>
                     </div>
@@ -32,11 +32,11 @@
             </div>
             <!-- Sidebar Col end -->
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                <h2 class="page-title">諮詢、顧問</h2>
+                <h2 class="page-title">訓練、認證、發照</h2>
                 <hr class="botmargin-min">
                 <!-- 內容開始 -->
                 <div>
-                    @Html.Raw(Model.FirstOrDefault()?.Content ?? "<p>目前尚無相關資料。</p>")
+                    <p>目前不開放此業務</p>
                 </div>
 
 

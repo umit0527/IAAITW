@@ -177,10 +177,9 @@
     <Compile Include="Areas\Back\Controllers\ViewHelper.cs" />
     <Compile Include="Areas\Front\Controllers\CalendarsController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
-    <Compile Include="Areas\Front\Controllers\JobsController.cs" />
+    <Compile Include="Areas\Front\Controllers\ArticleController.cs" />
     <Compile Include="Areas\Front\Controllers\KnowledgesController.cs" />
-    <Compile Include="Areas\Front\Controllers\LisencesController.cs" />
-    <Compile Include="Areas\Front\Controllers\RefersController.cs" />
+    <Compile Include="Areas\Front\Controllers\MemberController.cs" />
     <Compile Include="Areas\Front\Controllers\SurveysController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -236,6 +235,18 @@
     <Compile Include="Migrations\202511060811136_add survey table.Designer.cs">
       <DependentUpon>202511060811136_add survey table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511060949418_add member tables.cs" />
+    <Compile Include="Migrations\202511060949418_add member tables.Designer.cs">
+      <DependentUpon>202511060949418_add member tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511070725242_rename table.cs" />
+    <Compile Include="Migrations\202511070725242_rename table.Designer.cs">
+      <DependentUpon>202511070725242_rename table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511080751183_add totalyear&amp;month feild.cs" />
+    <Compile Include="Migrations\202511080751183_add totalyear&amp;month feild.Designer.cs">
+      <DependentUpon>202511080751183_add totalyear&amp;month feild.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Contact.cs" />
@@ -243,6 +254,10 @@
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Knowledge.cs" />
     <Compile Include="Models\KnowledgeViewModel.cs" />
+    <Compile Include="Models\MemberAccount.cs" />
+    <Compile Include="Models\MemberInfo.cs" />
+    <Compile Include="Models\MemberRegisterViewModel.cs" />
+    <Compile Include="Models\MemberServiceExp.cs" />
     <Compile Include="Models\Refer.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -313,21 +328,28 @@
     <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Scripts\ckeditor\SECURITY.md" />
     <Content Include="Scripts\ckeditor\skins\moono-lisa\readme.md" />
-    <Content Include="Areas\Front\Views\Jobs\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Article\Job.cshtml" />
     <Content Include="Areas\Back\Views\Lisences\Index.cshtml" />
-    <Content Include="Areas\Front\Views\Lisences\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Article\Lisences.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Create.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Details.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Index.cshtml" />
-    <Content Include="Areas\Front\Views\Refers\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Article\Refer.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Create.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Details.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Index.cshtml" />
-    <Content Include="Areas\Front\Views\Surveys\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Article\Survey.cshtml" />
+    <Content Include="Areas\Front\Views\Member\Register.cshtml" />
+    <Content Include="Areas\Front\Views\Member\Delete.cshtml" />
+    <Content Include="Areas\Front\Views\Member\Details.cshtml" />
+    <Content Include="Areas\Front\Views\Member\Edit.cshtml" />
+    <Content Include="Areas\Front\Views\Member\Login.cshtml" />
+    <Content Include="key.config" />
+    <Content Include="Areas\Front\Views\Member\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -733,6 +755,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511060811136_add survey table.resx">
       <DependentUpon>202511060811136_add survey table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511060949418_add member tables.resx">
+      <DependentUpon>202511060949418_add member tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511070725242_rename table.resx">
+      <DependentUpon>202511070725242_rename table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511080751183_add totalyear&amp;month feild.resx">
+      <DependentUpon>202511080751183_add totalyear&amp;month feild.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

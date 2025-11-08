@@ -417,5 +417,5 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# 保密檔案
+# 保護敏感資料
 key.config

@@ -1,0 +1,401 @@
+﻿@model IAAITW.Models.MemberRegisterViewModel
+@using System.ComponentModel.DataAnnotations
+@using GoogleRecaptchaMvc
+
+@{
+    ViewBag.Title = "會員註冊";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("會員專區",null),
+        new Tuple<string, string>("會員註冊", Url.Action("Register", "Member", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
+}
+
+<section id="main-container" class="main-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="sidebar sidebar-right">
+                    <div class="widget">
+                        <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
+                        <ul class="arrow nav nav-tabs nav-stacked">
+                            <li class="active"><a href="#">會員註冊</a></li>
+                        </ul>
+                    </div>
+                    <!-- Categories end -->
+                </div>
+                <!-- Sidebar end -->
+            </div>
+            <!-- Sidebar Col end -->
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <h2 class="page-title">會員註冊</h2>
+                <hr class="botmargin-min">
+                <!-- 內容開始 -->
+
+                @using (Html.BeginForm("Register", "MemberRegister", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.Account, "帳  號：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.Account, new { @class = "form-control", placeholder = "請輸入帳號" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.Account, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.Password, "密  碼：")
+                            </div>
+                            <div class="col-sm-7 ">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "請輸入密碼" })
+                            </div>
+                            <div class="col-sm-3 ">
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.ConfirmPassword, "確認密碼：")
+                            </div>
+                            <div class="col-sm-7 ">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "請輸入確認密碼" })
+                            </div>
+                            <div class="col-sm-3 ">
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.Name, "姓  名：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "請輸入姓名" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.Gender, "性  別：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.EnumDropDownListFor(m => m.Gender, "請選擇性別", new { @class = "form-control" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.BirthDate, "生  日：")
+                            </div>
+                            <div class="col-sm-7 ">
+                                @Html.TextBoxFor(m => m.BirthDate, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control", style = "max-width:50%", placeholder = "請輸入生日" })
+                            </div>
+                            <div class="col-sm-3 ">
+                                @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                <label>申請類別：</label><br />
+                            </div>
+                            @foreach (var value in Enum.GetValues(typeof(IAAITW.Models.MembershipType)).Cast<IAAITW.Models.MembershipType>())
+                            {
+                                var displayName = value.GetType()  // 找到型別，才能用反射去查 model 的資訊，因為反射操作是對 型別 做的
+                                    .GetMember(value.ToString())  // 找到 enum 的成員資訊
+                                    .First()
+                                    .GetCustomAttributes(typeof(DisplayAttribute), false)  // 抓出 [Display(Name="...")]
+                                    .Cast<DisplayAttribute>()  //投射
+                                    .FirstOrDefault()?.Name ?? value.ToString();  // 若沒設定 Display，則顯示英文名稱
+
+                                <label class="radio-inline">
+                                    @Html.RadioButtonFor(m => m.MembershipType, value, new { @class = "radiostyle01" ,}) @displayName
+                                </label>
+                            }
+                            @Html.ValidationMessageFor(m => m.MembershipType, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.Phone, "連絡電話(公)：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "請輸入連絡電話(公)" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.Mobile, "手  機：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "請輸入手機" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.Mobile, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.Address, "通訊處：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "請輸入通訊處" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.Email, "E-mail：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "請輸入E-mail" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.InternationalMember, "國際會籍：")
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="" style="display:flex">
+                                    @Html.CheckBoxFor(m => m.InternationalMember, new { @class = "radiostyle01" })
+                                    <p style="margin-bottom:0px">為國際縱火調查學會之當年度有效會員，請檢附會員證影本</p>
+                                </div>
+                                @Html.TextBoxFor(m => m.InternationalFile, new { @class = "", type = "file" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.CurrentCompany, "現職單位：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.CurrentCompany, new { @class = "form-control", placeholder = "請輸入現職單位" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.CurrentCompany, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.CurrentJobTitle, "職　稱：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.CurrentJobTitle, new { @class = "form-control", placeholder = "請輸入職稱" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.CurrentJobTitle, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">
+                                @Html.LabelFor(m => m.HighestEducation, "最高學歷：")
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(m => m.HighestEducation, new { @class = "form-control", placeholder = "請輸入最高學歷" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(m => m.HighestEducation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="boxg">
+                            <h4 class="col-sm-2"><i class="fa fa-briefcase"></i> 服務經歷</h4>
+
+                            <div>
+                                @for (int i = 0; i < 3; i++)
+                                {
+                                    <div class="card mb-3 p-3 border">
+                                        <div class="form-group">
+                                            <div class="col-sm-2 control-label">
+                                                @Html.LabelFor(m => m.ServiceExperiences[i].Company, "服務單位：")
+                                            </div>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(m => m.ServiceExperiences[i].Company, new { @class = "form-control", placeholder = "請輸入服務單位" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-2 control-label">
+                                                @Html.LabelFor(m => m.ServiceExperiences[i].ExperienceJobTitle, "職　稱：")
+                                            </div>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(m => m.ServiceExperiences[i].ExperienceJobTitle, new { @class = "form-control", placeholder = "請輸入職稱" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col">
+                                                <div class="col-sm-2 control-label">
+                                                    @Html.Label("起：")
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    @Html.TextBoxFor(m => m.ServiceExperiences[i].StartYear, new { @class = "form-control", placeholder = "年" })
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="col-sm-2">
+                                                    @Html.TextBoxFor(m => m.ServiceExperiences[i].StartMonth, new { @class = "form-control", placeholder = "月" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col">
+                                                <div class="col-sm-2 control-label">
+                                                    @Html.Label("迄：")
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    @Html.TextBoxFor(m => m.ServiceExperiences[i].EndYear, new { @class = "form-control", placeholder = "年" })
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="col-sm-2">
+                                                    @Html.TextBoxFor(m => m.ServiceExperiences[i].EndMonth, new { @class = "form-control", placeholder = "月" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row" style="margin-left:0px">
+                                <div class="col-sm-2 control-label">
+                                    @Html.LabelFor(m => m.TotalYears, "相關年資合計：")
+                                </div>
+
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(m => m.TotalYears, new { @class = "form-control", placeholder = "合計年資(年)" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(m => m.TotalMonths, new { @class = "form-control", placeholder = "合計年資(月)" })
+                                </div>
+                            </div>
+                            <div class="row" style="margin-left:0px">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(m => m.TotalYears, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(m => m.TotalMonths, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        @* 驗證碼 *@
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">驗證碼：</label>
+                            <div class="col-sm-5">
+                                @Html.RecaptchaV2("6LevbPArAAAAAFy0-tvdGQ0kcxmiCnQjKSBS36EF")
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.ValidationMessage("ReCaptcha", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">送出</button>
+                    </div>
+                }
+
+
+            </div>
+            <!-- Content Col end -->
+            <!-- 內容結束 -->
+        </div>
+        <!-- Main row end -->
+    </div>
+    <!-- Conatiner end -->
+</section>
+<!-- Main container end -->
+
+@*驗證碼*@
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+
+            // 專門處理錯誤圖示邏輯
+            function updateValidationIcons() {
+                $('span.field-validation-error').each(function () {
+                    if (!$(this).find('i.fa-exclamation-circle').length) {
+                        $(this).prepend('<i class="fa fa-exclamation-circle text-danger me-1"></i>');
+                    }
+                });
+                $('span.field-validation-valid i.fa-exclamation-circle').remove();
+            }
+
+            // 初始載入檢查一次（避免第一次送出後不更新）
+            updateValidationIcons();
+
+            // 綁定輸入事件（keyup/change/blur 都觸發）
+            $('form').on('keyup change blur', 'input, textarea, select', function () {
+                updateValidationIcons();
+            });
+
+            // 綁定 jQuery Validate 的全域事件
+            $('form').on('invalid-form.validate', function () {
+                updateValidationIcons();
+            });
+
+            $('form').on('submit', function () {
+                setTimeout(updateValidationIcons, 100); // 延遲讓驗證更新完再加 icon
+            });
+        });
+    </script>
+
+    @* 通知訊息 *@
+    <script>
+$(function() {
+    var message = @Html.Raw(Json.Encode(TempData["ToastMessage"]));
+    var type = @Html.Raw(Json.Encode(TempData["ToastType"])); // "success" / "danger"
+
+    if(message) {
+        var $toast = $('#toastMessage');
+        var $toastBody = $('#toastBody');
+
+        // 設定顏色
+        $toast.removeClass('alert-success alert-danger');
+        if(type === "success") {
+            $toast.addClass('alert-success');
+        } else {
+            $toast.addClass('alert-danger');
+        }
+
+        $toastBody.text(message);
+
+        // 顯示並自動隱藏
+        $toast.fadeIn(300).delay(3000).fadeOut(500);
+    }
+});
+    </script>
+}
+
+
