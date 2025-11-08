@@ -40,7 +40,7 @@
                                 @Html.TextBoxFor(m => m.Account, new { @class = "form-control", placeholder = "請輸入帳號" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.Account)
+                                @Html.ValidationMessageFor(m => m.Account, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -52,7 +52,7 @@
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "請輸入密碼" })
                             </div>
                             <div class="col-sm-3 ">
-                                @Html.ValidationMessageFor(m => m.Password)
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -64,7 +64,7 @@
                                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "請輸入確認密碼" })
                             </div>
                             <div class="col-sm-3 ">
-                                @Html.ValidationMessageFor(m => m.Password)
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -76,7 +76,7 @@
                                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "請輸入姓名" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.Name)
+                                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -88,7 +88,7 @@
                                 @Html.EnumDropDownListFor(m => m.Gender, "請選擇性別", new { @class = "form-control" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.Gender)
+                                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -100,7 +100,7 @@
                                 @Html.TextBoxFor(m => m.BirthDate, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control", style = "max-width:50%", placeholder = "請輸入生日" })
                             </div>
                             <div class="col-sm-3 ">
-                                @Html.ValidationMessageFor(m => m.BirthDate)
+                                @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -118,10 +118,10 @@
                                     .FirstOrDefault()?.Name ?? value.ToString();  // 若沒設定 Display，則顯示英文名稱
 
                                 <label class="radio-inline">
-                                    @Html.RadioButtonFor(m => m.MembershipType, value, new { @class = "radiostyle01" }) @displayName
+                                    @Html.RadioButtonFor(m => m.MembershipType, value, new { @class = "radiostyle01" ,}) @displayName
                                 </label>
                             }
-                            @Html.ValidationMessageFor(m => m.MembershipType)
+                            @Html.ValidationMessageFor(m => m.MembershipType, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
@@ -132,7 +132,7 @@
                                 @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "請輸入連絡電話(公)" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.Phone)
+                                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -144,7 +144,7 @@
                                 @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "請輸入手機" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.Mobile)
+                                @Html.ValidationMessageFor(m => m.Mobile, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -156,7 +156,7 @@
                                 @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "請輸入通訊處" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.Address)
+                                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -168,7 +168,7 @@
                                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "請輸入E-mail" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.Email)
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -193,7 +193,7 @@
                                 @Html.TextBoxFor(m => m.CurrentCompany, new { @class = "form-control", placeholder = "請輸入現職單位" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.CurrentCompany)
+                                @Html.ValidationMessageFor(m => m.CurrentCompany, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
@@ -204,7 +204,7 @@
                                 @Html.TextBoxFor(m => m.CurrentJobTitle, new { @class = "form-control", placeholder = "請輸入職稱" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.CurrentJobTitle)
+                                @Html.ValidationMessageFor(m => m.CurrentJobTitle, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
@@ -215,7 +215,7 @@
                                 @Html.TextBoxFor(m => m.HighestEducation, new { @class = "form-control", placeholder = "請輸入最高學歷" })
                             </div>
                             <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.HighestEducation)
+                                @Html.ValidationMessageFor(m => m.HighestEducation, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="boxg">
@@ -277,21 +277,26 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-sm-2 control-label">
-                                @Html.LabelFor(m => m.TotalYears, "相關年資合計：")
-                            </div>
-                            <div class="col-sm-2">
-                                @Html.TextBoxFor(m => m.TotalYears, new { @class = "form-control", placeholder = "合計年資(年)" })
-                            </div>
+                            <div class="row" style="margin-left:0px">
+                                <div class="col-sm-2 control-label">
+                                    @Html.LabelFor(m => m.TotalYears, "相關年資合計：")
+                                </div>
 
-                            <div class="col-sm-2">
-                                @Html.TextBoxFor(m => m.TotalMonths, new { @class = "form-control", placeholder = "合計年資(月)" })
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(m => m.TotalYears, new { @class = "form-control", placeholder = "合計年資(年)" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(m => m.TotalMonths, new { @class = "form-control", placeholder = "合計年資(月)" })
+                                </div>
                             </div>
-                            <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.TotalYears)
-                            </div>
-                            <div class="col-sm-3">
-                                @Html.ValidationMessageFor(m => m.TotalMonths)
+                            <div class="row" style="margin-left:0px">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(m => m.TotalYears, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ValidationMessageFor(m => m.TotalMonths, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
 
@@ -320,6 +325,68 @@
     <!-- Conatiner end -->
 </section>
 <!-- Main container end -->
-
 @*驗證碼*@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+
+            // 專門處理錯誤圖示邏輯
+            function updateValidationIcons() {
+                $('span.field-validation-error').each(function () {
+                    if (!$(this).find('i.fa-exclamation-circle').length) {
+                        $(this).prepend('<i class="fa fa-exclamation-circle text-danger me-1"></i>');
+                    }
+                });
+                $('span.field-validation-valid i.fa-exclamation-circle').remove();
+            }
+
+            // 初始載入檢查一次（避免第一次送出後不更新）
+            updateValidationIcons();
+
+            // 綁定輸入事件（keyup/change/blur 都觸發）
+            $('form').on('keyup change blur', 'input, textarea, select', function () {
+                updateValidationIcons();
+            });
+
+            // 綁定 jQuery Validate 的全域事件
+            $('form').on('invalid-form.validate', function () {
+                updateValidationIcons();
+            });
+
+            $('form').on('submit', function () {
+                setTimeout(updateValidationIcons, 100); // 延遲讓驗證更新完再加 icon
+            });
+        });
+    </script>
+
+    @* 通知訊息 *@
+    <script>
+$(function() {
+    var message = @Html.Raw(Json.Encode(TempData["ToastMessage"]));
+    var type = @Html.Raw(Json.Encode(TempData["ToastType"])); // "success" / "danger"
+
+    if(message) {
+        var $toast = $('#toastMessage');
+        var $toastBody = $('#toastBody');
+
+        // 設定顏色
+        $toast.removeClass('alert-success alert-danger');
+        if(type === "success") {
+            $toast.addClass('alert-success');
+        } else {
+            $toast.addClass('alert-danger');
+        }
+
+        $toastBody.text(message);
+
+        // 顯示並自動隱藏
+        $toast.fadeIn(300).delay(3000).fadeOut(500);
+    }
+});
+    </script>
+}
+
+

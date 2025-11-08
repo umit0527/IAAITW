@@ -98,7 +98,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Content, "詢問內容：", htmlAttributes: new { @class = "control-label col-sm-2" })
                             <div class="col-sm-10">
-                                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", cols = "80", rows = "10", placeholder = "請輸入詢問內容" })
+                                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", rows = "10", placeholder = "請輸入詢問內容" ,style="max-width:701.25px"})
                             </div>
                         </div>
 
@@ -190,5 +190,4 @@ $(function() {
     }
 });
     </script>
-
 }

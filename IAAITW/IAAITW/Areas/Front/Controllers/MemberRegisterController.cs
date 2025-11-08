@@ -98,7 +98,7 @@ namespace IAAITW.Areas.Front.Controllers
                 MemberInfo memberInfo = new MemberInfo
                 {
                     Name = model.Name,
-                    Gender= model.Gender,
+                    Gender= model.Gender.Value,
                     BirthDate = model.BirthDate,
                     MembershipType= model.MembershipType,
                     Phone = model.Phone,

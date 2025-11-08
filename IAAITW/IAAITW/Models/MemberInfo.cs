@@ -7,6 +7,30 @@ using System.Web;
 
 namespace IAAITW.Models
 {
+    // 性別 Enum
+    public enum Gender
+    {
+        [Display(Name = "男性")]
+        Male = 1,
+        [Display(Name = "女性")]
+        Female = 2,
+        [Display(Name = "其他")]
+        Other = 3
+    }
+
+    // 會員申請類別 Enum
+    public enum MembershipType
+    {
+        [Display(Name = "正式會員")]
+        Regular = 1,       // 正式會員
+        [Display(Name = "準會員")]
+        Probationary = 2,  // 準會員
+        [Display(Name = "個人贊助會員")]
+        IndividualSponsor = 3, // 個人贊助會員
+        [Display(Name = "學生會員")]
+        Student = 4        // 學生會員
+    }
+
     public class MemberInfo
     {
         [Key]
@@ -65,29 +89,5 @@ namespace IAAITW.Models
         [ForeignKey("MemberId")]
         public virtual MemberAccount MemberAccounts { get; set; }
 
-    }
-
-    // 性別 Enum
-    public enum Gender
-    {
-        [Display(Name ="男性")]
-        Male = 1,
-        [Display(Name ="女性")]
-        Female = 2,
-        [Display(Name ="其他")]
-        Other = 3
-    }
-
-    // 會員申請類別 Enum
-    public enum MembershipType
-    {
-        [Display(Name = "正式會員")]
-        Regular = 1,       // 正式會員
-        [Display(Name = "準會員")]
-        Probationary = 2,  // 準會員
-        [Display(Name = "個人贊助會員")]
-        IndividualSponsor = 3, // 個人贊助會員
-        [Display(Name = "學生會員")]
-        Student = 4        // 學生會員
     }
 }
