@@ -105,11 +105,15 @@ namespace IAAITW.Areas.Back.Controllers
                     {
                         // 儲存檔案
                         model.FileUpload.SaveAs(path);
+                        // 設定成功訊息與跳轉網址
+                        TempData["SuccessMessage"] = "新增成功！";
+                        ViewBag.RedirectUrl = Url.Action("Index");
                     }
                     catch (Exception ex)
                     {
                         ModelState.AddModelError("", "檔案上傳失敗: " + ex.Message);
                         ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
+                        TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
                         return View(model);
                     }
                     // 存到資料庫
@@ -117,12 +121,13 @@ namespace IAAITW.Areas.Back.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "未收到檔案或檔案為空");
+                    TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
+                    //ModelState.AddModelError("", "未收到檔案或檔案為空");
                 }
 
                 db.Knowledges.Add(knowledge);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(model);
             }
 
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
@@ -215,14 +220,22 @@ namespace IAAITW.Areas.Back.Controllers
 
                     db.Entry(existingKnowledge).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+
+                    // 設定成功訊息與跳轉網址
+                    TempData["SuccessMessage"] = "編輯成功！";
+                    ViewBag.RedirectUrl = Url.Action("Index");
+                    return View(model);
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", "更新失敗: " + ex.Message);
                 }
             }
-
+            else
+            {
+                TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
+            }
+                
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
             return View(model);
         }

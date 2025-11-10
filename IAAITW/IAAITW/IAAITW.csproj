@@ -167,6 +167,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Back\BackAreaRegistration.cs" />
+    <Compile Include="Areas\Back\Controllers\AboutsController.cs" />
     <Compile Include="Areas\Back\Controllers\CalendarsController.cs" />
     <Compile Include="Areas\Back\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Back\Controllers\JobsController.cs" />
@@ -246,7 +247,12 @@
     <Compile Include="Migrations\202511080751183_add totalyear&amp;month feild.Designer.cs">
       <DependentUpon>202511080751183_add totalyear&amp;month feild.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511100402402_add about table.cs" />
+    <Compile Include="Migrations\202511100402402_add about table.Designer.cs">
+      <DependentUpon>202511100402402_add about table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DBMdoelContext.cs" />
@@ -349,6 +355,11 @@
     <Content Include="Areas\Front\Views\Member\Login.cshtml" />
     <Content Include="key.config" />
     <Content Include="Areas\Front\Views\Member\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Abouts\Create.cshtml" />
+    <Content Include="Areas\Back\Views\Abouts\Delete.cshtml" />
+    <Content Include="Areas\Back\Views\Abouts\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Abouts\Edit.cshtml" />
+    <Content Include="Areas\Back\Views\Abouts\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -763,6 +774,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511080751183_add totalyear&amp;month feild.resx">
       <DependentUpon>202511080751183_add totalyear&amp;month feild.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511100402402_add about table.resx">
+      <DependentUpon>202511100402402_add about table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -21,6 +21,7 @@ namespace IAAITW.Models
         public virtual DbSet<MemberAccount> MemberAccounts { get; set; }
         public virtual DbSet<MemberInfo> MemberInfoes { get; set; }
         public virtual DbSet<MemberServiceExp> MemberServiceExps { get; set; }
+        public virtual DbSet<About> Abouts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

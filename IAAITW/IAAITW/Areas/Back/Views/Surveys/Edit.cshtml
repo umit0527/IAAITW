@@ -50,6 +50,27 @@
             } else {
                 console.error('CKEditor is not loaded!');
             }
+
+            // 顯示成功訊息並跳轉
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                    setTimeout(function () {
+                        alert("@TempData["SuccessMessage"]");
+                        setTimeout(function () {
+                            window.location.href = "@ViewBag.RedirectUrl";
+                        }, 800); // 再延遲 0.8 秒跳轉
+                    }, 500); // 先等 CKEditor 載完 0.5 秒
+                </text>
+            }
+
+            // 顯示錯誤訊息
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    alert("@TempData["ErrorMessage"]");
+                </text>
+            }
         });
     </script>
 }

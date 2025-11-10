@@ -63,12 +63,21 @@ namespace IAAITW.Areas.Back.Controllers
             {
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
-                sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
+                sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 refer.Content = sanitizer.Sanitize(refer.Content);
 
                 db.Refers.Add(refer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                // 設定成功訊息與跳轉網址
+                TempData["SuccessMessage"] = "新增成功！";
+                ViewBag.RedirectUrl = Url.Action("Index");
+
+                return View(refer);
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
             }
 
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", refer.AdminId);
@@ -115,8 +124,18 @@ namespace IAAITW.Areas.Back.Controllers
 
                 db.Entry(existingRefer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details");
+
+                // 設定成功訊息與跳轉網址
+                TempData["SuccessMessage"] = "編輯成功！";
+                ViewBag.RedirectUrl = Url.Action("Index");
+
+                return View(refer);
             }
+            else
+            {
+                TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
+            }
+
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", refer.AdminId);
             return View(refer);
         }

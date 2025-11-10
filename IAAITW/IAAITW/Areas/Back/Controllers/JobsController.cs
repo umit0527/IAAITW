@@ -48,7 +48,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Jobs/Create
         public ActionResult Create()
         {
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
             return View();
         }
 
@@ -57,21 +56,31 @@ namespace IAAITW.Areas.Back.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( Job job)
+        public ActionResult Create(Job job)
         {
             if (ModelState.IsValid)
             {
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
-                sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
+                sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 job.Content = sanitizer.Sanitize(job.Content);
 
                 db.Jobs.Add(job);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                TempData["SuccessMessage"] = "新增成功！";
+
+                // 把要導向的 URL 給 View
+                ViewBag.RedirectUrl = Url.Action("Details", new { id = job.Id });
+
+                return View(job);
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
             }
 
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", job.AdminId);
+            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", job.AdminId);
             return View(job);
         }
 
@@ -87,7 +96,6 @@ namespace IAAITW.Areas.Back.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", job.AdminId);
             return View(job);
         }
 
@@ -109,15 +117,26 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 existingJob.Content = sanitizer.Sanitize(job.Content);
-                
+
                 // 設定最後更新時間
                 existingJob.UpdatedDate = DateTime.Now;
+                existingJob.UpdatedAdminId = job.UpdatedAdminId;
 
                 db.Entry(existingJob).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details");
+
+                // 設定成功訊息與跳轉網址
+                TempData["SuccessMessage"] = "編輯成功！";
+                // 把要導向的 URL 給 View
+                ViewBag.RedirectUrl = Url.Action("Details", new { id = job.Id });
+
+                return View(job);
             }
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", job.AdminId);
+            else
+            {
+                TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
+            }
+
             return View(job);
         }
 

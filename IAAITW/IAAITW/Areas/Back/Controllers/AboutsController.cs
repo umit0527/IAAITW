@@ -11,14 +11,14 @@ using System.Web.Mvc;
 
 namespace IAAITW.Areas.Back.Controllers
 {
-    public class SurveysController : Controller
+    public class AboutsController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
 
-        // GET: Back/Surveys
+        // GET: Back/Abouts/Index
         public ActionResult Index()
         {
-            var data = db.Surveys.FirstOrDefault();
+            var data = db.Abouts.FirstOrDefault();
 
             // 若沒有資料，導向 Details（會讓它顯示「Create New」）
             if (data == null)
@@ -29,10 +29,10 @@ namespace IAAITW.Areas.Back.Controllers
             return RedirectToAction("Details", new { id = data.Id });
         }
 
-        // GET: Back/Surveys/Details/5
+        // GET: Back/Abouts/Details/5
         public ActionResult Details(int? id)
         {
-            var data = db.Surveys.FirstOrDefault();
+            var data = db.Abouts.FirstOrDefault();
 
             if (data == null)
             {
@@ -45,115 +45,142 @@ namespace IAAITW.Areas.Back.Controllers
             return View(data);
         }
 
-        // GET: Back/Surveys/Create
+        // GET: Back/Abouts/Create
         public ActionResult Create()
         {
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
             return View();
         }
 
-        // POST: Back/Surveys/Create
+        // POST: Back/Abouts/Create
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Survey survey)
+        public ActionResult Create(About about)
         {
             if (ModelState.IsValid)
             {
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
-                survey.Content = sanitizer.Sanitize(survey.Content);
+                about.Content = sanitizer.Sanitize(about.Content);
 
-                db.Surveys.Add(survey);
+                db.Abouts.Add(about);
                 db.SaveChanges();
 
                 // 設定成功訊息與跳轉網址
                 TempData["SuccessMessage"] = "新增成功！";
+                // 把要導向的 URL 給 View
                 ViewBag.RedirectUrl = Url.Action("Index");
 
-                return View(survey);
+                return View(about);
             }
             else
             {
                 TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
             }
 
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", survey.AdminId);
-            return View(survey);
+            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", about.AdminId);
+            return View(about);
         }
 
-        // GET: Back/Surveys/Edit/5
+        // GET: Back/Abouts/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Survey survey = db.Surveys.Find(id);
-            if (survey == null)
+            About about = db.Abouts.Find(id);
+            if (about == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account", survey.UpdatedAdminId);
-            return View(survey);
+            
+            return View(about);
         }
 
-        // POST: Back/Surveys/Edit/5
+        // POST: Back/Abouts/Edit/5
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Survey survey)
+        public ActionResult Edit(About about)
         {
             if (ModelState.IsValid)
             {
-                var existingSurvey = db.Surveys.Find(survey.Id);
-                if (existingSurvey == null)
+                var existingAbout = db.Abouts.Find(about.Id);
+                if (existingAbout == null)
                 {
                     return HttpNotFound();
                 }
                 // 安全過濾 HTML 並更新內容
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
-                existingSurvey.Content = sanitizer.Sanitize(survey.Content);
+                existingAbout.Content = sanitizer.Sanitize(about.Content);
 
                 // 設定最後更新時間
-                existingSurvey.UpdatedDate = DateTime.Now;
+                existingAbout.UpdatedDate = DateTime.Now;
+                existingAbout.UpdatedAdminId=about.UpdatedAdminId;
 
-                db.Entry(existingSurvey).State = EntityState.Modified;
+                db.Entry(existingAbout).State = EntityState.Modified;
                 db.SaveChanges();
 
                 // 設定成功訊息與跳轉網址
                 TempData["SuccessMessage"] = "編輯成功！";
+                // 把要導向的 URL 給 View
                 ViewBag.RedirectUrl = Url.Action("Index");
 
-                return View(survey);
+                return View(about);
             }
             else
             {
                 TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
             }
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", survey.AdminId);
-            return View(survey);
+
+            return View(about);
         }
 
-        // POST: Back/Surveys/Delete/5
+        // GET: Back/Abouts/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            About about = db.Abouts.Find(id);
+            if (about == null)
+            {
+                return HttpNotFound();
+            }
+            return View(about);
+        }
+
+        // POST: Back/Abouts/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var survey = db.Surveys.Find(id);
-            if (survey == null)
+            var about = db.Abouts.Find(id);
+            if (about == null)
             {
                 return Json(new { success = false, message = "找不到資料" });
             }
 
-            db.Surveys.Remove(survey);
+            db.Abouts.Remove(about);
             db.SaveChanges();
 
             return Json(new { success = true });
-        }    
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
