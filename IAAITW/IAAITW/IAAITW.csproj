@@ -179,8 +179,10 @@
     <Compile Include="Areas\Back\Controllers\RefersController.cs" />
     <Compile Include="Areas\Back\Controllers\SurveysController.cs" />
     <Compile Include="Areas\Back\Controllers\ViewHelper.cs" />
+    <Compile Include="Areas\Front\Controllers\AboutController.cs" />
     <Compile Include="Areas\Front\Controllers\CalendarsController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
+    <Compile Include="Areas\Front\Controllers\DeclareController.cs" />
     <Compile Include="Areas\Front\Controllers\JobController.cs" />
     <Compile Include="Areas\Front\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Front\Controllers\MemberController.cs" />
@@ -307,11 +309,7 @@
     <Content Include="Areas\Front\Views\web.config" />
     <Content Include="Areas\Front\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Front\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Front\Views\Contacts\Create.cshtml" />
-    <Content Include="Areas\Front\Views\Contacts\Delete.cshtml" />
-    <Content Include="Areas\Front\Views\Contacts\Details.cshtml" />
-    <Content Include="Areas\Front\Views\Contacts\Edit.cshtml" />
-    <Content Include="Areas\Front\Views\Contacts\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Contacts\Contacts.cshtml" />
     <Content Include="Areas\Back\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Back\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Back\Views\Contacts\Index.cshtml" />
@@ -385,6 +383,12 @@
     <Content Include="Areas\Back\Views\Experts\Details.cshtml" />
     <Content Include="Areas\Back\Views\Experts\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Experts\Index.cshtml" />
+    <Content Include="Areas\Front\Views\About\About.cshtml" />
+    <Content Include="Areas\Front\Views\About\Organization.cshtml" />
+    <Content Include="Areas\Front\Views\About\History.cshtml" />
+    <Content Include="Areas\Front\Views\About\Member.cshtml" />
+    <Content Include="Areas\Front\Views\About\Expert.cshtml" />
+    <Content Include="Areas\Front\Views\Declare\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />

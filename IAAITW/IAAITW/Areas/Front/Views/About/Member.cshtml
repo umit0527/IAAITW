@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "配證會員";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("關於我們",null),
+        new Tuple<string, string>("配證會員", Url.Action("Member", "About", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
+}
+
+<section id="main-container" class="main-container">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+                <div class="sidebar sidebar-right">
+                    <div class="widget">
+                        <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>關於我們</h2>
+                        <ul class="arrow nav nav-tabs nav-stacked">
+                            <li><a href="#">關於我們</a></li>
+                            <li><a href="#">組織架構</a></li>
+                            <li><a href="#">沿革</a></li>
+                            <li class="active"><a href="#">配證會員</a></li>
+                            <li><a href="#">專家介紹</a></li>
+                        </ul>
+                    </div><!-- Categories end -->
+
+                </div><!-- Sidebar end -->
+            </div><!-- Sidebar Col end -->
+
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
+                <h2 class="page-title">國際會員</h2>
+                <hr class="botmargin-min">
+
+                <!-- 內容開始 -->
+
+
+                <table class="table table-striped career-table about-table">
+                    <p>暫無資料</p>
+                </table>
+                <!-- Content row 1 end -->
+                <!-- 內容結束 -->
+            </div><!-- Content Col end -->
+
+
+        </div><!-- Main row end -->
+
+    </div><!-- Conatiner end -->
+</section><!-- Main container end -->
