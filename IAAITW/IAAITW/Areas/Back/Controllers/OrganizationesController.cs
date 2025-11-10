@@ -11,14 +11,14 @@ using System.Web.Mvc;
 
 namespace IAAITW.Areas.Back.Controllers
 {
-    public class JobsController : Controller
+    public class OrganizationesController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
 
-        // GET: Back/Jobs
+        // GET: Back/Organizations
         public ActionResult Index()
         {
-            var data = db.Jobs.FirstOrDefault();
+            var data = db.Organizationes.FirstOrDefault();
 
             // 若沒有資料，導向 Details（會讓它顯示「Create New」）
             if (data == null)
@@ -29,10 +29,10 @@ namespace IAAITW.Areas.Back.Controllers
             return RedirectToAction("Details", new { id = data.Id });
         }
 
-        // GET: Back/Jobs/Details/5
+        // GET: Back/Organizations/Details/5
         public ActionResult Details(int? id)
         {
-            var data = db.Jobs.FirstOrDefault();
+            var data = db.Organizationes.FirstOrDefault();
 
             if (data == null)
             {
@@ -45,84 +45,88 @@ namespace IAAITW.Areas.Back.Controllers
             return View(data);
         }
 
-        // GET: Back/Jobs/Create
+        // GET: Back/Organizations/Create
         public ActionResult Create()
         {
+            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
+            //ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account");
             return View();
         }
 
-        // POST: Back/Jobs/Create
+        // POST: Back/Organizations/Create
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Job job)
+        public ActionResult Create(Organization organization)
         {
             if (ModelState.IsValid)
             {
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
-                job.Content = sanitizer.Sanitize(job.Content);
+                organization.Content = sanitizer.Sanitize(organization.Content);
 
-                db.Jobs.Add(job);
+                db.Organizationes.Add(organization);
                 db.SaveChanges();
 
                 TempData["SuccessMessage"] = "新增成功！";
 
                 // 把要導向的 URL 給 View
-                ViewBag.RedirectUrl = Url.Action("Index");
+                ViewBag.RedirectUrl = Url.Action("Details", new { id = organization.Id });
 
-                return View(job);
+                return View(organization);
             }
             else
             {
                 TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
             }
 
-            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", job.AdminId);
-            return View(job);
+            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", organization.AdminId);
+            return View(organization);
         }
 
-        // GET: Back/Jobs/Edit/5
+        // GET: Back/Organizations/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Job job = db.Jobs.Find(id);
-            if (job == null)
+            Organization organization = db.Organizationes.Find(id);
+            if (organization == null)
             {
                 return HttpNotFound();
             }
-            return View(job);
+            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", organization.AdminId);
+            //ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account", organization.UpdatedAdminId);
+            return View(organization);
         }
 
-        // POST: Back/Jobs/Edit/5
+        // POST: Back/Organizations/Edit/5
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Job job)
+        public ActionResult Edit(Organization organization)
         {
             if (ModelState.IsValid)
             {
-                var existingJob = db.Jobs.Find(job.Id);
-                if (existingJob == null)
+                var existingOrganization = db.Organizationes.Find(organization.Id);
+                if (existingOrganization == null)
                 {
                     return HttpNotFound();
                 }
                 // 安全過濾 HTML 並更新內容
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
-                existingJob.Content = sanitizer.Sanitize(job.Content);
+                existingOrganization.Content = sanitizer.Sanitize(organization.Content);
 
                 // 設定最後更新時間
-                existingJob.UpdatedDate = DateTime.Now;
-                existingJob.UpdatedAdminId = job.UpdatedAdminId;
+                existingOrganization.UpdatedDate = DateTime.Now;
+                existingOrganization.UpdatedAdminId = organization.UpdatedAdminId;
 
-                db.Entry(existingJob).State = EntityState.Modified;
+                db.Entry(existingOrganization).State = EntityState.Modified;
                 db.SaveChanges();
 
                 // 設定成功訊息與跳轉網址
@@ -130,28 +134,28 @@ namespace IAAITW.Areas.Back.Controllers
                 // 把要導向的 URL 給 View
                 ViewBag.RedirectUrl = Url.Action("Index");
 
-                return View(job);
+                return View(organization);
             }
             else
             {
                 TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
             }
 
-            return View(job);
+            return View(organization);
         }
 
-        // POST: Back/Jobs/Delete/5
+        // POST: Back/Organizations/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var job = db.Jobs.Find(id);
-            if (job == null)
+            var organization = db.Organizationes.Find(id);
+            if (organization == null)
             {
                 return Json(new { success = false, message = "找不到資料" });
             }
 
-            db.Jobs.Remove(job);
+            db.Organizationes.Remove(organization);
             db.SaveChanges();
 
             return Json(new { success = true });

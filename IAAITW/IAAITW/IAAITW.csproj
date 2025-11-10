@@ -170,9 +170,12 @@
     <Compile Include="Areas\Back\Controllers\AboutsController.cs" />
     <Compile Include="Areas\Back\Controllers\CalendarsController.cs" />
     <Compile Include="Areas\Back\Controllers\ContactsController.cs" />
+    <Compile Include="Areas\Back\Controllers\ExpertsController.cs" />
+    <Compile Include="Areas\Back\Controllers\HistoriesController.cs" />
     <Compile Include="Areas\Back\Controllers\JobsController.cs" />
     <Compile Include="Areas\Back\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Back\Controllers\LisencesController.cs" />
+    <Compile Include="Areas\Back\Controllers\OrganizationesController.cs" />
     <Compile Include="Areas\Back\Controllers\RefersController.cs" />
     <Compile Include="Areas\Back\Controllers\SurveysController.cs" />
     <Compile Include="Areas\Back\Controllers\ViewHelper.cs" />
@@ -251,11 +254,17 @@
     <Compile Include="Migrations\202511100402402_add about table.Designer.cs">
       <DependentUpon>202511100402402_add about table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511100730226_add tables.cs" />
+    <Compile Include="Migrations\202511100730226_add tables.Designer.cs">
+      <DependentUpon>202511100730226_add tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DBMdoelContext.cs" />
+    <Compile Include="Models\Expert.cs" />
+    <Compile Include="Models\History.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Knowledge.cs" />
     <Compile Include="Models\KnowledgeViewModel.cs" />
@@ -263,6 +272,7 @@
     <Compile Include="Models\MemberInfo.cs" />
     <Compile Include="Models\MemberRegisterViewModel.cs" />
     <Compile Include="Models\MemberServiceExp.cs" />
+    <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Refer.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -360,6 +370,21 @@
     <Content Include="Areas\Back\Views\Abouts\Details.cshtml" />
     <Content Include="Areas\Back\Views\Abouts\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Abouts\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Organizationes\Create.cshtml" />
+    <Content Include="Areas\Back\Views\Organizationes\Delete.cshtml" />
+    <Content Include="Areas\Back\Views\Organizationes\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Organizationes\Edit.cshtml" />
+    <Content Include="Areas\Back\Views\Organizationes\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Histories\Create.cshtml" />
+    <Content Include="Areas\Back\Views\Histories\Delete.cshtml" />
+    <Content Include="Areas\Back\Views\Histories\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Histories\Edit.cshtml" />
+    <Content Include="Areas\Back\Views\Histories\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Experts\Create.cshtml" />
+    <Content Include="Areas\Back\Views\Experts\Delete.cshtml" />
+    <Content Include="Areas\Back\Views\Experts\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Experts\Edit.cshtml" />
+    <Content Include="Areas\Back\Views\Experts\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -777,6 +802,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511100402402_add about table.resx">
       <DependentUpon>202511100402402_add about table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511100730226_add tables.resx">
+      <DependentUpon>202511100730226_add tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

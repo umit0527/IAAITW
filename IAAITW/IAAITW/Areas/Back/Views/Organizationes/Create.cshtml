@@ -1,0 +1,77 @@
+﻿@model IAAITW.Models.Organization
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Organization</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="d-flex">
+                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2", style = "width:40px" })
+                <p>(上限1000個字)</p>
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.Content, new { @class = "form-control", id = "editor" })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Details")
+</div>
+
+@section Scripts {
+    @* 文字編輯器 *@
+    <script>
+        $(document).ready(function () {
+            if (typeof CKEDITOR !== 'undefined') {
+                CKEDITOR.replace('editor', {
+                    height: 500,
+                    language: 'zh'
+                });
+            }
+            else
+            {
+                console.error('CKEditor is not loaded!');
+            }
+
+            // 顯示成功訊息並跳轉
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                    setTimeout(function () {
+                        alert("@TempData["SuccessMessage"]");
+                        setTimeout(function () {
+                            window.location.href = "@ViewBag.RedirectUrl";
+                        }, 800); // 再延遲 0.8 秒跳轉
+                    }, 500); // 先等 CKEditor 載完 0.5 秒
+                </text>
+            }
+
+            // 顯示錯誤訊息
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    alert("@TempData["ErrorMessage"]");
+                </text>
+            }
+        });
+    </script>
+}
