@@ -9,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using Ganss.Xss;
 
 namespace IAAITW.Areas.Front.Controllers
 {
@@ -88,17 +89,33 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content,PosterId,CreatedDate,UpdatedDate")] MemberDiscussionPost memberDiscussionPost)
+        public ActionResult Create(MemberDiscussionPost post)
         {
             if (ModelState.IsValid)
             {
-                db.MemberDiscussionPosts.Add(memberDiscussionPost);
+                // 安全過濾 HTML
+                var sanitizer = new HtmlSanitizer();
+                sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
+                post.Content = sanitizer.Sanitize(post.Content);
+
+                db.MemberDiscussionPosts.Add(post);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                TempData["SuccessMessage"] = "新增成功！";
+
+                // 把要導向的 URL 給 View
+                ViewBag.RedirectUrl = Url.Action("Index");
+
+                return View(post);
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
             }
 
-            ViewBag.PosterId = new SelectList(db.MemberAccounts, "Id", "Account", memberDiscussionPost.PosterId);
-            return View(memberDiscussionPost);
+            // ViewBag.PosterId = new SelectList(db.MemberAccounts, "Id", "Account", memberDiscussionPost.PosterId);
+
+            return View(post);
         }
 
         // GET: Front/MemberDiscussion/Edit/5

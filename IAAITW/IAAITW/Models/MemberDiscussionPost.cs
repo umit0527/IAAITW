@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace IAAITW.Models
 {
@@ -19,12 +20,13 @@ namespace IAAITW.Models
 
         [Required(ErrorMessage = "內容為必填欄位")]
         [Display(Name = "內容")]
+        [AllowHtml]
         public string Content { get; set; }
 
         [Required(ErrorMessage = "發表人為必填欄位")]
         [Display(Name = "發表人")]
         // 外鍵，對應 MemberInfo 的 Id
-        public int PosterId { get; set; }
+        public int PosterId { get; set; } = 2;
         [ForeignKey("PosterId")]
         public virtual MemberInfo MemberInfo { get; set; }
 
