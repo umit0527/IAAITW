@@ -186,6 +186,7 @@
     <Compile Include="Areas\Front\Controllers\JobController.cs" />
     <Compile Include="Areas\Front\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Front\Controllers\MemberController.cs" />
+    <Compile Include="Areas\Front\Controllers\MemberDiscussionController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -260,17 +261,32 @@
     <Compile Include="Migrations\202511100730226_add tables.Designer.cs">
       <DependentUpon>202511100730226_add tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511110629249_add memberDiscussion tables.cs" />
+    <Compile Include="Migrations\202511110629249_add memberDiscussion tables.Designer.cs">
+      <DependentUpon>202511110629249_add memberDiscussion tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511110755221_adjust ForeignKey in discussion tables.cs" />
+    <Compile Include="Migrations\202511110755221_adjust ForeignKey in discussion tables.Designer.cs">
+      <DependentUpon>202511110755221_adjust ForeignKey in discussion tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511110802184_fix ForeignKey in discussion tables.cs" />
+    <Compile Include="Migrations\202511110802184_fix ForeignKey in discussion tables.Designer.cs">
+      <DependentUpon>202511110802184_fix ForeignKey in discussion tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DBMdoelContext.cs" />
+    <Compile Include="Models\DiscussionListViewModel.cs" />
     <Compile Include="Models\Expert.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Knowledge.cs" />
     <Compile Include="Models\KnowledgeViewModel.cs" />
     <Compile Include="Models\MemberAccount.cs" />
+    <Compile Include="Models\MemberDiscussionPost.cs" />
+    <Compile Include="Models\MemberDiscussionReply.cs" />
     <Compile Include="Models\MemberInfo.cs" />
     <Compile Include="Models\MemberRegisterViewModel.cs" />
     <Compile Include="Models\MemberServiceExp.cs" />
@@ -389,6 +405,11 @@
     <Content Include="Areas\Front\Views\About\Member.cshtml" />
     <Content Include="Areas\Front\Views\About\Expert.cshtml" />
     <Content Include="Areas\Front\Views\Declare\Index.cshtml" />
+    <Content Include="Areas\Front\Views\MemberDiscussion\Create.cshtml" />
+    <Content Include="Areas\Front\Views\MemberDiscussion\Delete.cshtml" />
+    <Content Include="Areas\Front\Views\MemberDiscussion\Details.cshtml" />
+    <Content Include="Areas\Front\Views\MemberDiscussion\Edit.cshtml" />
+    <Content Include="Areas\Front\Views\MemberDiscussion\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -809,6 +830,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511100730226_add tables.resx">
       <DependentUpon>202511100730226_add tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511110629249_add memberDiscussion tables.resx">
+      <DependentUpon>202511110629249_add memberDiscussion tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511110755221_adjust ForeignKey in discussion tables.resx">
+      <DependentUpon>202511110755221_adjust ForeignKey in discussion tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511110802184_fix ForeignKey in discussion tables.resx">
+      <DependentUpon>202511110802184_fix ForeignKey in discussion tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

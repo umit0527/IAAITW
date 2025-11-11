@@ -1,0 +1,103 @@
+﻿@using MvcPaging
+@model IPagedList<IAAITW.Models.DiscussionListViewModel>
+
+@{
+    ViewBag.Title = "討論區";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("會員專區",null),
+        new Tuple<string, string>("討論區", Url.Action("Index", "MemberDiscussion", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
+}
+
+<section id="main-container" class="main-container">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+                <div class="sidebar sidebar-right">
+
+                    <div class="widget">
+                        <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
+                        <ul class="arrow nav nav-tabs nav-stacked">
+                            <li class="active"><a href="/Download/Create">討論區</a></li>
+                            <li><a href="/Member/Edit">修改個人資料</a></li>
+                            <li><a href="/Member/LogOff">登出</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Categories end -->
+
+                </div><!-- Sidebar end -->
+            </div><!-- Sidebar Col end -->
+
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
+                <h2 class="page-title">討論區</h2>
+                <hr class="botmargin-min">
+                <!-- 內容開始 -->
+
+
+                <style>
+                    .respon {
+                        margin: 20px auto;
+                        display: inline-block;
+                        padding: 3px 8px;
+                        background: #b2b2b2;
+                        color: white;
+                        border-radius: 2px;
+                    }
+                </style>
+                <p>
+                    @Html.ActionLink("張貼文章", "Create", null, new { @class = "respon" })
+                </p>
+                <table class="table table-striped career-table download-table">
+                    <thead>
+                        <tr>
+                            <th style="width:50%;"><span class="text-left">標題</span></th>
+                            <th>發表人</th>
+                            <th>最新回覆者</th>
+                            <th>回覆數</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="text-left">
+                                        @Html.ActionLink(item.Title, "Details", new { id = item.PostId })
+                                    </span>
+                                </td>
+                                <td>
+                                    @item.PosterName <br />
+                                    <small>@item.CreatedDate.ToString("yyyy/MM/dd")</small>
+                                </td>
+                                <td>
+                                    @(string.IsNullOrEmpty(item.LatestReplierName) ? "-" : item.LatestReplierName) <br />
+                                    <small>@(item.LatestReplyDate.HasValue ?    item.LatestReplyDate.Value.ToString("yyyy/MM/dd") : "-")</small>
+                                </td>
+                                <td>@item.ReplyCount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="paging text-center">
+                    <div class="pagination">
+                        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+                    </div>
+                </div>
+                <!-- Content row 1 end -->
+                <!-- 內容結束 -->
+            </div><!-- Content Col end -->
+
+
+        </div><!-- Main row end -->
+
+    </div><!-- Conatiner end -->
+</section><!-- Main container end -->

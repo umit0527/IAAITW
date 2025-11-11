@@ -29,13 +29,13 @@ namespace IAAITW
 
             //前台css
             bundles.Add(new StyleBundle("~/Front/css").Include(
-                      "~/css/bootstrap.min.css","~/css/style.css",
+                      "~/css/bootstrap.min.css",
+                      "~/css/style.css",
                       "~/css/responsive.css", 
-                      "~/css/animate.css","~/css/owl.carousel.min.css",
+                      "~/css/animate.css",
+                      "~/css/owl.carousel.min.css",
                       "~/css/owl.theme.css",
-                      
                       "~/css/colorbox.css"
-                      
                       ));
 
             //前台js

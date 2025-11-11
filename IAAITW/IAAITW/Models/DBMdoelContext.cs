@@ -25,6 +25,9 @@ namespace IAAITW.Models
         public virtual DbSet<Expert> Experts { get; set; }
         public virtual DbSet<History> Histories { get; set; }
         public virtual DbSet<Organization> Organizationes { get; set; }
+        public virtual DbSet<MemberDiscussionPost> MemberDiscussionPosts { get; set; }
+        public virtual DbSet<MemberDiscussionReply> MemberDiscussionReplies { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
