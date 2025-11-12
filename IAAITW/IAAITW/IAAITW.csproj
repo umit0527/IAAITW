@@ -279,6 +279,7 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DBMdoelContext.cs" />
     <Compile Include="Models\DiscussionListViewModel.cs" />
+    <Compile Include="Models\DiscussionContentViewModel.cs" />
     <Compile Include="Models\Expert.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Job.cs" />

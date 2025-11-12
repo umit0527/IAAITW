@@ -1,15 +1,16 @@
-﻿using IAAITW.Models;
+﻿using Ganss.Xss;
+using IAAITW.Models;
 using MvcPaging;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
-using Ganss.Xss;
 
 namespace IAAITW.Areas.Front.Controllers
 {
@@ -20,9 +21,6 @@ namespace IAAITW.Areas.Front.Controllers
         // GET: Front/MemberDiscussion
         public ActionResult Index(int? page)
         {
-            //指令化
-            var discussion = db.MemberDiscussionPosts.AsQueryable();
-
             //一頁幾筆資料
             var pageSize = 5;
 
@@ -63,18 +61,49 @@ namespace IAAITW.Areas.Front.Controllers
         }
 
         // GET: Front/MemberDiscussion/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int? page)
         {
             if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MemberDiscussionPost memberDiscussionPost = db.MemberDiscussionPosts.Find(id);
-            if (memberDiscussionPost == null)
-            {
                 return HttpNotFound();
-            }
-            return View(memberDiscussionPost);
+
+            // 查詢文章（
+            var post = db.MemberDiscussionPosts
+                .Include(p => p.MemberInfo)
+                .FirstOrDefault(p => p.Id == id);
+
+            if (post == null)
+                return HttpNotFound();
+
+            // 分頁設定
+            int pageSize = 5;
+            // 0-Based 頁碼
+            int zeroBasedPageNumber = (page.HasValue && page.Value > 0) ? (page.Value - 1) : 0;
+
+            // 建立 IQueryable 查詢
+            // 不再需要 .AsQueryable()，因為 db.MemberDiscussionReplies 預設就是 IQueryable
+            var queryReplies = db.MemberDiscussionReplies
+                .Where(r => r.PostId == id)
+                .Include(r => r.MemberInfo)
+                .OrderByDescending(r => r.CreatedDate)
+                .Select(r => new ReplyViewModel
+                {
+                    ReplierName = r.MemberInfo.Name,
+                    ReplyDate = r.CreatedDate,
+                    ReplyContent = r.Content
+                }).ToPagedList(zeroBasedPageNumber, pageSize);
+
+            // 組成 ViewModel
+            var model = new DiscussionContentViewModel
+            {
+                PostId = post.Id,
+                Title = post.Title,
+                PosterName = post.MemberInfo?.Name,
+                CreatedDate = post.CreatedDate,
+                Content = post.Content,
+                Replies = queryReplies 
+            };
+
+            return View(model);
         }
 
         // GET: Front/MemberDiscussion/Create

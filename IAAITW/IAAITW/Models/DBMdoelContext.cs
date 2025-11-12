@@ -10,6 +10,7 @@ namespace IAAITW.Models
         public DBMdoelContext()
             : base("name=DBMdoelContext")
         {
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
         public virtual DbSet<Contact> Contacts { get; set; }
