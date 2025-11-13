@@ -147,6 +147,62 @@ namespace IAAITW.Areas.Front.Controllers
             return View(post);
         }
 
+        // GET: Front/MemberDiscussion/CreateRe/5
+        public ActionResult CreateRe(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+
+            // 查詢主文章（用 id 來找）
+            var post = db.MemberDiscussionPosts.FirstOrDefault(p => p.Id == id);
+            if (post == null)
+                return HttpNotFound();
+
+            // 建立回覆模型，帶入主文章資訊
+            var model = new MemberDiscussionReply
+            {
+                PostId = post.Id,
+                Post = post   // ← 這行是關鍵，讓 View 可以顯示 Post.Title
+            };
+
+            return View(model);
+        }
+
+        // POST: Front/MemberDiscussion/CreateRe/5
+        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
+        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRe(MemberDiscussionReply reply,int id)
+        {
+            if (ModelState.IsValid)
+            {
+                // 安全過濾 HTML
+                var sanitizer = new HtmlSanitizer();
+                sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
+                reply.Content = sanitizer.Sanitize(reply.Content);
+                reply.PostId = id;
+
+                db.MemberDiscussionReplies.Add(reply);
+                db.SaveChanges();
+
+                TempData["SuccessMessage"] = "新增成功！";
+
+                // 把要導向的 URL 給 View
+                ViewBag.RedirectUrl = Url.Action("Details", "MemberDiscussion", new { id = reply.PostId });
+
+                return View(reply);
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
+            }
+
+            // ViewBag.PosterId = new SelectList(db.MemberAccounts, "Id", "Account", memberDiscussionPost.PosterId);
+
+            return View(reply);
+        }
+
         // GET: Front/MemberDiscussion/Edit/5
         public ActionResult Edit(int? id)
         {

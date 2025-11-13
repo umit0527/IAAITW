@@ -411,6 +411,7 @@
     <Content Include="Areas\Front\Views\MemberDiscussion\Details.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Edit.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Index.cshtml" />
+    <Content Include="Areas\Front\Views\MemberDiscussion\CreateRe.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />

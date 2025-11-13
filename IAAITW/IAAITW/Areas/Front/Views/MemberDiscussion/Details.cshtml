@@ -3,6 +3,13 @@
 
 @{
     ViewBag.Title = "Details";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("會員專區",null),
+        new Tuple<string, string>("討論區", Url.Action("Index", "MemberDiscussion", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
 }
 
 <div>
@@ -114,10 +121,10 @@
                         </div><!-- post-body end -->
 
                         <p>
-                            @Html.ActionLink("回應文章", "Reply", new { id = Model.PostId }, new { @class = "respon" })
+                            @Html.ActionLink("回應文章", "CreateRe", new { id = Model.PostId }, new { @class = "respon" })
                         </p>
 
-                        <div class="clear"></div>
+                        <div class="clear align-items-center"></div>
 
                         @if (Model.Replies != null && Model.Replies.Any())
                         {
