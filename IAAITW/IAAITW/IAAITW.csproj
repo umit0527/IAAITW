@@ -58,6 +58,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FoolproofValidation, Version=0.9.5851.39121, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Foolproof.0.9.4518\lib\net45\FoolproofValidation.dll</HintPath>
+    </Reference>
     <Reference Include="GoogleRecaptcha, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GoogleRecaptcha.1.2.1\lib\GoogleRecaptcha.dll</HintPath>
     </Reference>
@@ -273,6 +276,42 @@
     <Compile Include="Migrations\202511110802184_fix ForeignKey in discussion tables.Designer.cs">
       <DependentUpon>202511110802184_fix ForeignKey in discussion tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511130602407_add Navigation properties in MemberInfoes table.cs" />
+    <Compile Include="Migrations\202511130602407_add Navigation properties in MemberInfoes table.Designer.cs">
+      <DependentUpon>202511130602407_add Navigation properties in MemberInfoes table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511130704232_adjust feild in table memberAccount.cs" />
+    <Compile Include="Migrations\202511130704232_adjust feild in table memberAccount.Designer.cs">
+      <DependentUpon>202511130704232_adjust feild in table memberAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511130747042_adjust feild in table memberInfoes.cs" />
+    <Compile Include="Migrations\202511130747042_adjust feild in table memberInfoes.Designer.cs">
+      <DependentUpon>202511130747042_adjust feild in table memberInfoes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511130835193_remove require of salt in table memberAccount.cs" />
+    <Compile Include="Migrations\202511130835193_remove require of salt in table memberAccount.Designer.cs">
+      <DependentUpon>202511130835193_remove require of salt in table memberAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511130917342_adjust totalyear&amp;totalmonth.cs" />
+    <Compile Include="Migrations\202511130917342_adjust totalyear&amp;totalmonth.Designer.cs">
+      <DependentUpon>202511130917342_adjust totalyear&amp;totalmonth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511130921404_remove totalyear&amp;totalmonth in memberServiceExp table.cs" />
+    <Compile Include="Migrations\202511130921404_remove totalyear&amp;totalmonth in memberServiceExp table.Designer.cs">
+      <DependentUpon>202511130921404_remove totalyear&amp;totalmonth in memberServiceExp table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511130951390_add createddate&amp;updateddate in memberServiceExp table.cs" />
+    <Compile Include="Migrations\202511130951390_add createddate&amp;updateddate in memberServiceExp table.Designer.cs">
+      <DependentUpon>202511130951390_add createddate&amp;updateddate in memberServiceExp table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511131002208_remove foreignkey memberaccount in memberServiceExp table.cs" />
+    <Compile Include="Migrations\202511131002208_remove foreignkey memberaccount in memberServiceExp table.Designer.cs">
+      <DependentUpon>202511131002208_remove foreignkey memberaccount in memberServiceExp table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511131004162_add foreignkey memberInfo in memberServiceExp table.cs" />
+    <Compile Include="Migrations\202511131004162_add foreignkey memberInfo in memberServiceExp table.Designer.cs">
+      <DependentUpon>202511131004162_add foreignkey memberInfo in memberServiceExp table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -297,6 +336,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Client Scripts\mvcfoolproof.unobtrusive.js" />
+    <Content Include="Client Scripts\mvcfoolproof.unobtrusive.min.js" />
+    <Content Include="Client Scripts\MvcFoolproofJQueryValidation.js" />
+    <Content Include="Client Scripts\MvcFoolproofJQueryValidation.min.js" />
+    <Content Include="Client Scripts\MvcFoolproofValidation.js" />
+    <Content Include="Client Scripts\MvcFoolproofValidation.min.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -841,6 +886,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511110802184_fix ForeignKey in discussion tables.resx">
       <DependentUpon>202511110802184_fix ForeignKey in discussion tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130602407_add Navigation properties in MemberInfoes table.resx">
+      <DependentUpon>202511130602407_add Navigation properties in MemberInfoes table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130704232_adjust feild in table memberAccount.resx">
+      <DependentUpon>202511130704232_adjust feild in table memberAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130747042_adjust feild in table memberInfoes.resx">
+      <DependentUpon>202511130747042_adjust feild in table memberInfoes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130835193_remove require of salt in table memberAccount.resx">
+      <DependentUpon>202511130835193_remove require of salt in table memberAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130917342_adjust totalyear&amp;totalmonth.resx">
+      <DependentUpon>202511130917342_adjust totalyear&amp;totalmonth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130921404_remove totalyear&amp;totalmonth in memberServiceExp table.resx">
+      <DependentUpon>202511130921404_remove totalyear&amp;totalmonth in memberServiceExp table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130951390_add createddate&amp;updateddate in memberServiceExp table.resx">
+      <DependentUpon>202511130951390_add createddate&amp;updateddate in memberServiceExp table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511131002208_remove foreignkey memberaccount in memberServiceExp table.resx">
+      <DependentUpon>202511131002208_remove foreignkey memberaccount in memberServiceExp table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511131004162_add foreignkey memberInfo in memberServiceExp table.resx">
+      <DependentUpon>202511131004162_add foreignkey memberInfo in memberServiceExp table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

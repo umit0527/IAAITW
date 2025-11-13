@@ -30,17 +30,13 @@ namespace IAAITW.Models
         [Range(1, 12)]
         public int? EndMonth { get; set; } // 結束月份，可空值
 
-        [Required]
-        [Range(0,100)]
-        public int? TotalYears { get; set; } // 計算用年
-
-        [Required]
-        [Range(1, 12)]
-        public int? TotalMonths { get; set; } // 計算用月
-
-        // 外鍵，對應 MemberAccount 的 Id
+        public DateTime CreatedDate { get; set; } = DateTime.Now; // 建立時間，預設系統時間
+        public DateTime UpdatedDate { get; set; } = DateTime.Now; // 更新時間，預設系統時間
+                                                                  // 外鍵，對應 MemberInfo 的 Id
         public int MemberId { get; set; }
+
         [ForeignKey("MemberId")]
-        public virtual MemberAccount MemberAccounts { get; set; }
+        public virtual MemberInfo MemberInfo { get; set; }
+
     }
 }

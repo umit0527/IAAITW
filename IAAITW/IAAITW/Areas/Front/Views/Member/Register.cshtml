@@ -181,14 +181,14 @@
 
                         <div class="form-group">
                             <div class="col-sm-2 control-label">
-                                @Html.LabelFor(m => m.InternationalMember, "國際會籍：")
+                                @Html.LabelFor(m => m.IsInternationalMember, "國際會籍：")
                             </div>
                             <div class="col-sm-7">
                                 <div class="" style="display:flex">
-                                    @Html.CheckBoxFor(m => m.InternationalMember, new { @class = "radiostyle01" })
+                                    @Html.CheckBoxFor(m => m.IsInternationalMember, new { @class = "radiostyle01" })
                                     <p style="margin-bottom:0px">為國際縱火調查學會之當年度有效會員，請檢附會員證影本</p>
                                 </div>
-                                @Html.TextBoxFor(m => m.InternationalFile, new { @class = "", type = "file" })
+                                @Html.TextBoxFor(m => m.FileUpload, new { @class = "", type = "file" })
                             </div>
                         </div>
 
@@ -286,23 +286,23 @@
                         <div class="form-group">
                             <div class="row" style="margin-left:0px">
                                 <div class="col-sm-2 control-label">
-                                    @Html.LabelFor(m => m.TotalYears, "相關年資合計：")
+                                    @Html.LabelFor(m => m.TotalExpYears, "相關年資合計：")
                                 </div>
 
                                 <div class="col-sm-2">
-                                    @Html.TextBoxFor(m => m.TotalYears, new { @class = "form-control", placeholder = "合計年資(年)" })
+                                    @Html.TextBoxFor(m => m.TotalExpYears, new { @class = "form-control", placeholder = "合計年資(年)" })
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.TextBoxFor(m => m.TotalMonths, new { @class = "form-control", placeholder = "合計年資(月)" })
+                                    @Html.TextBoxFor(m => m.TotalExpMonths, new { @class = "form-control", placeholder = "合計年資(月)" })
                                 </div>
                             </div>
                             <div class="row" style="margin-left:0px">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-2">
-                                    @Html.ValidationMessageFor(m => m.TotalYears, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(m => m.TotalExpYears, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.ValidationMessageFor(m => m.TotalMonths, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(m => m.TotalExpMonths, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>

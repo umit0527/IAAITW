@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foolproof;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,23 +10,27 @@ namespace IAAITW.Models
 {
     public class MemberRegisterViewModel
     {
+        public int Id { get; set; }
+
         // 帳號資料
         [Required(ErrorMessage = "帳號必填")]
         [StringLength(50)]
         [Display(Name = "帳  號")]
         public string Account { get; set; }
 
-        [Required(ErrorMessage = "密碼必填")]
+        public bool IsNewPassword { get; set; } = false; // 編輯密碼的判斷
+        [RequiredIf("IsNewPassword", true, ErrorMessage = "密碼為必填")]
         [StringLength(255)]
         [Display(Name = "密  碼")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage ="確認密碼必填")]
+        public bool IsChkPassword { get; set; } = false; // 編輯確認密碼的判斷
+        [RequiredIf("IsChkPassword", true, ErrorMessage = "確認密碼為必填")]
         [StringLength(255)]
         [Compare("Password", ErrorMessage = "與密碼不一致")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        //[Required]
         [StringLength(255)]
         public string Salt { get; set; }
 
@@ -33,7 +38,10 @@ namespace IAAITW.Models
         public bool IsActive { get; set; } = true;
 
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+
+        [Required]
+        public DateTime UpdatedDate { get; set; } = DateTime.Now;
 
         // 基本資料
         [Required(ErrorMessage = "姓名必填")]
@@ -50,9 +58,6 @@ namespace IAAITW.Models
         [Display(Name = "生  日")]
         public DateTime? BirthDate { get; set; }
 
-        [Required(ErrorMessage = "年齡必填")]
-        [Range(0, 120, ErrorMessage = "年齡必須在 0 到 120 之間")]
-        public int? Age { get; set; }
         [Display(Name = "申請類別")]
         public MembershipType MembershipType { get; set; }= MembershipType.Regular;
 
@@ -80,7 +85,7 @@ namespace IAAITW.Models
         public string Email { get; set; }
 
         [Display(Name = "國際會籍")]
-        public bool InternationalMember { get; set; }
+        public bool IsInternationalMember { get; set; }
 
         // 國際會員文件上傳路徑
         [StringLength(255)]
@@ -88,7 +93,7 @@ namespace IAAITW.Models
 
         // 不儲存進資料庫，只在接收表單時使用
         [NotMapped]
-        public HttpPostedFileBase InternationalFile { get; set; }
+        public HttpPostedFileBase FileUpload { get; set; }
 
         [Required(ErrorMessage = "現職單位必填")]
         [StringLength(100)]
@@ -105,19 +110,21 @@ namespace IAAITW.Models
         [Display(Name = "最高學歷")]
         public string HighestEducation { get; set; }
 
-        // 服務經歷 (可多筆)
-        public List<ServiceExpViewModel> ServiceExperiences { get; set; } = new List<ServiceExpViewModel>();
-
         // 總年資
         [Required(ErrorMessage = "合計年資(年)必填")]
-        public int? TotalYears { get; set; }
+        public int? TotalExpYears { get; set; }
 
         [Required(ErrorMessage = "合計年資(月)必填")]
-        public int? TotalMonths { get; set; }
+        public int? TotalExpMonths { get; set; }
+
+        // 服務經歷 (可多筆)
+        public List<ServiceExpViewModel> ServiceExperiences { get; set; } = new List<ServiceExpViewModel>();
     }
 
     public class ServiceExpViewModel
     {
+        public int Id { get; set; }
+
         [StringLength(100)]
         [Display(Name = "服務單位")]
         public string Company { get; set; }
@@ -137,5 +144,9 @@ namespace IAAITW.Models
 
         [Range(1, 12)]
         public int? EndMonth { get; set; }
+
+        public int? TotalYears { get; set; }
+
+        public int? TotalMonths { get; set; }
     }
 }

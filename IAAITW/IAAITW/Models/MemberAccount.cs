@@ -21,7 +21,7 @@ namespace IAAITW.Models
         [Display(Name ="密  碼")]
         public string Password { get; set; } // 密碼 (建議存 Hash)
 
-        [Required]
+        //[Required]
         [StringLength(255)]
         public string Salt { get; set; } // 密碼用鹽值
 
@@ -29,6 +29,9 @@ namespace IAAITW.Models
         public bool IsActive { get; set; } = true; // 是否啟用，預設啟用
 
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.Now; // 建立時間，預設系統時間
+        public DateTime CreatedDate { get; set; } = DateTime.Now; // 建立時間，預設系統時間
+
+        [Required]
+        public DateTime UpdatedDate { get; set; } = DateTime.Now; // 更新時間，預設系統時間
     }
 }

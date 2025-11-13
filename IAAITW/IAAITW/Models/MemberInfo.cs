@@ -65,7 +65,7 @@ namespace IAAITW.Models
         [StringLength(100)]
         public string Email { get; set; } // E-mail
 
-        public bool InternationalMember { get; set; } // 國際會籍，Checkbox
+        public bool IsInternationalMember { get; set; } // 國際會籍，Checkbox
 
         // 國際會員文件上傳路徑
         [StringLength(255)]
@@ -73,7 +73,7 @@ namespace IAAITW.Models
 
         // 不儲存進資料庫，只在接收表單時使用
         [NotMapped]
-        public HttpPostedFileBase InternationalFile { get; set; }
+        public HttpPostedFileBase FileUpload { get; set; }
 
         [StringLength(100)]
         public string CurrentCompany { get; set; } // 現職單位
@@ -84,10 +84,20 @@ namespace IAAITW.Models
         [StringLength(50)]
         public string HighestEducation { get; set; } // 最高學歷
 
+        // 總年資
+        [Required(ErrorMessage = "合計年資(年)必填")]
+        public int? TotalExpYears { get; set; }
+
+        [Required(ErrorMessage = "合計年資(月)必填")]
+        public int? TotalExpMonths { get; set; }
+
         // 外鍵，對應 MemberAccount 的 Id
         public int MemberId { get; set; }
         [ForeignKey("MemberId")]
         public virtual MemberAccount MemberAccounts { get; set; }
+
+        // 導航屬性，會員服務經歷
+        public virtual ICollection<MemberServiceExp> ServiceExperiences { get; set; }
 
     }
 }
