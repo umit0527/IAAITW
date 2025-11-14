@@ -129,6 +129,11 @@ namespace IAAITW.Areas.Back.Controllers
                 db.SaveChanges();
                 return View(model);
             }
+            else
+            {
+                TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
+                //ModelState.AddModelError("", "未收到檔案或檔案為空");
+            }
 
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
             return View(model);

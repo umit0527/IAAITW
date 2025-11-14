@@ -178,6 +178,7 @@
     <Compile Include="Areas\Back\Controllers\JobsController.cs" />
     <Compile Include="Areas\Back\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Back\Controllers\LisencesController.cs" />
+    <Compile Include="Areas\Back\Controllers\NewsController.cs" />
     <Compile Include="Areas\Back\Controllers\OrganizationesController.cs" />
     <Compile Include="Areas\Back\Controllers\RefersController.cs" />
     <Compile Include="Areas\Back\Controllers\SurveysController.cs" />
@@ -312,6 +313,18 @@
     <Compile Include="Migrations\202511131004162_add foreignkey memberInfo in memberServiceExp table.Designer.cs">
       <DependentUpon>202511131004162_add foreignkey memberInfo in memberServiceExp table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511140613595_add news table.cs" />
+    <Compile Include="Migrations\202511140613595_add news table.Designer.cs">
+      <DependentUpon>202511140613595_add news table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511140621378_adjust news feild.cs" />
+    <Compile Include="Migrations\202511140621378_adjust news feild.Designer.cs">
+      <DependentUpon>202511140621378_adjust news feild.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511140841582_adjust coverImageFile feild in news table.cs" />
+    <Compile Include="Migrations\202511140841582_adjust coverImageFile feild in news table.Designer.cs">
+      <DependentUpon>202511140841582_adjust coverImageFile feild in news table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -330,6 +343,7 @@
     <Compile Include="Models\MemberInfo.cs" />
     <Compile Include="Models\MemberRegisterViewModel.cs" />
     <Compile Include="Models\MemberServiceExp.cs" />
+    <Compile Include="Models\News.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Refer.cs" />
     <Compile Include="Models\Survey.cs" />
@@ -457,6 +471,11 @@
     <Content Include="Areas\Front\Views\MemberDiscussion\Edit.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Index.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\CreateRe.cshtml" />
+    <Content Include="Areas\Back\Views\News\Create.cshtml" />
+    <Content Include="Areas\Back\Views\News\Delete.cshtml" />
+    <Content Include="Areas\Back\Views\News\Details.cshtml" />
+    <Content Include="Areas\Back\Views\News\Edit.cshtml" />
+    <Content Include="Areas\Back\Views\News\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -913,6 +932,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511131004162_add foreignkey memberInfo in memberServiceExp table.resx">
       <DependentUpon>202511131004162_add foreignkey memberInfo in memberServiceExp table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511140613595_add news table.resx">
+      <DependentUpon>202511140613595_add news table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511140621378_adjust news feild.resx">
+      <DependentUpon>202511140621378_adjust news feild.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511140841582_adjust coverImageFile feild in news table.resx">
+      <DependentUpon>202511140841582_adjust coverImageFile feild in news table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
