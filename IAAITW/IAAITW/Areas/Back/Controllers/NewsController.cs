@@ -1,13 +1,16 @@
 ﻿using Ganss.Xss;
 using IAAITW.Models;
+using MvcPaging;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace IAAITW.Areas.Back.Controllers
 {
@@ -16,10 +19,31 @@ namespace IAAITW.Areas.Back.Controllers
         private DBMdoelContext db = new DBMdoelContext();
 
         // GET: Back/News
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var news = db.News.Include(n => n.LastUpdater).Include(n => n.Publisher);
-            return View(news.ToList());
+            //一頁幾筆資料
+            var pageSize = 10;
+
+            //目前第幾頁
+            ///避免page是null的時候
+            ///page-1是為了與後端的值對齊
+            ///當前端是第一頁 value=1、後端value應該要是0，從0開始計算
+            if (page.HasValue)
+            {
+                page = page - 1;
+            }
+            else
+            {
+                page = 0;
+            }
+
+            //用套件一定要有 orderby 排序
+            var result = db.News.OrderByDescending(x => x.IsPinned)
+                                   .ThenByDescending(x => x.UpdatedDate)
+                                   .ToPagedList(page.Value, pageSize);
+
+            //var news = db.News.Include(n => n.LastUpdater).Include(n => n.Publisher);
+            return View(result);
         }
 
         // GET: Back/News/Details/5
@@ -59,6 +83,16 @@ namespace IAAITW.Areas.Back.Controllers
                     // 檔案上傳
                     if (news.CoverImageFile != null && news.CoverImageFile.ContentLength > 0)
                     {
+                        // 允許的副檔名
+                        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                        var extension = Path.GetExtension(news.CoverImageFile.FileName).ToLower();
+
+                        if (!allowedExtensions.Contains(extension))
+                        {
+                            TempData["ErrorMessage"] = "檔案格式不正確，請上傳 JPG、JPEG、PNG或GIF";
+                            return View(news);
+                        }
+
                         var uploadsFolder = Server.MapPath("~/Uploads/News"); // 存放路徑
 
                         // 如果資料夾不存在就建立                                                  
@@ -89,7 +123,7 @@ namespace IAAITW.Areas.Back.Controllers
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = "未收到檔案或檔案為空。";
+                        TempData["ErrorMessage"] = "請上傳封面圖片";
                         return View(news);
                     }
 
@@ -132,14 +166,26 @@ namespace IAAITW.Areas.Back.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            News news = db.News.Find(id);
+
+            var news = db.News.Include(k => k.Publisher)
+                              .FirstOrDefault(k => k.Id == id);
             if (news == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.LastUpdaterId = new SelectList(db.MemberInfoes, "Id", "Name", news.LastUpdaterId);
-            ViewBag.PublisherId = new SelectList(db.MemberInfoes, "Id", "Name", news.PublisherId);
-            return View(news);
+
+            var viewModel = new News
+            {
+                Id = news.Id,
+                Title = news.Title,
+                Content = news.Content,
+                CoverImage = news.CoverImage,
+                IsPinned = news.IsPinned,
+                LastUpdaterId = news.LastUpdaterId,
+            };
+
+            //ViewBag.PublisherId = new SelectList(db.Admins, "Id", "Account", news.PublisherId);
+            return View(viewModel);
         }
 
         // POST: Back/News/Edit/5
@@ -151,12 +197,77 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(news).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    var existingNews = db.News
+                        .Include(k => k.LastUpdater)
+                        .FirstOrDefault(k => k.Id == news.Id);
+
+                    if (existingNews == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    // 更新基本欄位
+                    existingNews.Title = news.Title;
+                    existingNews.Content = news.Content;
+                    existingNews.IsPinned = news.IsPinned;
+                    existingNews.LastUpdaterId = news.LastUpdaterId;
+
+                    // 處理封面上傳
+                    if (news.CoverImageFile != null && news.CoverImageFile.ContentLength > 0)
+                    {
+                        // 允許的副檔名
+                        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                        var extension = Path.GetExtension(news.CoverImageFile.FileName).ToLower();
+
+                        if (!allowedExtensions.Contains(extension))
+                        {
+                            TempData["ErrorMessage"] = "檔案格式不正確，請上傳 JPG、JPEG、PNG或GIF";
+                            return View(news);
+                        }
+
+                        var uploadsFolder = Server.MapPath("~/Uploads/News");
+                        if (!System.IO.Directory.Exists(uploadsFolder))
+                            System.IO.Directory.CreateDirectory(uploadsFolder);
+
+                        // 刪掉舊檔案
+                        if (!string.IsNullOrEmpty(existingNews.CoverImage))
+                        {
+                            var oldFile = Server.MapPath(existingNews.CoverImage);
+                            if (System.IO.File.Exists(oldFile))
+                                System.IO.File.Delete(oldFile);
+                        }
+
+                        // 儲存新檔案
+                        var fileName = System.IO.Path.GetFileName(news.CoverImageFile.FileName);
+                        var path = System.IO.Path.Combine(uploadsFolder, fileName);
+                        news.CoverImageFile.SaveAs(path);
+                        existingNews.CoverImage = "/Uploads/News/" + fileName;
+                    }
+
+                    // 更新修改時間
+                    existingNews.UpdatedDate = DateTime.Now;
+
+                    db.Entry(existingNews).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    // 設定成功訊息與跳轉網址
+                    TempData["SuccessMessage"] = "編輯成功！";
+                    ViewBag.RedirectUrl = Url.Action("Index");
+                    return View(news);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "更新失敗: " + ex.Message);
+                }
             }
-            ViewBag.LastUpdaterId = new SelectList(db.MemberInfoes, "Id", "Name", news.LastUpdaterId);
-            ViewBag.PublisherId = new SelectList(db.MemberInfoes, "Id", "Name", news.PublisherId);
+            else
+            {
+                TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
+            }
+
+            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", news.LastUpdaterId);
             return View(news);
         }
 

@@ -140,6 +140,20 @@ namespace IAAITW.Areas.Front.Controllers
                 // 若是國際會員，處理檔案上傳
                 if (model.IsInternationalMember && model.FileUpload != null)
                 {
+                    // 允許的副檔名（圖片 + 文件）
+                    var allowedExtensions = new[] {
+                        ".jpg", ".jpeg", ".png", ".gif",   // 圖片
+                        ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx" // 文件
+                    };
+
+                    var extension = Path.GetExtension(model.FileUpload.FileName).ToLower();
+
+                    if (!allowedExtensions.Contains(extension))
+                    {
+                        TempData["ErrorMessage"] = "檔案格式不正確，請上傳圖片或文件檔";
+                        return View(model);
+                    }
+
                     string folder = Server.MapPath("~/Uploads/InternationalMembers/");
                     // 如果資料夾不存在就建立
                     if (!Directory.Exists(folder))
@@ -302,6 +316,20 @@ namespace IAAITW.Areas.Front.Controllers
             // 處理國際會員檔案
             if (model.IsInternationalMember && model.FileUpload != null)
             {
+                // 允許的副檔名（圖片 + 文件）
+                var allowedExtensions = new[] {
+                        ".jpg", ".jpeg", ".png", ".gif",   // 圖片
+                        ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx" // 文件
+                    };
+
+                var extension = Path.GetExtension(model.FileUpload.FileName).ToLower();
+
+                if (!allowedExtensions.Contains(extension))
+                {
+                    TempData["ErrorMessage"] = "檔案格式不正確，請上傳圖片或文件檔";
+                    return View(model);
+                }
+
                 string folder = Server.MapPath("~/Uploads/InternationalMembers/");
                 if (!Directory.Exists(folder))
                     Directory.CreateDirectory(folder);

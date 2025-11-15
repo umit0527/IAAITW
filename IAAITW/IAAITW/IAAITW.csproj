@@ -325,6 +325,14 @@
     <Compile Include="Migrations\202511140841582_adjust coverImageFile feild in news table.Designer.cs">
       <DependentUpon>202511140841582_adjust coverImageFile feild in news table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511140914203_remove foreignkey in news table.cs" />
+    <Compile Include="Migrations\202511140914203_remove foreignkey in news table.Designer.cs">
+      <DependentUpon>202511140914203_remove foreignkey in news table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511140915096_add foreignkey in news table.cs" />
+    <Compile Include="Migrations\202511140915096_add foreignkey in news table.Designer.cs">
+      <DependentUpon>202511140915096_add foreignkey in news table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -941,6 +949,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511140841582_adjust coverImageFile feild in news table.resx">
       <DependentUpon>202511140841582_adjust coverImageFile feild in news table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511140914203_remove foreignkey in news table.resx">
+      <DependentUpon>202511140914203_remove foreignkey in news table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511140915096_add foreignkey in news table.resx">
+      <DependentUpon>202511140915096_add foreignkey in news table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

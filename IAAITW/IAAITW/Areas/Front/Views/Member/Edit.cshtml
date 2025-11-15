@@ -202,7 +202,7 @@
                                     @Html.CheckBoxFor(m => m.IsInternationalMember, new { @class = "radiostyle01" })
                                     <p style="margin-bottom:0px">為國際縱火調查學會之當年度有效會員，請檢附會員證影本</p>
                                 </div>
-                                @Html.TextBoxFor(m => m.FileUpload, new { @class = "", type = "file" })
+                                @Html.TextBoxFor(m => m.FileUpload, new { @class = "", type = "file",accept = ".jpg,.jpeg,.png,.gif" })
                             </div>
                         </div>
 

@@ -1,11 +1,13 @@
-﻿@model IEnumerable<IAAITW.Models.News>
-@using IAAITW.Helper;
+﻿@using IAAITW.Helper;
+@using MvcPaging
+@model MvcPaging.IPagedList<IAAITW.Models.News>
+
 @{
     ViewBag.Title = "News";
 }
 
 <div>
-    <h2>Index</h2>
+    <h2>消息</h2>
 
     <p>
         @Html.ActionLink("Create New", "Create")
@@ -13,26 +15,26 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IsPinned)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsPinned)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CoverImage)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CoverImage)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
             </th>
             <th>
                 發布人員
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CreatedDate)
             </th>
             <th>
                 最後更新人員
             </th>
             <th>
-    @Html.DisplayNameFor(model => model.UpdatedDate)
-</th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UpdatedDate)
+            </th>
             <th></th>
         </tr>
 
@@ -48,7 +50,7 @@
                 <td>
                     @{
                         // 截斷
-                        var shortTitle = item.Title.TruncateWithChinese(34); 
+                        var shortTitle = item.Title.TruncateWithChinese(34);
                     }
                     @shortTitle
                 </td>
@@ -79,6 +81,9 @@
                 </td>
             </tr>
         }
-
     </table>
+</div>
+
+<div class="pager text-center pt-5">
+    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
 </div>

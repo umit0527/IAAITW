@@ -121,8 +121,7 @@ namespace IAAITW.Areas.Back.Controllers
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
-                    //ModelState.AddModelError("", "未收到檔案或檔案為空");
+                    TempData["ErrorMessage"] = "請上傳檔案";
                 }
 
                 db.Knowledges.Add(knowledge);
@@ -165,7 +164,7 @@ namespace IAAITW.Areas.Back.Controllers
                 FilePath = knowledge.FilePath,
                 AdminId = knowledge.AdminId,
                 UploadDate = knowledge.UploadDate,
-                Admin = knowledge.Admin
+                Admin = knowledge.Admin,
             };
 
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", knowledge.AdminId);

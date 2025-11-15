@@ -32,7 +32,7 @@ namespace IAAITW.Models
         public string CoverImage { get; set; }
 
         [NotMapped]
-        [Required(ErrorMessage = "請上傳封面圖片")] 
+        [Display(Name = "封面")]
         public HttpPostedFileBase CoverImageFile { get; set; }
 
         // 發布時間
@@ -47,7 +47,7 @@ namespace IAAITW.Models
         [Display(Name = "發布人員")]
         public int PublisherId { get; set; } = 2;
 
-        // 最後更新人員（MemberAccount / MemberInfo FK）
+        // 最後更新人員
         [Display(Name = "最後更新人員")]
         public int LastUpdaterId { get; set; } = 2;
 
@@ -55,11 +55,11 @@ namespace IAAITW.Models
         [Display(Name = "置頂")]
         public bool IsPinned { get; set; } = false;
 
-        // 與 MemberInfo 的關聯
+        // 與 Admin 的關聯
         [ForeignKey("PublisherId")]
-        public virtual MemberInfo Publisher { get; set; } 
+        public virtual Admin Publisher { get; set; } 
 
         [ForeignKey("LastUpdaterId")]
-        public virtual MemberInfo LastUpdater { get; set; }
+        public virtual Admin LastUpdater { get; set; }
     }
 }
