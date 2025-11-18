@@ -356,6 +356,7 @@
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Refer.cs" />
     <Compile Include="Models\Survey.cs" />
+    <Compile Include="Models\Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

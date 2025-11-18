@@ -57,7 +57,6 @@
 </div>
 
 @section Scripts {
-    @* 文字編輯器 *@
     <script>
             // 顯示成功訊息並跳轉
             @if (TempData["SuccessMessage"] != null)
@@ -67,8 +66,8 @@
                         alert("@TempData["SuccessMessage"]");
                         setTimeout(function () {
                             window.location.href = "@ViewBag.RedirectUrl";
-                        }, 800); // 再延遲 0.8 秒跳轉
-                    }, 500); // 先等 CKEditor 載完 0.5 秒
+                        }, 800); // 延遲 0.8 秒跳轉
+                    });
                 </text>
             }
 

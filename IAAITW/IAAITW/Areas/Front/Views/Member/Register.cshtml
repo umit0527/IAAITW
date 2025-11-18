@@ -34,7 +34,7 @@
                 <hr class="botmargin-min">
                 <!-- 內容開始 -->
 
-                @using (Html.BeginForm("Register", "MemberRegister", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Register", "Member", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -125,7 +125,7 @@
                                     .FirstOrDefault()?.Name ?? value.ToString();  // 若沒設定 Display，則顯示英文名稱
 
                                 <label class="radio-inline">
-                                    @Html.RadioButtonFor(m => m.MembershipType, value, new { @class = "radiostyle01" ,}) @displayName
+                                    @Html.RadioButtonFor(m => m.MembershipType, value, new { @class = "radiostyle01", }) @displayName
                                 </label>
                             }
                             @Html.ValidationMessageFor(m => m.MembershipType, "", new { @class = "text-danger" })
@@ -188,7 +188,13 @@
                                     @Html.CheckBoxFor(m => m.IsInternationalMember, new { @class = "radiostyle01" })
                                     <p style="margin-bottom:0px">為國際縱火調查學會之當年度有效會員，請檢附會員證影本</p>
                                 </div>
+
                                 @Html.TextBoxFor(m => m.FileUpload, new { @class = "", type = "file", accept = ".jpg,.jpeg,.png,.gif" })
+
+
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.ValidationMessageFor(m => m.FileUpload, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -332,7 +338,6 @@
     <!-- Conatiner end -->
 </section>
 <!-- Main container end -->
-
 @*驗證碼*@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -341,7 +346,6 @@
 
     <script>
         $(function () {
-
             // 專門處理錯誤圖示邏輯
             function updateValidationIcons() {
                 $('span.field-validation-error').each(function () {
@@ -373,28 +377,26 @@
 
     @* 通知訊息 *@
     <script>
-$(function() {
-    var message = @Html.Raw(Json.Encode(TempData["ToastMessage"]));
-    var type = @Html.Raw(Json.Encode(TempData["ToastType"])); // "success" / "danger"
-
-    if(message) {
-        var $toast = $('#toastMessage');
-        var $toastBody = $('#toastBody');
-
-        // 設定顏色
-        $toast.removeClass('alert-success alert-danger');
-        if(type === "success") {
-            $toast.addClass('alert-success');
-        } else {
-            $toast.addClass('alert-danger');
+        // 顯示成功訊息並跳轉
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                setTimeout(function () {
+                    alert("@TempData["SuccessMessage"]");
+                    setTimeout(function () {
+                        window.location.href = "@ViewBag.RedirectUrl";
+                    }, 800); // 延遲 0.8 秒跳轉
+                });
+            </text>
         }
 
-        $toastBody.text(message);
-
-        // 顯示並自動隱藏
-        $toast.fadeIn(300).delay(3000).fadeOut(500);
-    }
-});
+        // 顯示錯誤訊息
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                alert("@TempData["ErrorMessage"]");
+            </text>
+        }
     </script>
 }
 

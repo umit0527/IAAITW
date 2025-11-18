@@ -18,14 +18,12 @@ namespace IAAITW.Models
         [Display(Name = "帳  號")]
         public string Account { get; set; }
 
-        public bool IsNewPassword { get; set; } = false; // 編輯密碼的判斷
-        [RequiredIf("IsNewPassword", true, ErrorMessage = "密碼為必填")]
+        [Required(ErrorMessage = "密碼為必填")]
         [StringLength(255)]
         [Display(Name = "密  碼")]
         public string Password { get; set; }
 
-        public bool IsChkPassword { get; set; } = false; // 編輯確認密碼的判斷
-        [RequiredIf("IsChkPassword", true, ErrorMessage = "確認密碼為必填")]
+        [Required(ErrorMessage = "確認密碼為必填")]
         [StringLength(255)]
         [Compare("Password", ErrorMessage = "與密碼不一致")]
         public string ConfirmPassword { get; set; }
