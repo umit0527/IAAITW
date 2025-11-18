@@ -6,77 +6,69 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>News</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.LastUpdater.Name)
-        </dt>
+<div class="row">
 
-        <dd>
-            @Html.DisplayFor(model => model.LastUpdater.Name)
-        </dd>
+    <!-- 左半部欄位 -->
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Title, new { @class = "col-sm-2 control-label" })
+                    <div>@Html.DisplayFor(m => m.Title, new { @class = "form-control" })</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.IsPinned, new { @class = "col-sm-2 control-label" })
+                    <div>@Html.DisplayFor(m => m.IsPinned, new { @class = "form-control" })</div>
+                </div>
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Publisher.Name)
-        </dt>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Content, new { @class = "col-sm-2 control-label" })
+            <div class="from-control">@Html.Raw(Model.Content)</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Publisher.Name)
-        </dd>
+        <div class="d-flex">
+            <div class="col-md-6 mb-3">
+                發布人員
+                <div>@Model.Publisher.Name</div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(m => m.CreatedDate)
+                <div>@Html.DisplayFor(m => m.CreatedDate, new { @class = "form-control" })</div>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+        <div class="d-flex">
+            <div class="col-md-6 mb-3">
+                最後更新人員
+                <div >@Model.LastUpdater.Name</div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(m => m.UpdatedDate)
+                <div>@Html.DisplayFor(m => m.UpdatedDate, new { @class = "form-control" })</div>
+            </div>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
+        <!-- 右半部欄位 -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                @Html.LabelFor(m => m.CoverImage, new { @class = "col-sm-2 control-label" })
+                <div>
+                    <img src="@Url.Content(Model.CoverImage)" style="width:100%;height:auto;border-radius:0;" />
+                </div>
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CoverImage)
-        </dt>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.CoverImage)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsPinned)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsPinned)
-        </dd>
-
-    </dl>
-</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+

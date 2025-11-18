@@ -191,6 +191,7 @@
     <Compile Include="Areas\Front\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Front\Controllers\MemberController.cs" />
     <Compile Include="Areas\Front\Controllers\MemberDiscussionController.cs" />
+    <Compile Include="Areas\Front\Controllers\NewsController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -484,6 +485,11 @@
     <Content Include="Areas\Back\Views\News\Details.cshtml" />
     <Content Include="Areas\Back\Views\News\Edit.cshtml" />
     <Content Include="Areas\Back\Views\News\Index.cshtml" />
+    <Content Include="Areas\Front\Views\News\Create.cshtml" />
+    <Content Include="Areas\Front\Views\News\Delete.cshtml" />
+    <Content Include="Areas\Front\Views\News\Details.cshtml" />
+    <Content Include="Areas\Front\Views\News\Edit.cshtml" />
+    <Content Include="Areas\Front\Views\News\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />

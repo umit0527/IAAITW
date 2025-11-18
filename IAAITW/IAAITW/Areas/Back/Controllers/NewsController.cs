@@ -287,14 +287,30 @@ namespace IAAITW.Areas.Back.Controllers
         }
 
         // POST: Back/News/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            News news = db.News.Find(id);
+            var news = db.News.Find(id);
+            if (news == null)
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
+
+            // 刪除實體檔案
+            if (!string.IsNullOrEmpty(news.CoverImage))
+            {
+                var filePath = Server.MapPath(news.CoverImage);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+
             db.News.Remove(news);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Json(new { success = true });
         }
 
         protected override void Dispose(bool disposing)

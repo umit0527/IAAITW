@@ -13,6 +13,7 @@
         @Html.ActionLink("Create New", "Create")
     </p>
     <table class="table">
+        @Html.AntiForgeryToken()
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().IsPinned)
@@ -76,8 +77,9 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    <button class="delete-btn" data-id="@item.Id">刪除</button>
                 </td>
             </tr>
         }
@@ -87,3 +89,66 @@
 <div class="pager text-center pt-5">
     @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
 </div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $('.delete-btn').on('click', function () {
+                if (!confirm('確定要刪除這筆資料嗎？')) return;
+
+                var id = $(this).data('id');
+                var row = $('#row-' + id);
+                // 讀取 AntiForgery token（由 @Html.AntiForgeryToken() 產生）
+                var token = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    url: '@Url.Action("DeleteConfirmed", "News", new { area = "Back" })',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id: id,
+                        __RequestVerificationToken: token
+                    },
+                    success: function (res) {
+                        if (res && res.success) {
+                            row.fadeOut(300, function () { $(this).remove(); });
+                            // 可改成更漂亮的提示元件（toast）
+                            alert('刪除成功！');
+                            location.reload();
+                        } else {
+                            var msg = (res && res.message) ? res.message : '刪除失敗';
+                            alert('刪除失敗: ' + msg);
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        // 更完整的錯誤資訊，有助 debug
+                        console.error('刪除錯誤', status, err, xhr.responseText);
+                        alert('刪除時發生錯誤，請稍後再試。');
+                    }
+                });
+            });
+        });
+
+        // 顯示成功訊息並跳轉
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                setTimeout(function () {
+                    alert("@TempData["SuccessMessage"]");
+                    setTimeout(function () {
+                        window.location.href = "@ViewBag.RedirectUrl";
+                    }, 800); // 再延遲 0.8 秒跳轉
+                }, 500); // 先等 CKEditor 載完 0.5 秒
+            </text>
+        }
+
+        // 顯示錯誤訊息
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                alert("@TempData["ErrorMessage"]");
+            </text>
+        }
+    </script>
+}
