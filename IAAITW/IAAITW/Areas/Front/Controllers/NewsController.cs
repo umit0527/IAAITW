@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IAAITW.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,7 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using IAAITW.Models;
+using System.Web.UI;
+using MvcPaging;
 
 namespace IAAITW.Areas.Front.Controllers
 {
@@ -15,10 +17,29 @@ namespace IAAITW.Areas.Front.Controllers
         private DBMdoelContext db = new DBMdoelContext();
 
         // GET: Front/News
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+            //一頁幾筆資料
+            var pageSize = 5;
+
+            //目前第幾頁
+            ///避免page是null的時候
+            ///page-1是為了與後端的值對齊
+            ///當前端是第一頁 value=1、後端value應該要是0，從0開始計算
+            if (page.HasValue)
+            {
+                page = page - 1;
+            }
+            else
+            {
+                page = 0;
+            }
+
+            //用套件一定要有 orderby 排序
             var news = db.News.Include(n => n.LastUpdater).Include(n => n.Publisher);
-            return View(news.ToList());
+            var result = news.OrderBy(x => x.Id).ToPagedList(page.Value, pageSize);
+            
+            return View(result);
         }
 
         // GET: Front/News/Details/5
@@ -49,7 +70,7 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content,CoverImage,CreatedDate,UpdatedDate,PublisherId,LastUpdaterId,IsPinned")] News news)
+        public ActionResult Create(News news)
         {
             if (ModelState.IsValid)
             {

@@ -63,17 +63,10 @@
                     </tbody>
                 </table>
 
-                <div class="pager text-center">
-                    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
-                    @*<ul class="pagination">
-                            <li><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>*@
+                <div class="paging text-center">
+                    <div class="pagination">
+                        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+                    </div>
                 </div>
 
             </div>

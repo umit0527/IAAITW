@@ -1,82 +1,66 @@
 ﻿@model IAAITW.Models.News
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "訊息發布";
 }
 
-<h2>Details</h2>
+<!-- Banner area end -->
+<section id="main-container" class="main-container">
+    <div class="container" style="padding-bottom:50px">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="sidebar sidebar-right">
+                    <div class="widget">
+                        <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>訊息發布</h2>
+                        <ul class="arrow nav nav-tabs nav-stacked">
+                            <li class="active"><a href="#">訊息發布</a></li>
+                        </ul>
+                    </div>
+                    <!-- Categories end -->
+                </div>
+                <!-- Sidebar end -->
+            </div>
+            <!-- Sidebar Col end -->
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <h2 class="page-title">訊息發布</h2>
+                <hr class="botmargin-min">
+                <!-- 內容開始 -->
+                <div class="post-content">
+                    <div class="post-body">
 
-<div>
-    <h4>News</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.LastUpdater.Account)
-        </dt>
+                        @* 標題 *@
+                        <div class="entry-header">
+                            <span class="post-meta-date"><i class="fa fa fa-clock-o"></i> @Model.UpdatedDate.ToString("yyyy/MM/dd")</span>
+                            <h2 class="entry-title">@Model.Title</h2>
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastUpdater.Account)
-        </dd>
+                        @* 封面 *@
+                        <div class="post-media post-image">
+                            <img src="@Url.Content(Model.CoverImage)" class="img-responsive" alt="">
+                        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Publisher.Account)
-        </dt>
+                        @* 內容 *@
+                        <div class="entry-content topmargin-min">
+                            @Html.Raw(Model.Content)
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Publisher.Account)
-        </dd>
+                        @*分頁*@
+                        <div class="tags-area clearfix">
+                            <div class="post-footer  pull-left">
+                                <p>
+                                    @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-primary" })
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Col end -->
+            <!-- 內容結束 -->
+        </div>
+        <!-- Main row end -->
+    </div>
+    <!-- Conatiner end -->
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CoverImage)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CoverImage)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsPinned)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsPinned)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</section>
+<!-- Main container end -->
