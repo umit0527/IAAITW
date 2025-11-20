@@ -35,6 +35,24 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    @* 取得會員討論區-登入會員的資料 *@
+    <script>
+    @functions {
+        public IAAITW.Models.MemberAccount GetCurrentMember()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var identity = (FormsIdentity)User.Identity;
+                var ticket = identity.Ticket;
+                var userData = ticket.UserData;
+                var member = Newtonsoft.Json.JsonConvert.DeserializeObject<IAAITW.Models.MemberAccount>(userData);
+                return member;
+            }
+            return null;
+        }
+    }</script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

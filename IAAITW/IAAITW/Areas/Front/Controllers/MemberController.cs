@@ -1,6 +1,7 @@
 ﻿using GoogleRecaptcha;
 using IAAITW.Models;
 using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,31 +11,18 @@ using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.Services.Description;
+using System.Web.UI.WebControls;
 
 namespace IAAITW.Areas.Front.Controllers
 {
     public class MemberController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
-
-        // GET: Front/Member
-        [HttpGet]
-        public ActionResult Index()
-        {
-
-            return View();
-        }
-
-        // POST: Front/Member
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(MemberAccount model)
-        {
-            return View();
-        }
 
         // GET: Front/Member
         [HttpGet]
@@ -52,27 +40,59 @@ namespace IAAITW.Areas.Front.Controllers
             if (ModelState.IsValid)
             {
                 // 驗證帳號密碼
-                var user = db.MemberAccounts.FirstOrDefault(
-                             m => m.Account == model.Account &&
-                             m.Password == model.Password);
+                var user = ValidateUser(model.Account, model.Password);
 
-                if (user != null)
-                {
-                    // 登入成功，設定 Session 
-                    Session["Member"] = user;
-
-                    // 跳轉到會員首頁或指定頁
-                    return RedirectToAction("Index", "Member");
-                }
-                else
+                if (user == null)
                 {
                     // 帳號或密碼錯誤
                     ModelState.AddModelError("", "帳號或密碼錯誤");
+                    return View(model);
                 }
+                // 登入成功，產生表單驗證
+                string userData = JsonConvert.SerializeObject(user);
+                Utility.SetAuthenTicket(userData, model.Account);
+                // 跳轉到會員討論區
+                return RedirectToAction("Index", "MemberDiscussion");
             }
-
             // 驗證失敗或登入失敗，回傳原頁面
             return View(model);
+        }
+
+        /// <summary>
+        /// 驗證使用者
+        /// </summary>
+        /// <param name="account">輸入帳號</param>
+        /// <param name="password">輸入密碼</param>
+        /// <returns></returns>
+        private MemberAccount ValidateUser(string account, string password)
+        {
+            //確認帳號是否存在
+            MemberAccount member = db.MemberAccounts.FirstOrDefault(m => m.Account == account);
+
+            if (member == null)
+            {
+                return null;
+            }
+
+            //確認密碼是否正確
+            //資料庫資料
+            string dbPassword = member.Password;
+            string salt = member.Salt;
+            //產生雜湊密碼
+            var hashPassword = Utility.GenerateHashWithSalt(password, salt);
+
+            if (hashPassword != dbPassword)
+            {
+                return null;
+            }
+            return member;
+        }
+
+        [Authorize]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
         }
 
         // GET: Front/Member/Register
@@ -140,7 +160,7 @@ namespace IAAITW.Areas.Front.Controllers
                 db.MemberAccounts.Add(memberAccount);
                 db.SaveChanges(); // 先存入資料庫取得 Id
 
-                MemberInfo memberInfo = new MemberInfo
+                Models.MemberInfo memberInfo = new Models.MemberInfo
                 {
                     Name = model.Name,
                     Gender = model.Gender.Value,
@@ -163,66 +183,66 @@ namespace IAAITW.Areas.Front.Controllers
 
                 // 若是國際會員
 
-                    if (model.IsInternationalMember && model.FileUpload != null)
-                    {
-                        // 處理檔案上傳
-                        // 允許的副檔名（圖片 + 文件）
-                        var allowedExtensions = new[] {
+                if (model.IsInternationalMember && model.FileUpload != null)
+                {
+                    // 處理檔案上傳
+                    // 允許的副檔名（圖片 + 文件）
+                    var allowedExtensions = new[] {
                         ".jpg", ".jpeg", ".png", ".gif",   // 圖片
                         ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx" // 文件
                     };
 
-                        var extension = Path.GetExtension(model.FileUpload.FileName).ToLower();
+                    var extension = Path.GetExtension(model.FileUpload.FileName).ToLower();
 
-                        if (!allowedExtensions.Contains(extension))
-                        {
-                            TempData["ErrorMessage"] = "檔案格式不正確，請上傳圖片或文件檔";
-                            return View(model);
-                        }
-
-                        string folder = Server.MapPath("~/Uploads/InternationalMembers/");
-                        // 如果資料夾不存在就建立
-                        if (!Directory.Exists(folder))
-                            Directory.CreateDirectory(folder);
-
-                        var fileName = System.IO.Path.GetFileName(model.FileUpload.FileName);
-                        string fullPath = System.IO.Path.Combine(folder, fileName);
-                        try
-                        {
-                            model.FileUpload.SaveAs(fullPath);
-                        }
-                        catch (Exception ex)
-                        {
-                            ModelState.AddModelError("", "檔案上傳失敗: " + ex.Message);
-                            return View(model);
-                        }
-                        // 存到資料庫
-                        memberInfo.FilePath = "/Uploads/InternationalMembers/" + fileName;
-                        db.SaveChanges();
-                    }
-                
-
-                    foreach (var exp in model.ServiceExperiences)
+                    if (!allowedExtensions.Contains(extension))
                     {
-                        // 判斷是否有填寫資料（至少公司或職稱有填）
-                        if (string.IsNullOrWhiteSpace(exp.Company) && string.IsNullOrWhiteSpace(exp.ExperienceJobTitle))
-                        {
-                            continue; // 跳過這筆，避免新增空資料
-                        }
-
-                        MemberServiceExp memberServiceExp = new MemberServiceExp
-                        {
-                            MemberId = memberInfo.Id,
-                            Company = exp.Company,
-                            JobTitle = exp.ExperienceJobTitle,
-                            StartYear = exp.StartYear,
-                            StartMonth = exp.StartMonth,
-                            EndYear = exp.EndYear,
-                            EndMonth = exp.EndMonth,
-                            CreatedDate = DateTime.Now,
-                        };
-                        db.MemberServiceExps.Add(memberServiceExp);
+                        TempData["ErrorMessage"] = "檔案格式不正確，請上傳圖片或文件檔";
+                        return View(model);
                     }
+
+                    string folder = Server.MapPath("~/Uploads/InternationalMembers/");
+                    // 如果資料夾不存在就建立
+                    if (!Directory.Exists(folder))
+                        Directory.CreateDirectory(folder);
+
+                    var fileName = System.IO.Path.GetFileName(model.FileUpload.FileName);
+                    string fullPath = System.IO.Path.Combine(folder, fileName);
+                    try
+                    {
+                        model.FileUpload.SaveAs(fullPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("", "檔案上傳失敗: " + ex.Message);
+                        return View(model);
+                    }
+                    // 存到資料庫
+                    memberInfo.FilePath = "/Uploads/InternationalMembers/" + fileName;
+                    db.SaveChanges();
+                }
+
+
+                foreach (var exp in model.ServiceExperiences)
+                {
+                    // 判斷是否有填寫資料（至少公司或職稱有填）
+                    if (string.IsNullOrWhiteSpace(exp.Company) && string.IsNullOrWhiteSpace(exp.ExperienceJobTitle))
+                    {
+                        continue; // 跳過這筆，避免新增空資料
+                    }
+
+                    MemberServiceExp memberServiceExp = new MemberServiceExp
+                    {
+                        MemberId = memberInfo.Id,
+                        Company = exp.Company,
+                        JobTitle = exp.ExperienceJobTitle,
+                        StartYear = exp.StartYear,
+                        StartMonth = exp.StartMonth,
+                        EndYear = exp.EndYear,
+                        EndMonth = exp.EndMonth,
+                        CreatedDate = DateTime.Now,
+                    };
+                    db.MemberServiceExps.Add(memberServiceExp);
+                }
                 db.SaveChanges();
 
                 TempData["SuccessMessage"] = "註冊成功！";
@@ -240,66 +260,43 @@ namespace IAAITW.Areas.Front.Controllers
             return View(model);
         }
 
-        /// <summary>
-        /// 驗證使用者
-        /// </summary>
-        /// <param name="account">輸入帳號</param>
-        /// <param name="password">輸入密碼</param>
-        /// <returns></returns>
-        private MemberAccount ValidateUser(string account, string password)
-        {
-            //確認帳號是否存在
-            MemberAccount member = db.MemberAccounts.FirstOrDefault(m => m.Account == account);
-
-            if (member == null)
-            {
-                return null;
-            }
-
-            //確認密碼是否正確
-            //資料庫資料
-            string dbPassword = member.Password;
-            string salt = member.Salt;
-            //產生雜湊密碼
-            var hashPassword = Utility.GenerateHashWithSalt(password, salt);
-
-            if (hashPassword != dbPassword)
-            {
-                return null;
-            }
-            return member;
-        }
-
         // GET: Front/Member/Edit
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
                 return View();
 
-            var member = db.MemberInfoes.Find(id);
-            if (member == null)
+            // 取得會員資訊
+            var memberInfo = db.MemberInfoes.Include("MemberAccount").FirstOrDefault(m => m.Id == id);
+            if (memberInfo == null)
                 return HttpNotFound();
 
-            //轉成MemberRegisterViewModel
-            var viewModel = new MemberRegisterViewModel
+            // 取得對應的帳號
+            var memberAccount = db.MemberAccounts.FirstOrDefault(m => m.Id == memberInfo.MemberId);
+            if (memberAccount == null)
+                return HttpNotFound();
+
+            //轉成MemberEditViewModel
+            var viewModel = new MemberEditViewModel
             {
-                Id = member.Id,
-                Account = member.MemberAccounts.Account,
-                Name = member.Name,
-                Gender = member.Gender,
-                BirthDate = member.BirthDate,
-                MembershipType = member.MembershipType,
-                Phone = member.Phone,
-                Mobile = member.Mobile,
-                Address = member.Address,
-                Email = member.Email,
-                IsInternationalMember = member.IsInternationalMember,
-                CurrentCompany = member.CurrentCompany,
-                CurrentJobTitle = member.CurrentJobTitle,
-                HighestEducation = member.HighestEducation,
-                TotalExpYears = member.TotalExpYears,
-                TotalExpMonths = member.TotalExpMonths,
-                ServiceExperiences = member.ServiceExperiences.Select(exp => new ServiceExpViewModel
+                Id = memberInfo.Id,
+                Account = memberInfo.MemberAccount?.Account,
+                Name = memberInfo.Name,
+                Gender = memberInfo.Gender,
+                BirthDate = memberInfo.BirthDate,
+                MembershipType = memberInfo.MembershipType,
+                Phone = memberInfo.Phone,
+                Mobile = memberInfo.Mobile,
+                Address = memberInfo.Address,
+                Email = memberInfo.Email,
+                IsInternationalMember = memberInfo.IsInternationalMember,
+                CurrentCompany = memberInfo.CurrentCompany,
+                CurrentJobTitle = memberInfo.CurrentJobTitle,
+                HighestEducation = memberInfo.HighestEducation,
+                TotalExpYears = memberInfo.TotalExpYears,
+                TotalExpMonths = memberInfo.TotalExpMonths,
+                ServiceExperiences = memberInfo.ServiceExperiences.Select(exp => new ServiceExpViewModel
                 {
                     Company = exp.Company,
                     ExperienceJobTitle = exp.JobTitle,
@@ -323,33 +320,40 @@ namespace IAAITW.Areas.Front.Controllers
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MemberRegisterViewModel model)
+        public ActionResult Edit(MemberEditViewModel model, string newPassword)
         {
+            var memberInfo = db.MemberInfoes.Find(model.Id);
+            if (memberInfo == null)
+            {
+                TempData["ErrorMessage"] = "找不到會員資料";
+                return View(model);
+            }  
+
             // 取出會員帳號與會員資料
-            var memberAccount = db.MemberAccounts.FirstOrDefault(m => m.Id == model.Id);
+            var memberAccount = db.MemberAccounts.Find(memberInfo.MemberId);
             if (memberAccount == null)
             {
                 TempData["ErrorMessage"] = "找不到帳號資料";
                 return View(model);
             }
 
-            var memberInfo = db.MemberInfoes.FirstOrDefault(m => m.Id == model.Id);
-            if (memberInfo == null)
+            if (!ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = "找不到會員資料";
+                TempData["ErrorMessage"] = "請確認欄位是否正確填寫。";
                 return View(model);
             }
 
-            // 更新帳號資料 (僅有輸入密碼才更新)
+            // 更新密碼 (若有輸入新密碼)
+            if (!string.IsNullOrWhiteSpace(newPassword))
+            {
+                memberAccount.Password = Utility.GenerateHashWithSalt(newPassword, memberAccount.Salt);       
+            }
+
+            // 更新帳號資料
             memberAccount.Account = model.Account;
             memberAccount.UpdatedDate = DateTime.Now;
-
-            if (!string.IsNullOrWhiteSpace(model.Password) && !string.IsNullOrWhiteSpace(model.ConfirmPassword))
-            {
-                memberAccount.Password = model.Password;
-                memberAccount.Salt = model.Salt;
-            }
 
             // 更新會員基本資料
             memberInfo.Name = model.Name;
@@ -435,9 +439,12 @@ namespace IAAITW.Areas.Front.Controllers
                 }
             }
 
-            // 儲存
+            // 儲存至資料庫
             try
             {
+                db.Entry(memberAccount).State = EntityState.Modified;
+                db.Entry(memberInfo).State = EntityState.Modified;
+
                 db.SaveChanges();
                 TempData["SuccessMessage"] = "修改成功！";
                 ViewBag.RedirectUrl = Url.Action("Index", "MemberDiscussion", new { area = "Front" });
@@ -457,6 +464,7 @@ namespace IAAITW.Areas.Front.Controllers
             }
 
             return View(model);
+
         }
     }
 }

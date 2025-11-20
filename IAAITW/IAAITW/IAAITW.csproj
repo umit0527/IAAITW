@@ -334,6 +334,10 @@
     <Compile Include="Migrations\202511140915096_add foreignkey in news table.Designer.cs">
       <DependentUpon>202511140915096_add foreignkey in news table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511201357537_remove passowrd require in memberaccount.cs" />
+    <Compile Include="Migrations\202511201357537_remove passowrd require in memberaccount.Designer.cs">
+      <DependentUpon>202511201357537_remove passowrd require in memberaccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -349,6 +353,7 @@
     <Compile Include="Models\MemberAccount.cs" />
     <Compile Include="Models\MemberDiscussionPost.cs" />
     <Compile Include="Models\MemberDiscussionReply.cs" />
+    <Compile Include="Models\MemberEditViewModel.cs" />
     <Compile Include="Models\MemberInfo.cs" />
     <Compile Include="Models\MemberRegisterViewModel.cs" />
     <Compile Include="Models\MemberServiceExp.cs" />
@@ -962,6 +967,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511140915096_add foreignkey in news table.resx">
       <DependentUpon>202511140915096_add foreignkey in news table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511201357537_remove passowrd require in memberaccount.resx">
+      <DependentUpon>202511201357537_remove passowrd require in memberaccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

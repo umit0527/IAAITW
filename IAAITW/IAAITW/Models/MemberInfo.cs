@@ -94,7 +94,7 @@ namespace IAAITW.Models
         // 外鍵，對應 MemberAccount 的 Id
         public int MemberId { get; set; }
         [ForeignKey("MemberId")]
-        public virtual MemberAccount MemberAccounts { get; set; }
+        public virtual MemberAccount MemberAccount { get; set; }
 
         // 導航屬性，會員服務經歷
         public virtual ICollection<MemberServiceExp> ServiceExperiences { get; set; }

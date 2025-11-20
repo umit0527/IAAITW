@@ -8,12 +8,15 @@ using System.Data.Entity;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.UI;
 
 namespace IAAITW.Areas.Front.Controllers
 {
+    [Authorize]
     public class MemberDiscussionController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
@@ -21,6 +24,12 @@ namespace IAAITW.Areas.Front.Controllers
         // GET: Front/MemberDiscussion
         public ActionResult Index(int? page)
         {
+            //取得目前會員Id，給edit跳轉使用
+            ViewBag.MemberInfoId = db.MemberInfoes.FirstOrDefault()?.Id;
+
+            //指令化
+            var memberDiscussion = db.MemberDiscussionPosts.AsQueryable();
+            
             //一頁幾筆資料
             var pageSize = 5;
 
@@ -38,7 +47,7 @@ namespace IAAITW.Areas.Front.Controllers
             }
 
             //用套件一定要有 orderby 排序            
-            var result = db.MemberDiscussionPosts
+            var result = memberDiscussion
                 .OrderByDescending(p => p.CreatedDate)
                 .Select(p => new DiscussionListViewModel
                 {

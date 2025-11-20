@@ -9,6 +9,7 @@ namespace IAAITW.Models
 {
     public class DiscussionListViewModel
     {
+        public int Id { get; set; }
         public int PostId { get; set; }
 
         [Display(Name = "標題")]

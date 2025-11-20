@@ -1,5 +1,4 @@
-﻿using Foolproof;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +7,7 @@ using System.Web;
 
 namespace IAAITW.Models
 {
-    public class MemberRegisterViewModel
+    public class MemberEditViewModel
     {
         public int Id { get; set; }
 
@@ -20,12 +19,16 @@ namespace IAAITW.Models
 
         //[Required(ErrorMessage = "密碼為必填")]
         [StringLength(255)]
-        [Display(Name = "密  碼")]
+        [Display(Name = "密  碼")] // 舊密碼
         public string Password { get; set; }
+
+        [StringLength(255)]
+        [Display(Name = "密  碼")] 
+        public string NewPassword { get; set; }
 
         //[Required(ErrorMessage = "確認密碼為必填")]
         [StringLength(255)]
-        [Compare("Password", ErrorMessage = "與密碼不一致")]
+        [Compare("NewPassword", ErrorMessage = "與密碼不一致")]
         public string ConfirmPassword { get; set; }
 
         //[Required]
@@ -57,7 +60,7 @@ namespace IAAITW.Models
         public DateTime? BirthDate { get; set; }
 
         [Display(Name = "申請類別")]
-        public MembershipType MembershipType { get; set; }= MembershipType.Regular;
+        public MembershipType MembershipType { get; set; } = MembershipType.Regular;
 
         [Required(ErrorMessage = "連絡電話(公)必填")]
         [Phone]
@@ -119,34 +122,5 @@ namespace IAAITW.Models
         public List<ServiceExpViewModel> ServiceExperiences { get; set; } = new List<ServiceExpViewModel>();
 
         public int MemberId { get; set; }
-    }
-
-    public class ServiceExpViewModel
-    {
-        public int Id { get; set; }
-
-        [StringLength(100)]
-        [Display(Name = "服務單位")]
-        public string Company { get; set; }
-
-        [StringLength(50)]
-        [Display(Name = "職  稱")]
-        public string ExperienceJobTitle { get; set; }
-
-        [Range(1900, 2100)]
-        public int? StartYear { get; set; }
-
-        [Range(1, 12)]
-        public int? StartMonth { get; set; }
-
-        [Range(1900, 2100)]
-        public int? EndYear { get; set; }
-
-        [Range(1, 12)]
-        public int? EndMonth { get; set; }
-
-        public int? TotalYears { get; set; }
-
-        public int? TotalMonths { get; set; }
     }
 }

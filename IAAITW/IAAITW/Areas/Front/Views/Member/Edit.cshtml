@@ -1,4 +1,4 @@
-﻿@model IAAITW.Models.MemberRegisterViewModel
+﻿@model IAAITW.Models.MemberEditViewModel
 @using System.ComponentModel.DataAnnotations
 
 @{
@@ -56,6 +56,9 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.Id)
+                    @Html.HiddenFor(m => m.Password)
+                    @Html.HiddenFor(m => m.Salt)
+                    @Html.HiddenFor(m => m.MemberId)
                     <div class="form-horizontal">
                         <div class="form-group ">
                             <div class="col-sm-2 control-label">
@@ -71,10 +74,10 @@
 
                         <div class="form-group">
                             <div class="col-sm-2 control-label">
-                                @Html.LabelFor(m => m.Password, "密  碼：")
+                                @Html.LabelFor(m => m.NewPassword, "密  碼：")
                             </div>
                             <div class="col-sm-7 ">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "請輸入密碼" })
+                                @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", placeholder = "請輸入密碼" })
                                 <p>(不修改密碼請保持空白)</p>
                             </div>
                         </div>
@@ -86,6 +89,9 @@
                             <div class="col-sm-7 ">
                                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "請輸入確認密碼" })
                                 <p>(不修改密碼請保持空白)</p>
+                            </div>
+                            <div class="col-sm-3 ">
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -202,7 +208,7 @@
                                     @Html.CheckBoxFor(m => m.IsInternationalMember, new { @class = "radiostyle01" })
                                     <p style="margin-bottom:0px">為國際縱火調查學會之當年度有效會員，請檢附會員證影本</p>
                                 </div>
-                                @Html.TextBoxFor(m => m.FileUpload, new { @class = "", type = "file",accept = ".jpg,.jpeg,.png,.gif" })
+                                @Html.TextBoxFor(m => m.FileUpload, new { @class = "", type = "file", accept = ".jpg,.jpeg,.png,.gif" })
                             </div>
                         </div>
 

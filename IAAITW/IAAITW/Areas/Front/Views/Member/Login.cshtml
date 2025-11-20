@@ -34,7 +34,7 @@
                 <hr class="botmargin-min">
                 <h3 class="title-normal">請輸入您的帳號及密碼</h3>
                 <!-- 內容開始 -->
-                @using (Html.BeginForm("Login", "MemberLogin", FormMethod.Post, new { @class = "form-horizontal comments-form", role = "form" }))
+                @using (Html.BeginForm("Login", "Member", FormMethod.Post, new { @class = "form-horizontal comments-form", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">

@@ -9,13 +9,13 @@
         new Tuple<string, string>("會員專區",null),
         new Tuple<string, string>("討論區", Url.Action("Index", "MemberDiscussion", new { area = "Front" }))
     };
-    // --- 麵包屑設定結束 ---
+    // --- 麵包屑設定結束 ---  
 }
 
 <section id="main-container" class="main-container">
     <div class="container">
         <div class="row">
-
+            @*@Html.HiddenFor(m => m.Id)*@
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 
                 <div class="sidebar sidebar-right">
@@ -23,9 +23,9 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li class="active"><a href="/Download/Create">討論區</a></li>
-                            <li><a href="/Member/Edit">修改個人資料</a></li>
-                            <li><a href="/Member/LogOff">登出</a></li>
+                            <li class="active"><a href="#">討論區</a></li>
+                            <li><a href="@Url.Action("Edit", "Member", new { area = "Front", id = @ViewBag.MemberInfoId })">修改個人資料</a></li>
+                            <li><a href="@Url.Action("Logout", "Member", new { area = "Front" })">登出</a></li>
                         </ul>
                     </div>
 
@@ -39,8 +39,6 @@
                 <h2 class="page-title">討論區</h2>
                 <hr class="botmargin-min">
                 <!-- 內容開始 -->
-
-
                 <style>
                     .respon {
                         margin: 20px auto;
@@ -65,24 +63,33 @@
                     </thead>
 
                     <tbody>
-                        @foreach (var item in Model)
+                        @if (!Model.Any())
                         {
                             <tr>
-                                <td>
-                                    <span class="text-left">
-                                        @Html.ActionLink(item.Title, "Details", new { id = item.PostId })
-                                    </span>
-                                </td>
-                                <td>
-                                    @item.PosterName <br />
-                                    <small>@item.CreatedDate.ToString("yyyy/MM/dd")</small>
-                                </td>
-                                <td>
-                                    @(string.IsNullOrEmpty(item.LatestReplierName) ? "-" : item.LatestReplierName) <br />
-                                    <small>@(item.LatestReplyDate.HasValue ?    item.LatestReplyDate.Value.ToString("yyyy/MM/dd") : "-")</small>
-                                </td>
-                                <td>@item.ReplyCount</td>
+                                <td colspan="4" class="text-center">目前沒有討論文章。</td>
                             </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="text-left">
+                                            @Html.ActionLink(item.Title, "Details", new { id = item.PostId })
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @item.PosterName <br />
+                                        <small>@item.CreatedDate.ToString("yyyy/MM/dd")</small>
+                                    </td>
+                                    <td>
+                                        @(string.IsNullOrEmpty(item.LatestReplierName) ? "-" : item.LatestReplierName) <br />
+                                        <small>@(item.LatestReplyDate.HasValue ?    item.LatestReplyDate.Value.ToString("yyyy/MM/dd") : "-")</small>
+                                    </td>
+                                    <td>@item.ReplyCount</td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>

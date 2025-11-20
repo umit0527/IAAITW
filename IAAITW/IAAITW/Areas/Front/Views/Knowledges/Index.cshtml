@@ -43,22 +43,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @if (!Model.Any())
                         {
                             <tr>
-                                <td>
-                                    @item.UploadDate.ToString("yyyy-MM-dd")
-                                </td>
-                                <td style="text-align:start;">
-                                    @Html.DisplayFor(modelItem => item.Title)
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Download", "Knowledge", new { fileName = item.FilePath })"
-                                       class="btn btn-primary btn-sm">
-                                        <i class="fa fa-download"></i> 下載
-                                    </a>
-                                </td>
+                                <td colspan="3" style="text-align:center;">目前沒有任何資料</td>
                             </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.UploadDate.ToString("yyyy-MM-dd")
+                                    </td>
+                                    <td style="text-align:start;">
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Download", "Knowledge", new { fileName = item.FilePath })"
+                                           class="btn btn-primary btn-sm">
+                                            <i class="fa fa-download"></i> 下載
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
