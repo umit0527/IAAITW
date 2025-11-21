@@ -28,7 +28,7 @@ namespace IAAITW.Models
         [Required(ErrorMessage = "回覆者為必填欄位")]
         [Display(Name = "回覆者")]
 
-        public int ReplierId { get; set; } = 2;
+        public int ReplierId { get; set; } 
         // 外鍵，對應 MemberInfo 的 Id
         [ForeignKey("ReplierId")]
         public virtual MemberInfo MemberInfo { get; set; }
@@ -38,6 +38,8 @@ namespace IAAITW.Models
 
         [Display(Name = "最後更新時間")]
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
+
+
 
     }
 }

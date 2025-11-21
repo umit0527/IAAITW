@@ -33,7 +33,7 @@ namespace IAAITW.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           
+            
         }
     }
 }

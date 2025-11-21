@@ -1,5 +1,6 @@
 ﻿using Ganss.Xss;
 using IAAITW.Models;
+using Microsoft.Ajax.Utilities;
 using MvcPaging;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.Services.Description;
 using System.Web.UI;
 
 namespace IAAITW.Areas.Front.Controllers
@@ -24,12 +26,9 @@ namespace IAAITW.Areas.Front.Controllers
         // GET: Front/MemberDiscussion
         public ActionResult Index(int? page)
         {
-            //取得目前會員Id，給edit跳轉使用
-            ViewBag.MemberInfoId = db.MemberInfoes.FirstOrDefault()?.Id;
-
             //指令化
             var memberDiscussion = db.MemberDiscussionPosts.AsQueryable();
-            
+
             //一頁幾筆資料
             var pageSize = 5;
 
@@ -54,7 +53,7 @@ namespace IAAITW.Areas.Front.Controllers
                     PostId = p.Id,
                     Title = p.Title,
                     PosterName = p.MemberInfo.Name,
-                    CreatedDate= p.CreatedDate,
+                    CreatedDate = p.CreatedDate,
                     LatestReplierName = p.Replies
                         .OrderByDescending(r => r.CreatedDate)
                         .Select(r => r.MemberInfo.Name)
@@ -109,7 +108,7 @@ namespace IAAITW.Areas.Front.Controllers
                 PosterName = post.MemberInfo?.Name,
                 CreatedDate = post.CreatedDate,
                 Content = post.Content,
-                Replies = queryReplies 
+                Replies = queryReplies
             };
 
             return View(model);
@@ -131,6 +130,29 @@ namespace IAAITW.Areas.Front.Controllers
         {
             if (ModelState.IsValid)
             {
+                // 取得登入者帳號
+                var accountName = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 先查出 account 表的 id
+                var member = db.MemberAccounts.FirstOrDefault(m => m.Account == accountName);
+
+                if (member == null)
+                {
+                    TempData["ErrorMessage"] = "找不到登入會員資訊。";
+                    return View(post);
+                }
+
+                // 再查出 info 表的 id
+                var memberInfo = db.MemberInfoes.FirstOrDefault(mi => mi.MemberId == member.Id);
+                if (memberInfo == null)
+                {
+                    TempData["ErrorMessage"] = "找不到會員資訊。";
+                    return View(post);
+                }
+
+                // 設定外鍵 PosterId
+                post.PosterId = memberInfo.Id;
+
+
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
@@ -182,15 +204,38 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateRe(MemberDiscussionReply reply,int id)
+        public ActionResult CreateRe(MemberDiscussionReply reply, int id)
         {
             if (ModelState.IsValid)
             {
+                // 取得登入者帳號
+                var accountName = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                
+                // 先查出 account 表的 id
+                var member = db.MemberAccounts.FirstOrDefault(m => m.Account == accountName);
+
+                if (member == null)
+                {
+                    TempData["ErrorMessage"] = "找不到登入會員資訊。";
+                    return View(reply);
+                }
+
+                // 再查出 info 表的 id
+                var memberInfo = db.MemberInfoes.FirstOrDefault(mi => mi.MemberId == member.Id);
+                if (memberInfo == null)
+                {
+                    TempData["ErrorMessage"] = "找不到會員資訊。";
+                    return View(reply);
+                }
+
+                
+
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 reply.Content = sanitizer.Sanitize(reply.Content);
                 reply.PostId = id;
+                reply.ReplierId=memberInfo.Id;
 
                 db.MemberDiscussionReplies.Add(reply);
                 db.SaveChanges();

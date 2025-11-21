@@ -33,7 +33,5 @@ namespace IAAITW.Models
 
         [Required]
         public DateTime UpdatedDate { get; set; } = DateTime.Now; // 更新時間，預設系統時間
-
-        //public virtual MemberInfo MemberInfo { get; set; } // 導覽屬性，一對一關聯 MemberInfo
     }
 }

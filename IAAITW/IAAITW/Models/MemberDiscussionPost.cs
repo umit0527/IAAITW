@@ -26,7 +26,7 @@ namespace IAAITW.Models
         [Required(ErrorMessage = "發表人為必填欄位")]
         [Display(Name = "發表人")]
         // 外鍵，對應 MemberInfo 的 Id
-        public int PosterId { get; set; } = 2;
+        public int PosterId { get; set; }
         [ForeignKey("PosterId")]
         public virtual MemberInfo MemberInfo { get; set; }
 

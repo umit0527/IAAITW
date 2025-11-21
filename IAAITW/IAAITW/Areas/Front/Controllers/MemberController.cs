@@ -264,9 +264,6 @@ namespace IAAITW.Areas.Front.Controllers
         [Authorize]
         public ActionResult Edit()
         {
-
-
-
             // 取得登入者帳號
             var accountName = User.Identity.Name; // ASP.NET Identity 的登入名稱
             var memberInfo = db.MemberInfoes
