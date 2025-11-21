@@ -100,11 +100,11 @@ namespace IAAITW.Areas.Front.Controllers
         {
             var model = new MemberRegisterViewModel
             {
-                ServiceExperiences = new List<ServiceExpViewModel>
+                MemberServiceExps = new List<MemberServiceExp>
                 {
-                    new ServiceExpViewModel(),
-                    new ServiceExpViewModel(),
-                    new ServiceExpViewModel()
+                    new MemberServiceExp(),
+                    new MemberServiceExp(),
+                    new MemberServiceExp()
                 }
             };
             return View(model);
@@ -222,10 +222,10 @@ namespace IAAITW.Areas.Front.Controllers
                 }
 
 
-                foreach (var exp in model.ServiceExperiences)
+                foreach (var exp in model.MemberServiceExps)
                 {
                     // 判斷是否有填寫資料（至少公司或職稱有填）
-                    if (string.IsNullOrWhiteSpace(exp.Company) && string.IsNullOrWhiteSpace(exp.ExperienceJobTitle))
+                    if (string.IsNullOrWhiteSpace(exp.Company) && string.IsNullOrWhiteSpace(exp.JobTitle))
                     {
                         continue; // 跳過這筆，避免新增空資料
                     }
@@ -234,7 +234,7 @@ namespace IAAITW.Areas.Front.Controllers
                     {
                         MemberId = memberInfo.Id,
                         Company = exp.Company,
-                        JobTitle = exp.ExperienceJobTitle,
+                        JobTitle = exp.JobTitle,
                         StartYear = exp.StartYear,
                         StartMonth = exp.StartMonth,
                         EndYear = exp.EndYear,
@@ -262,22 +262,18 @@ namespace IAAITW.Areas.Front.Controllers
 
         // GET: Front/Member/Edit
         [Authorize]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
-                return View();
 
-            // 取得會員資訊
+
+
+            // 取得登入者帳號
+            var accountName = User.Identity.Name; // ASP.NET Identity 的登入名稱
             var memberInfo = db.MemberInfoes
                 .Include("MemberAccount")
                 .Include("MemberServiceExps")
-                .FirstOrDefault(m => m.Id == id);
+                .FirstOrDefault(m => m.MemberAccount.Account == accountName);
             if (memberInfo == null)
-                return HttpNotFound();
-
-            // 取得對應的帳號
-            var memberAccount = db.MemberAccounts.FirstOrDefault(m => m.Id == memberInfo.MemberId);
-            if (memberAccount == null)
                 return HttpNotFound();
 
             //轉成MemberEditViewModel
