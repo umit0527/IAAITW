@@ -97,7 +97,7 @@ namespace IAAITW.Models
         public virtual MemberAccount MemberAccount { get; set; }
 
         // 導航屬性，會員服務經歷
-        public virtual ICollection<MemberServiceExp> ServiceExperiences { get; set; }
+        public virtual ICollection<MemberServiceExp> MemberServiceExps { get; set; }
 
     }
 }

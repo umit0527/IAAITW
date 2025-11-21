@@ -268,7 +268,10 @@ namespace IAAITW.Areas.Front.Controllers
                 return View();
 
             // 取得會員資訊
-            var memberInfo = db.MemberInfoes.Include("MemberAccount").FirstOrDefault(m => m.Id == id);
+            var memberInfo = db.MemberInfoes
+                .Include("MemberAccount")
+                .Include("MemberServiceExps")
+                .FirstOrDefault(m => m.Id == id);
             if (memberInfo == null)
                 return HttpNotFound();
 
@@ -296,10 +299,12 @@ namespace IAAITW.Areas.Front.Controllers
                 HighestEducation = memberInfo.HighestEducation,
                 TotalExpYears = memberInfo.TotalExpYears,
                 TotalExpMonths = memberInfo.TotalExpMonths,
-                ServiceExperiences = memberInfo.ServiceExperiences.Select(exp => new ServiceExpViewModel
+                MemberServiceExps = memberInfo.MemberServiceExps.Select(exp => new MemberServiceExp
                 {
+                    Id = exp.Id,
+                    MemberId = exp.MemberId,
                     Company = exp.Company,
-                    ExperienceJobTitle = exp.JobTitle,
+                    JobTitle = exp.JobTitle,
                     StartYear = exp.StartYear,
                     StartMonth = exp.StartMonth,
                     EndYear = exp.EndYear,
@@ -308,9 +313,9 @@ namespace IAAITW.Areas.Front.Controllers
             };
 
             // 補足空的 service experiences 到 3 筆
-            while (viewModel.ServiceExperiences.Count < 3)
+            while (viewModel.MemberServiceExps.Count < 3)
             {
-                viewModel.ServiceExperiences.Add(new ServiceExpViewModel());
+                viewModel.MemberServiceExps.Add(new MemberServiceExp());
             }
 
             return View(viewModel);
@@ -399,41 +404,59 @@ namespace IAAITW.Areas.Front.Controllers
                 memberInfo.FilePath = model.FilePath;
             }
 
+            // 取得原本的服務經歷列表
+            var existingExps = db.MemberServiceExps.Where(e => e.MemberId == memberInfo.Id).ToList();
+
             // 更新服務經歷
-            foreach (var exp in model.ServiceExperiences)
+            foreach (var expVM in model.MemberServiceExps)
             {
-                // 判斷是否有填寫資料（至少公司或職稱有填）
-                if (string.IsNullOrWhiteSpace(exp.Company) && string.IsNullOrWhiteSpace(exp.ExperienceJobTitle))
+                bool empty = string.IsNullOrWhiteSpace(expVM.Company)
+                          && string.IsNullOrWhiteSpace(expVM.JobTitle);
+
+                // -------------------------------------------
+                // 1. 使用者沒有填任何內容 → 不做動作
+                // -------------------------------------------
+                if (empty)
                 {
-                    continue; // 跳過這筆，避免新增空資料
-                }
-                if (exp.Id > 0) // 已存在資料，更新
-                {
-                    var dbExp = db.MemberServiceExps.Find(exp.Id);
-                    if (dbExp != null)
+                    // 若是空白但原本有資料 → 刪除
+                    var original = existingExps.FirstOrDefault(x => x.Id == expVM.Id);
+                    if (original != null)
                     {
-                        dbExp.Company = exp.Company;
-                        dbExp.JobTitle = exp.ExperienceJobTitle;
-                        dbExp.StartYear = exp.StartYear;
-                        dbExp.StartMonth = exp.StartMonth;
-                        dbExp.EndYear = exp.EndYear;
-                        dbExp.EndMonth = exp.EndMonth;
-                        dbExp.UpdatedDate = DateTime.Now;
+                        db.MemberServiceExps.Remove(original);
                     }
-                    db.Entry(dbExp).State = EntityState.Modified;
+                    continue;
                 }
-                else // 新增資料
+
+                // -------------------------------------------
+                // 2. 有 ID → 修改原資料
+                // -------------------------------------------
+                if (expVM.Id > 0)
                 {
+                    var original = existingExps.FirstOrDefault(x => x.Id == expVM.Id);
+                    if (original != null)
+                    {
+                        original.Company = expVM.Company;
+                        original.JobTitle = expVM.JobTitle;
+                        original.StartYear = expVM.StartYear;
+                        original.StartMonth = expVM.StartMonth;
+                        original.EndYear = expVM.EndYear;
+                        original.EndMonth = expVM.EndMonth;
+                    }
+                }
+                else
+                {
+                    // -------------------------------------------
+                    // 3. ID == 0 且 有填內容 → 新增
+                    // -------------------------------------------
                     var newExp = new MemberServiceExp
                     {
-                        Company = exp.Company,
-                        JobTitle = exp.ExperienceJobTitle,
-                        StartYear = exp.StartYear,
-                        StartMonth = exp.StartMonth,
-                        EndYear = exp.EndYear,
-                        EndMonth = exp.EndMonth,
-                        MemberId = model.Id,
-                        UpdatedDate = DateTime.Now
+                        MemberId = memberInfo.Id,
+                        Company = expVM.Company,
+                        JobTitle = expVM.JobTitle,
+                        StartYear = expVM.StartYear,
+                        StartMonth = expVM.StartMonth,
+                        EndYear = expVM.EndYear,
+                        EndMonth = expVM.EndMonth
                     };
                     db.MemberServiceExps.Add(newExp);
                 }

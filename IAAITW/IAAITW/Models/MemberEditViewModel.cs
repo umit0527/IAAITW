@@ -119,7 +119,7 @@ namespace IAAITW.Models
         public int? TotalExpMonths { get; set; }
 
         // 服務經歷 (可多筆)
-        public List<ServiceExpViewModel> ServiceExperiences { get; set; } = new List<ServiceExpViewModel>();
+        public List<MemberServiceExp> MemberServiceExps { get; set; } = new List<MemberServiceExp>();
 
         public int MemberId { get; set; }
     }
