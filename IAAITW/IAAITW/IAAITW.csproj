@@ -448,12 +448,9 @@
     <Content Include="Areas\Back\Views\Surveys\Index.cshtml" />
     <Content Include="Areas\Front\Views\Job\Survey.cshtml" />
     <Content Include="Areas\Front\Views\Member\Register.cshtml" />
-    <Content Include="Areas\Front\Views\Member\Delete.cshtml" />
-    <Content Include="Areas\Front\Views\Member\Details.cshtml" />
     <Content Include="Areas\Front\Views\Member\Edit.cshtml" />
     <Content Include="Areas\Front\Views\Member\Login.cshtml" />
     <Content Include="key.config" />
-    <Content Include="Areas\Front\Views\Member\Index.cshtml" />
     <Content Include="Areas\Back\Views\Abouts\Create.cshtml" />
     <Content Include="Areas\Back\Views\Abouts\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Abouts\Details.cshtml" />

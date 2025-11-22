@@ -21,7 +21,7 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li class="active"><a href="#">會員登入</a></li>
+                            <li class="active"><a href="@Url.Action("Login", "Member", new { area = "Front" })">會員登入</a></li>
                         </ul>
                     </div>
                     <!-- Categories end -->
@@ -69,7 +69,7 @@
 
                 <div class="text-left">
                     @*<a href="#">忘記密碼</a> &nbsp;&nbsp;/&nbsp;&nbsp;*@
-                    <a href="#">尚未註冊</a>
+                    <a href="@Url.Action("Register", "Member", new { area = "Front" })">尚未註冊</a>
                 </div>
 
             </div>
@@ -114,30 +114,29 @@
                 setTimeout(updateValidationIcons, 100); // 延遲讓驗證更新完再加 icon
             });
         });
-    </script>
 
-    @* 通知訊息 *@
-    <script>
-$(function() {
-    var message = @Html.Raw(Json.Encode(TempData["ToastMessage"]));
-    var type = @Html.Raw(Json.Encode(TempData["ToastType"])); // "success" / "danger"
 
-    if(message) {
-        var $toast = $('#toastMessage');
-        var $toastBody = $('#toastBody');
+       @* 通知訊息 *@
+    $(document).ready(function () {
+    // 顯示成功訊息並跳轉
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+            setTimeout(function () {
+                alert("@TempData["SuccessMessage"]");
+                setTimeout(function () {
+                    window.location.href = "@ViewBag.RedirectUrl";
+                }, 800); // 再延遲 0.8 秒跳轉
+            });
+        </text>
+    }
 
-        // 設定顏色
-        $toast.removeClass('alert-success alert-danger');
-        if(type === "success") {
-            $toast.addClass('alert-success');
-        } else {
-            $toast.addClass('alert-danger');
-        }
-
-        $toastBody.text(message);
-
-        // 顯示並自動隱藏
-        $toast.fadeIn(300).delay(3000).fadeOut(500);
+    // 顯示錯誤訊息
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <text>
+            alert("@TempData["ErrorMessage"]");
+        </text>
     }
 });
     </script>

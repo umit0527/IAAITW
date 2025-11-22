@@ -45,14 +45,19 @@ namespace IAAITW.Areas.Front.Controllers
                 if (user == null)
                 {
                     // 帳號或密碼錯誤
-                    ModelState.AddModelError("", "帳號或密碼錯誤");
+                    TempData["ErrorMessage"] = "帳號或密碼錯誤。";
                     return View(model);
                 }
                 // 登入成功，產生表單驗證
                 string userData = JsonConvert.SerializeObject(user);
                 Utility.SetAuthenTicket(userData, model.Account);
-                // 跳轉到會員討論區
-                return RedirectToAction("Index", "MemberDiscussion");
+
+                TempData["SuccessMessage"] = "登入成功！";
+
+                // 把要導向的 URL 給 View 跳轉到會員討論區
+                ViewBag.RedirectUrl = Url.Action("Index", "MemberDiscussion", new { area = "Front" });
+
+                return View(model);
             }
             // 驗證失敗或登入失敗，回傳原頁面
             return View(model);

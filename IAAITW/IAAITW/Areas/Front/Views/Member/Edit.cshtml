@@ -7,30 +7,11 @@
 {
      // Tuple<顯示文字, 連結URL>
         new Tuple<string, string>("會員專區",null),
-        new Tuple<string, string>("會員註冊", Url.Action("Edit", "Member", new { area = "Front" }))
+        new Tuple<string, string>("修改個人資料", Url.Action("Edit", "Member", new { area = "Front" }))
     };
     // --- 麵包屑設定結束 ---
 }
-@* 顯示 ModelState 的欄位驗證錯誤 *@
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>修改失敗，請檢查下列欄位：</strong>
-        <ul>
-            @foreach (var key in ViewData.ModelState.Keys)
-            {
-                var state = ViewData.ModelState[key];
-                if (state.Errors.Count > 0)
-                {
-                    <li>
-                        <strong>@key:</strong> @string.Join(", ", state.Errors.Select(e => e.ErrorMessage))
-                    </li>
-                }
-            }
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
+
 <section id="main-container" class="main-container">
     <div class="container">
         <div class="row">
@@ -39,7 +20,9 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li class="active"><a href="#">會員註冊</a></li>
+                            <li ><a href="@Url.Action("Index", "MemberDiscussion", new { area = "Front" })">討論區</a></li>
+                            <li class="active"><a href="@Url.Action("Edit", "Member", new { area = "Front" })">修改個人資料</a></li>
+                            <li><a href="@Url.Action("Logout", "Member", new { area = "Front" })">登出</a></li>
                         </ul>
                     </div>
                     <!-- Categories end -->
@@ -48,7 +31,7 @@
             </div>
             <!-- Sidebar Col end -->
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                <h2 class="page-title">會員註冊</h2>
+                <h2 class="page-title">修改個人資料</h2>
                 <hr class="botmargin-min">
                 <!-- 內容開始 -->
 

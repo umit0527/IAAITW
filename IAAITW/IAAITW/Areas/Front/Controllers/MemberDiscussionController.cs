@@ -228,8 +228,6 @@ namespace IAAITW.Areas.Front.Controllers
                     return View(reply);
                 }
 
-                
-
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
@@ -278,7 +276,7 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,PosterId,CreatedDate,UpdatedDate")] MemberDiscussionPost memberDiscussionPost)
+        public ActionResult Edit(MemberDiscussionPost memberDiscussionPost)
         {
             if (ModelState.IsValid)
             {
@@ -288,32 +286,6 @@ namespace IAAITW.Areas.Front.Controllers
             }
             ViewBag.PosterId = new SelectList(db.MemberAccounts, "Id", "Account", memberDiscussionPost.PosterId);
             return View(memberDiscussionPost);
-        }
-
-        // GET: Front/MemberDiscussion/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MemberDiscussionPost memberDiscussionPost = db.MemberDiscussionPosts.Find(id);
-            if (memberDiscussionPost == null)
-            {
-                return HttpNotFound();
-            }
-            return View(memberDiscussionPost);
-        }
-
-        // POST: Front/MemberDiscussion/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            MemberDiscussionPost memberDiscussionPost = db.MemberDiscussionPosts.Find(id);
-            db.MemberDiscussionPosts.Remove(memberDiscussionPost);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
