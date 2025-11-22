@@ -35,7 +35,7 @@
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.MemberAccounts", t => t.ReplierId, cascadeDelete: false)
-                .ForeignKey("dbo.MemberDiscussionPosts", t => t.PostId, cascadeDelete: false)
+                .ForeignKey("dbo.MemberDiscussionPosts", t => t.PostId, cascadeDelete: true)
                 .Index(t => t.PostId)
                 .Index(t => t.ReplierId);
             

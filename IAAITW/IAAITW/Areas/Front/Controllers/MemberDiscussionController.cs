@@ -10,6 +10,7 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -276,16 +277,59 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MemberDiscussionPost memberDiscussionPost)
+        public ActionResult Edit(MemberDiscussionPost editPost)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(memberDiscussionPost).State = EntityState.Modified;
+                // 找到原本的文章（只用 editPost.Id 來查文章）
+                var postId = db.MemberDiscussionPosts.Find(editPost.Id);
+                if (postId == null)
+                    return HttpNotFound();
+
+                // 取得登入會員的 MemberInfo（PosterId 必須是登入者）
+                var memberAccount = db.MemberAccounts
+                    .FirstOrDefault(m => m.Account == User.Identity.Name);
+
+                var memberInfo = db.MemberInfoes
+                    .FirstOrDefault(m => m.MemberId == memberAccount.Id);
+
+                // 更新欄位
+                postId.Title = editPost.Title;
+                postId.Content = new Ganss.Xss.HtmlSanitizer()
+                    .Sanitize(editPost.Content);
+
+                postId.PosterId = memberInfo.Id;    
+                postId.UpdatedDate = DateTime.Now; 
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                TempData["SuccessMessage"] = "編輯成功！";
+
+                // 把要導向的 URL 給 View
+                return RedirectToAction("Details", new { id = postId.Id });
             }
-            ViewBag.PosterId = new SelectList(db.MemberAccounts, "Id", "Account", memberDiscussionPost.PosterId);
-            return View(memberDiscussionPost);
+            else
+            {
+                TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
+            }
+
+            return View(editPost);
+        }
+
+        //POST: Back/Knowledges/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var Post = db.MemberDiscussionPosts.Find(id);
+            if (Post == null)
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
+            db.MemberDiscussionPosts.Remove(Post);
+            db.SaveChanges();
+
+            return Json(new { success = true });
         }
 
         protected override void Dispose(bool disposing)

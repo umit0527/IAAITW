@@ -9,61 +9,107 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>MemberDiscussionPost</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(m=>m.Id)
+        <section id="main-container" class="main-container">
+            <div class="container">
+                <div class="row">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="sidebar sidebar-right">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PosterId, "PosterId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PosterId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PosterId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="widget">
+                                <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
+                                <ul class="arrow nav nav-tabs nav-stacked">
+                                    <li class="active"><a href="/Download/Create">討論區</a></li>
+                                    <li><a href="/Member/Edit">修改個人資料</a></li>
+                                    <li><a href="/Member/LogOff">登出</a></li>
+                                </ul>
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <!-- Categories end -->
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        </div><!-- Sidebar end -->
+                    </div><!-- Sidebar Col end -->
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
+                        <h2 class="page-title">討論區</h2>
+                        <hr class="botmargin-min">
+                        <!-- 內容開始 -->
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(m => m.Content, new { @class = "form-control", id = "editor" })
+                                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="發 表" class="btn btn-primary solid blank" />
+                            </div>
+                        </div>
+                        <!-- 內容結束 -->
+                    </div><!-- Content Col end -->
+
+
+                </div><!-- Main row end -->
+
+            </div><!-- Conatiner end -->
+        </section><!-- Main container end -->
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+@section Scripts {
+    @* 文字編輯器 *@
+    <script>
+        $(document).ready(function () {
+            if (typeof CKEDITOR !== 'undefined') {
+                CKEDITOR.replace('editor', {
+                    height: 500,
+                    language: 'zh'
+                });
+            }
+            else
+            {
+                console.error('CKEditor is not loaded!');
+            }
+
+            // 顯示成功訊息並跳轉
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                    setTimeout(function () {
+                        alert("@TempData["SuccessMessage"]");
+                        setTimeout(function () {
+                            window.location.href = "@ViewBag.RedirectUrl";
+                        }, 800); // 再延遲 0.8 秒跳轉
+                    }, 500); // 先等 CKEditor 載完 0.5 秒
+                </text>
+            }
+
+            // 顯示錯誤訊息
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    alert("@TempData["ErrorMessage"]");
+                </text>
+            }
+        });
+    </script>
+}
+

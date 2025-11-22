@@ -478,7 +478,6 @@
     <Content Include="Areas\Front\Views\About\Expert.cshtml" />
     <Content Include="Areas\Front\Views\Declare\Index.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Create.cshtml" />
-    <Content Include="Areas\Front\Views\MemberDiscussion\Delete.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Details.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Edit.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Index.cshtml" />
