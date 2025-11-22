@@ -1,7 +1,14 @@
 ﻿@model IAAITW.Models.MemberDiscussionPost
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit"; 
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("會員專區",null),
+        new Tuple<string, string>("討論區", Url.Action("Index", "MemberDiscussion", new { area = "Front" }))
+    };
+    // --- 麵包屑設定結束 ---
 }
 
 <h2>Edit</h2>
@@ -25,8 +32,8 @@
                                 <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
                                 <ul class="arrow nav nav-tabs nav-stacked">
                                     <li class="active"><a href="/Download/Create">討論區</a></li>
-                                    <li><a href="/Member/Edit">修改個人資料</a></li>
-                                    <li><a href="/Member/LogOff">登出</a></li>
+                                    <li><a href="@Url.Action("Edit", "Member", new { area = "Front" })">修改個人資料</a></li>
+                                    <li><a href="@Url.Action("Logout", "Member", new { area = "Front" })">登出</a></li>
                                 </ul>
                             </div>
 

@@ -86,7 +86,7 @@ namespace IAAITW.Areas.Front.Controllers
 
             // 取得登入者對應的 MemberInfo ，用 memeberAccount 的 id 比對 MemberInfoe的memerId
             var loginMemberInfo = db.MemberInfoes.FirstOrDefault(m => m.MemberId == loginUser.Id);
-            ViewBag.LoginUser = loginMemberInfo.Id;
+            ViewBag.LoginUser = loginMemberInfo.Id;  //給 view 判斷刪除與編輯用，是否為發文者
 
             // 查詢文章
             var post = db.MemberDiscussionPosts
@@ -119,7 +119,7 @@ namespace IAAITW.Areas.Front.Controllers
             {
                 PostId = post.Id,
                 Title = post.Title,
-                PosterId=post.PosterId,
+                PosterId = post.PosterId,
                 PosterName = post.MemberInfo?.Name,
                 CreatedDate = post.CreatedDate,
                 Content = post.Content,
@@ -225,7 +225,7 @@ namespace IAAITW.Areas.Front.Controllers
             {
                 // 取得登入者帳號
                 var accountName = User.Identity.Name; // ASP.NET Identity 的登入名稱
-                
+
                 // 先查出 account 表的 id
                 var member = db.MemberAccounts.FirstOrDefault(m => m.Account == accountName);
 
@@ -248,7 +248,7 @@ namespace IAAITW.Areas.Front.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 reply.Content = sanitizer.Sanitize(reply.Content);
                 reply.PostId = id;
-                reply.ReplierId=memberInfo.Id;
+                reply.ReplierId = memberInfo.Id;
 
                 db.MemberDiscussionReplies.Add(reply);
                 db.SaveChanges();
@@ -277,6 +277,7 @@ namespace IAAITW.Areas.Front.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             MemberDiscussionPost memberDiscussionPost = db.MemberDiscussionPosts.Find(id);
             if (memberDiscussionPost == null)
             {
@@ -307,20 +308,27 @@ namespace IAAITW.Areas.Front.Controllers
                 var memberInfo = db.MemberInfoes
                     .FirstOrDefault(m => m.MemberId == memberAccount.Id);
 
-                // 更新欄位
-                postId.Title = editPost.Title;
-                postId.Content = new Ganss.Xss.HtmlSanitizer()
-                    .Sanitize(editPost.Content);
+                if (postId.PosterId != memberInfo.Id)
+                {
+                    TempData["ErrorMessage"] = "沒有編輯權限";
+                }
+                else
+                {
+                    // 更新欄位
+                    postId.Title = editPost.Title;
+                    postId.Content = new Ganss.Xss.HtmlSanitizer()
+                        .Sanitize(editPost.Content);
 
-                postId.PosterId = memberInfo.Id;    
-                postId.UpdatedDate = DateTime.Now; 
+                    postId.PosterId = memberInfo.Id;
+                    postId.UpdatedDate = DateTime.Now;
 
-                db.SaveChanges();
+                    db.SaveChanges();
 
-                TempData["SuccessMessage"] = "編輯成功！";
+                    TempData["SuccessMessage"] = "編輯成功！";
 
-                // 把要導向的 URL 給 View
-                return RedirectToAction("Details", new { id = postId.Id });
+                    // 把要導向的 URL 給 View
+                    return RedirectToAction("Details", new { id = postId.Id });
+                }
             }
             else
             {
@@ -340,24 +348,20 @@ namespace IAAITW.Areas.Front.Controllers
             {
                 return Json(new { success = false, message = "找不到資料" });
             }
-            // 取得目前登入者的 MemberAccount
-            // 1.將 User.Identity 轉型，因為登入是使用 FormsIdentity ，才能存取 Ticket
-            var identity = (FormsIdentity)User.Identity;
-            // 2.從登入 cookie 中取得 Ticket，Ticket.UserData 裡有 memeberAccount 的 id
-            var ticket = identity.Ticket;
-            // 3.反序列化 UserData 成原本的 MemberAccount
-            var loginUser = JsonConvert.DeserializeObject<MemberAccount>(ticket.UserData);
 
-            // 取得登入者對應的 MemberInfo ，用 memeberAccount 的 id 比對 MemberInfoe的memerId
-            var loginMemberInfo = db.MemberInfoes.FirstOrDefault(m => m.MemberId == loginUser.Id);
+            // 取得登入會員的 MemberInfo（PosterId 必須是登入者）
+            var memberAccount = db.MemberAccounts
+                .FirstOrDefault(m => m.Account == User.Identity.Name);
 
-            if (loginMemberInfo == null)
+            var memberInfo = db.MemberInfoes
+                    .FirstOrDefault(m => m.MemberId == memberAccount.Id);
+            if (memberInfo == null)
             {
                 return Json(new { success = false, message = "登入者資料異常" });
             }
 
             // 比對文章作者是否是本人
-            if (post.PosterId != loginMemberInfo.Id)
+            if (post.PosterId != memberInfo.Id)
             {
                 return Json(new { success = false, message = "沒有刪除權限" });
             }
@@ -365,7 +369,8 @@ namespace IAAITW.Areas.Front.Controllers
             db.MemberDiscussionPosts.Remove(post);
             db.SaveChanges();
 
-            return Json(new {
+            return Json(new
+            {
                 success = true,
                 redirectUrl = Url.Action("Index", "MemberDiscussion", new { area = "Front" }),
                 message = "刪除成功！"

@@ -123,7 +123,7 @@
                                 <div class="tags-area clearfix"></div>
                             </div>
                         </div><!-- post-body end -->
-                        @if (Model.PosterId==ViewBag.LoginUser)
+                        @if (Model.PosterId == ViewBag.LoginUser)
                         {
                             <div class="" style="text-align:right;">
                                 @Html.ActionLink("編 輯", "Edit", new { id = Model.PostId }, new { @class = "respon", style = "padding:6px 12px;margin:0px;height:33.6px;" })
