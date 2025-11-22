@@ -12,178 +12,176 @@
     // --- 麵包屑設定結束 ---
 }
 
-    <div>
-        @Html.AntiForgeryToken()
-        <section id="main-container" class="main-container">
-            <div class="container">
-                <div class="row">
+<div>
+    @Html.AntiForgeryToken()
+    <section id="main-container" class="main-container">
+        <div class="container">
+            <div class="row">
 
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 
-                        <div class="sidebar sidebar-right">
+                    <div class="sidebar sidebar-right">
 
-                            <div class="widget">
-                                <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
-                                <ul class="arrow nav nav-tabs nav-stacked">
-                                    <li class="active"><a href="@Url.Action("Index", "MemberDiscussion", new { area = "Front" })">討論區</a></li>
-                                    <li><a href="@Url.Action("Edit", "Member", new { area = "Front" })">修改個人資料</a></li>
-                                    <li><a href="@Url.Action("Logout", "Member", new { area = "Front" })">登出</a></li>
-                                </ul>
+                        <div class="widget">
+                            <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>會員專區</h2>
+                            <ul class="arrow nav nav-tabs nav-stacked">
+                                <li class="active"><a href="@Url.Action("Index", "MemberDiscussion", new { area = "Front" })">討論區</a></li>
+                                <li><a href="@Url.Action("Edit", "Member", new { area = "Front" })">修改個人資料</a></li>
+                                <li><a href="@Url.Action("Logout", "Member", new { area = "Front" })">登出</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Categories end -->
+
+                    </div><!-- Sidebar end -->
+                </div><!-- Sidebar Col end -->
+
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div>
+                        <h2 class="page-title">討論區</h2>
+                        <hr class="botmargin-min">
+                        <!-- 內容開始 -->
+
+                        <style>
+                            .entry-header {
+                                background: #3c73b0;
+                                color: white;
+                                padding: 10px 30px;
+                            }
+
+                                .entry-header .entry-title {
+                                    color: white;
+                                }
+
+                            .entry-title {
+                            }
+
+                            .post-meta-date {
+                            }
+
+                            .post-content {
+                                border: whitesmoke 1px solid;
+                                margin-bottom: 20px;
+                                box-shadow: rgba(210,210,210,.1) 2px 2px 20px;
+                            }
+
+                            .entry-content {
+                            }
+
+                            .post {
+                                border: whitesmoke 1px solid;
+                                padding: 0;
+                            }
+
+                            .postInfo {
+                                padding: 10px 20px;
+                                background: #eee;
+                                text-align: right;
+                            }
+
+                            .respon {
+                                margin: 20px auto;
+                                display: inline-block;
+                                padding: 3px 8px;
+                                background: #b2b2b2;
+                                color: white;
+                                border-radius: 2px;
+                            }
+
+                            .post-body {
+                                background: #FCFCFC;
+                                padding: 30px;
+                                box-shadow: rgba(210,210,210,.1) 2px 2px 20px;
+                            }
+
+                            .clear {
+                                clear: both;
+                            }
+
+                            .postMan {
+                                font-size: 16px;
+                            }
+                        </style>
+
+                        <div class="post-content">
+                            <div class="entry-header">
+                                <h2 class="entry-title">
+                                    @Html.DisplayFor(m => m.Title)
+                                </h2>
+                                <div>
+                                    <span class="postMan"> 發表人：@Html.DisplayFor(m => m.PosterName)</span>
+
+                                </div>
+                            </div><!-- header end -->
+                            <div class="postInfo">
+                                <span class="post-meta-date"><i class="fa fa fa-clock-o"></i> @Model.CreatedDate.ToString("yyyy/MM/dd")</span>
                             </div>
+                            <div class="post-body">
+                                <div class="entry-content topmargin-min">
+                                    <p>@Html.Raw(Model.Content)</p>
+                                </div>
+                                <div class="tags-area clearfix"></div>
+                            </div>
+                        </div><!-- post-body end -->
+                        @if (Model.PosterId==ViewBag.LoginUser)
+                        {
+                            <div class="" style="text-align:right;">
+                                @Html.ActionLink("編 輯", "Edit", new { id = Model.PostId }, new { @class = "respon", style = "padding:6px 12px;margin:0px;height:33.6px;" })
+                                <input type="submit" value="刪 除" data-id="@Model.PostId" class="btn btn-warning delete-btn ms-1" style="border-radius: 2px; margin-bottom:4px; margin-left:5px;" />
+                            </div>
+                        }
 
-                            <!-- Categories end -->
+                        <p>
+                            @Html.ActionLink("回應文章", "CreateRe", new { id = Model.PostId }, new { @class = "respon" })
+                        </p>
 
-                        </div><!-- Sidebar end -->
-                    </div><!-- Sidebar Col end -->
+                        <div class="clear align-items-center"></div>
 
-                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                        <div>
-                            <h2 class="page-title">討論區</h2>
-                            <hr class="botmargin-min">
-                            <!-- 內容開始 -->
-
-                            <style>
-                                .entry-header {
-                                    background: #3c73b0;
-                                    color: white;
-                                    padding: 10px 30px;
-                                }
-
-                                    .entry-header .entry-title {
-                                        color: white;
-                                    }
-
-                                .entry-title {
-                                }
-
-                                .post-meta-date {
-                                }
-
-                                .post-content {
-                                    border: whitesmoke 1px solid;
-                                    margin-bottom: 20px;
-                                    box-shadow: rgba(210,210,210,.1) 2px 2px 20px;
-                                }
-
-                                .entry-content {
-                                }
-
-                                .post {
-                                    border: whitesmoke 1px solid;
-                                    padding: 0;
-                                }
-
-                                .postInfo {
-                                    padding: 10px 20px;
-                                    background: #eee;
-                                    text-align: right;
-                                }
-
-                                .respon {
-                                    margin: 20px auto;
-                                    display: inline-block;
-                                    padding: 3px 8px;
-                                    background: #b2b2b2;
-                                    color: white;
-                                    border-radius: 2px;
-                                }
-
-                                .post-body {
-                                    background: #FCFCFC;
-                                    padding: 30px;
-                                    box-shadow: rgba(210,210,210,.1) 2px 2px 20px;
-                                }
-
-                                .clear {
-                                    clear: both;
-                                }
-
-                                .postMan {
-                                    font-size: 16px;
-                                }
-                            </style>
-                            @using (Html.BeginForm())
+                        @if (Model.Replies != null && Model.Replies.Any())
+                        {
+                            foreach (var reply in Model.Replies.ToList())
                             {
-                                <div class="post-content">
+                                <div class="post">
                                     <div class="entry-header">
-                                        <h2 class="entry-title">
-                                            @Html.DisplayFor(m => m.Title)
-                                        </h2>
-                                        <div class="d-flex justify-content-between">
-                                            <span class="postMan"> 發表人：@Html.DisplayFor(m => m.PosterName)</span>
-                                            <div>
-                                                <p>
-                                                    @Html.ActionLink("編輯", "Edit", new { id = Model.PostId }, new { @class = "respon" })
-                                                </p>
-                                                <p>
-                                                    <input type="submit" value="Delete" data-id="@Model.PostId" class="btn btn-default delete-btn" />
-                                                    @*@Html.ActionLink("刪除", "Delete", new { id = Model.PostId }, new { @class = "btn btn-primary" })*@
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div><!-- header end -->
+                                        回應：@reply.ReplierName
+                                    </div>
                                     <div class="postInfo">
-                                        <span class="post-meta-date"><i class="fa fa fa-clock-o"></i> @Model.CreatedDate.ToString("yyyy/MM/dd")</span>
+                                        <span>@reply.ReplyDate.ToString("yyyy/MM/dd")</span>
                                     </div>
                                     <div class="post-body">
-                                        <div class="entry-content topmargin-min">
-                                            <p>@Html.Raw(Model.Content)</p>
-                                        </div>
-                                        <div class="tags-area clearfix"></div>
+                                        <p>@Html.Raw(reply.ReplyContent)</p>
                                     </div>
-                                </div><!-- post-body end -->
-
-                                <p>
-                                    @Html.ActionLink("回應文章", "CreateRe", new { id = Model.PostId }, new { @class = "respon" })
-                                </p>
-
-                                <div class="clear align-items-center"></div>
-
-                                if (Model.Replies != null && Model.Replies.Any())
-                                {
-                                    foreach (var reply in Model.Replies.ToList())
-                                    {
-                                        <div class="post">
-                                            <div class="entry-header">
-                                                回應：@reply.ReplierName
-                                            </div>
-                                            <div class="postInfo">
-                                                <span>@reply.ReplyDate.ToString("yyyy/MM/dd")</span>
-                                            </div>
-                                            <div class="post-body">
-                                                <p>@Html.Raw(reply.ReplyContent)</p>
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="paging text-center">
-                                        <div class="pagination">
-                                            @Html.Pager(Model.Replies.PageSize, Model.Replies.PageNumber, Model.Replies.TotalItemCount)
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <p>目前尚無回覆。</p>
-                                }
-
-                                <!-- 內容結束 -->
+                                </div>
                             }
-                        </div><!-- Content Col end -->
+                            <div class="paging text-center">
+                                <div class="pagination">
+                                    @Html.Pager(Model.Replies.PageSize, Model.Replies.PageNumber, Model.Replies.TotalItemCount)
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>目前尚無回覆。</p>
+                        }
 
-                        <div class="post-footer pull-left">
-                            @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-primary" })
-                        </div>
+                        <!-- 內容結束 -->
+
+                    </div><!-- Content Col end -->
+
+                    <div class="post-footer pull-left">
+                        @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-primary" })
                     </div>
-                </div><!-- Main row end -->
+                </div>
+            </div><!-- Main row end -->
 
-            </div><!-- Conatiner end -->
-        </section><!-- Main container end -->
-    </div>
+        </div><!-- Conatiner end -->
+    </section><!-- Main container end -->
+</div>
 
 
-    @section scripts {
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
         $(function () {
             $('.delete-btn').on('click', function () {
                 if (!confirm('確定要刪除這筆資料嗎？')) return;
@@ -203,10 +201,10 @@
                     },
                     success: function (res) {
                         if (res && res.success) {
-                            row.fadeOut(300, function () { $(this).remove(); });
-                            // 可改成更漂亮的提示元件（toast）
-                            alert('刪除成功！');
-                            location.reload();
+                            alert(res.message || '刪除成功！');
+                            if (res.redirectUrl) {
+                                window.location.href = res.redirectUrl;
+                            }
                         } else {
                             var msg = (res && res.message) ? res.message : '刪除失敗';
                             alert('刪除失敗: ' + msg);
@@ -220,26 +218,5 @@
                 });
             });
         });
-
-        // 顯示成功訊息並跳轉
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <text>
-                setTimeout(function () {
-                    alert("@TempData["SuccessMessage"]");
-                    setTimeout(function () {
-                        window.location.href = "@ViewBag.RedirectUrl";
-                    }, 800); // 再延遲 0.8 秒跳轉
-                }, 500); // 先等 CKEditor 載完 0.5 秒
-            </text>
-        }
-
-        // 顯示錯誤訊息
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <text>
-                alert("@TempData["ErrorMessage"]");
-            </text>
-        }
-        </script>
-    }
+    </script>
+}

@@ -259,17 +259,6 @@ namespace IAAITW.Areas.Back.Controllers
             return View(knowledge);
         }
 
-        //// POST: Back/Knowledges/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Knowledge knowledge = db.Knowledges.Find(id);
-        //    db.Knowledges.Remove(knowledge);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
         //POST: Back/Knowledges/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]

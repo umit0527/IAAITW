@@ -2,6 +2,7 @@
 using IAAITW.Models;
 using Microsoft.Ajax.Utilities;
 using MvcPaging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -75,7 +76,19 @@ namespace IAAITW.Areas.Front.Controllers
             if (id == null)
                 return HttpNotFound();
 
-            // 查詢文章（
+            // 取得目前登入者的 MemberAccount
+            // 1.將 User.Identity 轉型，因為登入是使用 FormsIdentity ，才能存取 Ticket
+            var identity = (FormsIdentity)User.Identity;
+            // 2.從登入 cookie 中取得 Ticket，Ticket.UserData 裡有 memeberAccount 的 id
+            var ticket = identity.Ticket;
+            // 3.反序列化 UserData 成原本的 MemberAccount
+            var loginUser = JsonConvert.DeserializeObject<MemberAccount>(ticket.UserData);
+
+            // 取得登入者對應的 MemberInfo ，用 memeberAccount 的 id 比對 MemberInfoe的memerId
+            var loginMemberInfo = db.MemberInfoes.FirstOrDefault(m => m.MemberId == loginUser.Id);
+            ViewBag.LoginUser = loginMemberInfo.Id;
+
+            // 查詢文章
             var post = db.MemberDiscussionPosts
                 .Include(p => p.MemberInfo)
                 .FirstOrDefault(p => p.Id == id);
@@ -106,6 +119,7 @@ namespace IAAITW.Areas.Front.Controllers
             {
                 PostId = post.Id,
                 Title = post.Title,
+                PosterId=post.PosterId,
                 PosterName = post.MemberInfo?.Name,
                 CreatedDate = post.CreatedDate,
                 Content = post.Content,
@@ -316,20 +330,46 @@ namespace IAAITW.Areas.Front.Controllers
             return View(editPost);
         }
 
-        //POST: Back/Knowledges/Delete/5
+        //POST: Back/MemberDiscussion/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var Post = db.MemberDiscussionPosts.Find(id);
-            if (Post == null)
+            var post = db.MemberDiscussionPosts.Find(id);
+            if (post == null)
             {
                 return Json(new { success = false, message = "找不到資料" });
             }
-            db.MemberDiscussionPosts.Remove(Post);
+            // 取得目前登入者的 MemberAccount
+            // 1.將 User.Identity 轉型，因為登入是使用 FormsIdentity ，才能存取 Ticket
+            var identity = (FormsIdentity)User.Identity;
+            // 2.從登入 cookie 中取得 Ticket，Ticket.UserData 裡有 memeberAccount 的 id
+            var ticket = identity.Ticket;
+            // 3.反序列化 UserData 成原本的 MemberAccount
+            var loginUser = JsonConvert.DeserializeObject<MemberAccount>(ticket.UserData);
+
+            // 取得登入者對應的 MemberInfo ，用 memeberAccount 的 id 比對 MemberInfoe的memerId
+            var loginMemberInfo = db.MemberInfoes.FirstOrDefault(m => m.MemberId == loginUser.Id);
+
+            if (loginMemberInfo == null)
+            {
+                return Json(new { success = false, message = "登入者資料異常" });
+            }
+
+            // 比對文章作者是否是本人
+            if (post.PosterId != loginMemberInfo.Id)
+            {
+                return Json(new { success = false, message = "沒有刪除權限" });
+            }
+
+            db.MemberDiscussionPosts.Remove(post);
             db.SaveChanges();
 
-            return Json(new { success = true });
+            return Json(new {
+                success = true,
+                redirectUrl = Url.Action("Index", "MemberDiscussion", new { area = "Front" }),
+                message = "刪除成功！"
+            });
         }
 
         protected override void Dispose(bool disposing)

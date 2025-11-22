@@ -338,6 +338,10 @@
     <Compile Include="Migrations\202511201357537_remove passowrd require in memberaccount.Designer.cs">
       <DependentUpon>202511201357537_remove passowrd require in memberaccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511220902264_EnableCascadeDeleteOnReplies.cs" />
+    <Compile Include="Migrations\202511220902264_EnableCascadeDeleteOnReplies.Designer.cs">
+      <DependentUpon>202511220902264_EnableCascadeDeleteOnReplies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -966,6 +970,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511201357537_remove passowrd require in memberaccount.resx">
       <DependentUpon>202511201357537_remove passowrd require in memberaccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511220902264_EnableCascadeDeleteOnReplies.resx">
+      <DependentUpon>202511220902264_EnableCascadeDeleteOnReplies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

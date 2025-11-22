@@ -14,6 +14,8 @@ namespace IAAITW.Models
 
         public string Content { get; set; }
 
+        public int PosterId { get; set; }
+
         public string PosterName { get; set; }
 
         public DateTime CreatedDate { get; set; }
