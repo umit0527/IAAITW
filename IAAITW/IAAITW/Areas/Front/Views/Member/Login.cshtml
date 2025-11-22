@@ -135,9 +135,17 @@
     @if (TempData["ErrorMessage"] != null)
     {
         <text>
-            alert("@TempData["ErrorMessage"]");
+        alert("@TempData["ErrorMessage"]");
         </text>
     }
+
+        // 顯示登出訊息
+@if (TempData["LogoutMessage"] != null)
+{
+    <text>
+    alert("@TempData["LogoutMessage"]");
+    </text>
+}
 });
     </script>
 }

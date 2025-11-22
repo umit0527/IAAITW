@@ -97,6 +97,8 @@ namespace IAAITW.Areas.Front.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            // 放入一次性提示訊息
+            TempData["LogoutMessage"] = "登出成功！";
             return RedirectToAction("Login");
         }
 
