@@ -76,17 +76,17 @@ namespace IAAITW.Areas.Front.Controllers
             if (id == null)
                 return HttpNotFound();
 
-            // 取得目前登入者的 MemberAccount
-            // 1.將 User.Identity 轉型，因為登入是使用 FormsIdentity ，才能存取 Ticket
-            var identity = (FormsIdentity)User.Identity;
-            // 2.從登入 cookie 中取得 Ticket，Ticket.UserData 裡有 memeberAccount 的 id
-            var ticket = identity.Ticket;
-            // 3.反序列化 UserData 成原本的 MemberAccount
-            var loginUser = JsonConvert.DeserializeObject<MemberAccount>(ticket.UserData);
+            // 取得登入會員的 MemberInfo
+            var memberAccount = db.MemberAccounts
+                .FirstOrDefault(m => m.Account == User.Identity.Name);
+            // 再查出 info 表的 id
+            var memberInfo = db.MemberInfoes
+                .FirstOrDefault(m => m.MemberId == memberAccount.Id);
 
-            // 取得登入者對應的 MemberInfo ，用 memeberAccount 的 id 比對 MemberInfoe的memerId
-            var loginMemberInfo = db.MemberInfoes.FirstOrDefault(m => m.MemberId == loginUser.Id);
-            ViewBag.LoginUser = loginMemberInfo.Id;  //給 view 判斷刪除與編輯用，是否為發文者
+            //var replyerId = db.MemberDiscussionReplies.FirstOrDefault(r => r.ReplierId == memberInfo.Id);
+
+            ViewBag.LoginUser =  memberInfo.Id;  //給 view 判斷刪除與編輯用，是否為發文者
+            //ViewBag.ReplyerId = replyerId.ReplierId;  //給 view 判斷刪除與編輯用，是否為回覆者
 
             // 查詢文章
             var post = db.MemberDiscussionPosts
@@ -109,6 +109,8 @@ namespace IAAITW.Areas.Front.Controllers
                 .OrderByDescending(r => r.CreatedDate)
                 .Select(r => new ReplyViewModel
                 {
+                    Id = r.Id,
+                    ReplierId = r.ReplierId,
                     ReplierName = r.MemberInfo.Name,
                     ReplyDate = r.CreatedDate,
                     ReplyContent = r.Content
@@ -208,7 +210,7 @@ namespace IAAITW.Areas.Front.Controllers
             var model = new MemberDiscussionReply
             {
                 PostId = post.Id,
-                Post = post   // ← 這行是關鍵，讓 View 可以顯示 Post.Title
+                Post = post   // ← 讓 View 可以顯示 Post.Title
             };
 
             return View(model);
@@ -341,7 +343,7 @@ namespace IAAITW.Areas.Front.Controllers
         //POST: Back/MemberDiscussion/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeletePost(int id)
         {
             var post = db.MemberDiscussionPosts.Find(id);
             if (post == null)
@@ -376,6 +378,30 @@ namespace IAAITW.Areas.Front.Controllers
                 message = "刪除成功！"
             });
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteReply(int id)
+        {
+            var reply = db.MemberDiscussionReplies.Find(id);
+            if (reply == null)
+            {
+                return Json(new { success = false, message = "找不到回覆資料" });
+            }
+
+            int postId = reply.PostId;
+
+            db.MemberDiscussionReplies.Remove(reply);
+            db.SaveChanges();
+
+            return Json(new
+            {
+                success = true,
+                message = "刪除成功！",
+                redirectUrl = Url.Action("Details", new { id = postId })
+            });
+        }
+
 
         protected override void Dispose(bool disposing)
         {

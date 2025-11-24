@@ -25,6 +25,8 @@ namespace IAAITW.Models
 
     public class ReplyViewModel
     {
+        public int Id { get; set; }
+        public int ReplierId { get; set; } 
         public string ReplierName { get; set; }
         public DateTime ReplyDate { get; set; }
         public string ReplyContent { get; set; }
