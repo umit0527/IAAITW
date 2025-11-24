@@ -40,7 +40,6 @@ namespace IAAITW
 
             //前台js
             bundles.Add(new ScriptBundle("~/bundles/Front").Include(
-                      "~/js/jquery.js",
                       "~/js/bootstrap.min.js",
                       "~/js/owl.carousel.min.js",
                       "~/js/jquery.counterup.min.js",

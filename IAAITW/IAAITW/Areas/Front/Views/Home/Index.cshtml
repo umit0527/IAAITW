@@ -1,0 +1,108 @@
+﻿@model IEnumerable<IAAITW.Models.News>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Front/Views/Shared/_LayoutIndex.cshtml";
+}
+
+<section id="news" class="news">
+    <div class="container">
+
+        <div class="row">
+
+            @foreach (var item in Model.Take(4))
+            {
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="latest-post">
+                        <img class="img-responsive" src="@Url.Content(item.CoverImage)" alt="img">
+                        <div class="post-body">
+                            <h4 class="post-title">
+                                <a href="@Url.Action("Details", "News", new { id = item.Id })">@item.Title</a>
+                            </h4>
+                            <span class="post-item-date">
+                                <i class="fa fa-clock-o"></i> @item.UpdatedDate.ToString("yyyy/MM/dd")
+                            </span>
+                            <div class="post-text">
+                                <p>
+                                    @{
+                                        var plain = RemoveHtml(item.Content); // 移除所有 HTML 標籤
+                                        var decoded = System.Web.HttpUtility.HtmlDecode(plain); // 移除HTML Entities 
+                                        var shortText = decoded.Length > 60 ? decoded.Substring(0, 60) + "..." : decoded;
+                                    }
+                                    @shortText
+                                </p>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("Details", "News", new {id=item.Id})" class="btn btn-primary">more</a>
+
+                    </div><!-- post col end -->
+                </div>
+            }
+        </div><!--/ Content row end -->
+    </div><!--/ Container end -->
+</section><!--/ News end -->
+
+<section id="facts" class="facts no-padding">
+    <div class="fact-img">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-12 fact-text">
+                    <ol>
+                        <li>從事火災調查之科技與學術研究，提昇我國火災調查科技研究水準，並落實研究成果。</li>
+                        <li>舉辦相關學術研討會及活動，提供技術資訊與發展之交流平台，參與並推動火災調查、預防及研究等之國內外交流活動。</li>
+                        <li>發行及出版火災調查、預防及研究等相關科技研究之學術刊物、書籍及媒體等。</li>
+                        <li>從事火災原因研究、危險因子診斷及災害預防等技術與系統之研發、相關資料庫之建立、及推廣和教育。</li>
+                        <li>提昇火災預防及調查專業人員之技術，並輔導會員取得國際證照。</li>
+                        <li>維護會員合法權益、端正會員職業道德與倫理、促進會員間之合作。</li>
+                        <li>關懷社會並維護社會公理正義。</li>
+                    </ol>
+                </div><!-- Col end -->
+            </div><!--/ Content row end -->
+        </div><!--/ Container end -->
+    </div><!--/ Container end -->
+</section><!-- Facts end -->
+
+<section id="graybg" class="graybg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <img src="~/Images/part3.jpg" alt="img" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners start -->
+<section class="partners-area">
+    <div class="container">
+
+        <div class="text-center">
+            <a href="https://www.nfa.gov.tw/cht/index.php?" target="_blank">
+                <img src="/Images/partner1.jpg" alt="client-消防署" style="padding-left:8px;">
+            </a>
+            <a href="https://www.firearson.com/" target="_blank">
+                <img src="/Images/S20160430110402.png" alt="client-IAAI" style="padding-left:8px;">
+            </a>
+            <a href="https://www.nationalfire.com/" target="_blank">
+                <img src="/Images/partner3.jpg" alt="client-NFPA" style="padding-left:8px;">
+            </a>
+            <a href="https://www.cfitrainer.net/en/" target="_blank">
+                <img src="/Images/partner4.jpg" alt="client-CFI" style="padding-left:8px;">
+            </a>
+            <a href="https://www.fema.gov/" target="_blank">
+                <img src="/Images/partner5.jpg" alt="client-FEMA" style="padding-left:8px;">
+            </a>
+
+            <!--/ Owl carousel end -->
+
+        </div><!--/ Content row end -->
+    </div><!--/ Container end -->
+</section><!--/ Partners end -->
+
+@* 移除內容的標籤 *@
+@functions{
+    public static string RemoveHtml(string input)
+    {
+        return System.Text.RegularExpressions.Regex.Replace(input, "<.*?>", string.Empty);
+    }
+}

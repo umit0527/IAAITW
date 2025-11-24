@@ -187,6 +187,7 @@
     <Compile Include="Areas\Front\Controllers\CalendarsController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Front\Controllers\DeclareController.cs" />
+    <Compile Include="Areas\Front\Controllers\HomeController.cs" />
     <Compile Include="Areas\Front\Controllers\JobController.cs" />
     <Compile Include="Areas\Front\Controllers\KnowledgesController.cs" />
     <Compile Include="Areas\Front\Controllers\MemberController.cs" />
@@ -334,6 +335,10 @@
     <Compile Include="Migrations\202511140915096_add foreignkey in news table.Designer.cs">
       <DependentUpon>202511140915096_add foreignkey in news table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511240648244_fix.cs" />
+    <Compile Include="Migrations\202511240648244_fix.Designer.cs">
+      <DependentUpon>202511240648244_fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -381,9 +386,79 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="css\animate.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\colorbox.css" />
+    <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\owl.carousel.css" />
+    <Content Include="css\owl.theme.css" />
+    <Content Include="css\responsive.css" />
+    <Content Include="css\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\banner-bg.jpg" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\calendar.jpg" />
+    <Content Include="Images\controls.png" />
+    <Content Include="Images\crossword.png" />
+    <Content Include="Images\down-arrow-transparent.png" />
+    <Content Include="Images\down-arrow-white.png" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\mission.png" />
+    <Content Include="Images\news-img.jpg" />
+    <Content Include="Images\newsimg-01.jpg" />
+    <Content Include="Images\newsimg-02.jpg" />
+    <Content Include="Images\newsimg-03.jpg" />
+    <Content Include="Images\newsimg-04.jpg" />
+    <Content Include="Images\newsimg-size.jpg" />
+    <Content Include="Images\newsimg.jpg" />
+    <Content Include="Images\newsletter-icon.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="Images\part2_menu_1.jpg" />
+    <Content Include="Images\part2_menu_2.jpg" />
+    <Content Include="Images\part2_menu_3.jpg" />
+    <Content Include="Images\part3.jpg" />
+    <Content Include="Images\partner.jpg" />
+    <Content Include="Images\partner1.jpg" />
+    <Content Include="Images\partner2.jpg" />
+    <Content Include="Images\partner3.jpg" />
+    <Content Include="Images\partner4.jpg" />
+    <Content Include="Images\partner5.jpg" />
+    <Content Include="Images\pro-size.jpg" />
+    <Content Include="Images\pro.jpg" />
+    <Content Include="Images\pro1.jpg" />
+    <Content Include="Images\pro2.jpg" />
+    <Content Include="Images\pro3.jpg" />
+    <Content Include="Images\pro4.jpg" />
+    <Content Include="Images\slider-main-01.jpg" />
+    <Content Include="Images\slider-main-02.jpg" />
+    <Content Include="Images\test.jpg" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\custom.js" />
+    <Content Include="js\gmap3.min.js" />
+    <Content Include="js\html5shiv.js" />
+    <Content Include="js\ini.isotope.js" />
+    <Content Include="js\isotope.js" />
+    <Content Include="js\jquery.colorbox.js" />
+    <Content Include="js\jquery.counterup.min.js" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\owl.carousel.min.js" />
+    <Content Include="js\respond.min.js" />
+    <Content Include="js\waypoints.min.js" />
+    <Content Include="js\wow.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -442,8 +517,6 @@
     <Content Include="Areas\Back\Views\Surveys\Index.cshtml" />
     <Content Include="Areas\Front\Views\Job\Survey.cshtml" />
     <Content Include="Areas\Front\Views\Member\Register.cshtml" />
-    <Content Include="Areas\Front\Views\Member\Delete.cshtml" />
-    <Content Include="Areas\Front\Views\Member\Details.cshtml" />
     <Content Include="Areas\Front\Views\Member\Edit.cshtml" />
     <Content Include="Areas\Front\Views\Member\Login.cshtml" />
     <Content Include="key.config" />
@@ -475,7 +548,6 @@
     <Content Include="Areas\Front\Views\About\Expert.cshtml" />
     <Content Include="Areas\Front\Views\Declare\Index.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Create.cshtml" />
-    <Content Include="Areas\Front\Views\MemberDiscussion\Delete.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Details.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Edit.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Index.cshtml" />
@@ -490,6 +562,8 @@
     <Content Include="Areas\Front\Views\News\Details.cshtml" />
     <Content Include="Areas\Front\Views\News\Edit.cshtml" />
     <Content Include="Areas\Front\Views\News\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Shared\_LayoutIndex.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -812,6 +886,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Uploads\Knowledge\螢幕擷取畫面 2025-03-10 095516.png" />
+    <Content Include="Uploads\News\螢幕擷取畫面 2025-03-02 144616.png" />
+    <Content Include="Uploads\News\螢幕擷取畫面 2025-03-10 095516.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -961,6 +1038,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511140915096_add foreignkey in news table.resx">
       <DependentUpon>202511140915096_add foreignkey in news table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511240648244_fix.resx">
+      <DependentUpon>202511240648244_fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
