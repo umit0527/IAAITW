@@ -128,7 +128,7 @@
                         @if (Model.PosterId == ViewBag.LoginUser)
                         {
                             <div class="" style="text-align:right;">
-                                @Html.ActionLink("編 輯", "Edit", new { id = Model.PostId }, new { @class = "respon", style = "padding:6px 12px;margin:0px;height:33.6px;" })
+                                @Html.ActionLink("編 輯", "EditPost", new { id = Model.PostId }, new { @class = "respon", style = "padding:6px 12px;margin:0px;height:33.6px;" })
                                 <input type="submit" value="刪 除" data-id="@Model.PostId" class="btn btn-warning delete-post-btn ms-1" style="border-radius: 2px; margin-bottom:4px; margin-left:5px;" />
                             </div>
                         }
@@ -160,7 +160,7 @@
                                 if (reply.ReplierId == ViewBag.LoginUser)
                                 {
                                     <div class="" style="text-align:right;">
-                                        @Html.ActionLink("編 輯", "Edit", new { id = reply.Id }, new { @class = "respon", style = "padding:6px 12px;margin:0px;height:33.6px;" })
+                                        @Html.ActionLink("編 輯", "EditReply", new { id = reply.Id }, new { @class = "respon", style = "padding:6px 12px;margin:0px;height:33.6px;" })
                                         <input type="submit" value="刪 除" data-id="@reply.Id" class="btn btn-warning delete-reply-btn ms-1" style="border-radius: 2px; margin-bottom:4px; margin-left:5px;" />
                                     </div>
                                 }

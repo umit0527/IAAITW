@@ -83,10 +83,7 @@ namespace IAAITW.Areas.Front.Controllers
             var memberInfo = db.MemberInfoes
                 .FirstOrDefault(m => m.MemberId == memberAccount.Id);
 
-            //var replyerId = db.MemberDiscussionReplies.FirstOrDefault(r => r.ReplierId == memberInfo.Id);
-
             ViewBag.LoginUser =  memberInfo.Id;  //給 view 判斷刪除與編輯用，是否為發文者
-            //ViewBag.ReplyerId = replyerId.ReplierId;  //給 view 判斷刪除與編輯用，是否為回覆者
 
             // 查詢文章
             var post = db.MemberDiscussionPosts
@@ -273,7 +270,7 @@ namespace IAAITW.Areas.Front.Controllers
         }
 
         // GET: Front/MemberDiscussion/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult EditPost(int? id)
         {
             if (id == null)
             {
@@ -294,7 +291,7 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MemberDiscussionPost editPost)
+        public ActionResult EditPost(MemberDiscussionPost editPost)
         {
             if (ModelState.IsValid)
             {
@@ -329,7 +326,7 @@ namespace IAAITW.Areas.Front.Controllers
                     TempData["SuccessMessage"] = "編輯成功！";
 
                     // 把要導向的 URL 給 View
-                    return RedirectToAction("Details", new { id = postId.Id });
+                    ViewBag.RedirectUrl = Url.Action("Details", new { id = postId.Id });
                 }
             }
             else
@@ -377,6 +374,73 @@ namespace IAAITW.Areas.Front.Controllers
                 redirectUrl = Url.Action("Index", "MemberDiscussion", new { area = "Front" }),
                 message = "刪除成功！"
             });
+        }
+
+        // GET: Front/MemberDiscussion/Edit/5
+        public ActionResult EditReply(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            MemberDiscussionReply memberDiscussionReply = db.MemberDiscussionReplies.Find(id);
+            if (memberDiscussionReply == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ReplierId = new SelectList(db.MemberAccounts, "Id", "Account", memberDiscussionReply.ReplierId);
+            return View(memberDiscussionReply);
+        }
+
+        // POST: Front/MemberDiscussion/Edit/5
+        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
+        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditReply(MemberDiscussionReply editReply)
+        {
+            if (ModelState.IsValid)
+            {
+                // 找到原本的文章（只用 editReply.Id 來查文章）
+                var replyId = db.MemberDiscussionReplies.Find(editReply.Id);
+                if (replyId == null)
+                    return HttpNotFound();
+
+                // 取得登入會員的 MemberInfo（PosterId 必須是登入者）
+                var memberAccount = db.MemberAccounts
+                    .FirstOrDefault(m => m.Account == User.Identity.Name);
+
+                var memberInfo = db.MemberInfoes
+                    .FirstOrDefault(m => m.MemberId == memberAccount.Id);
+
+                if (replyId.ReplierId != memberInfo.Id)
+                {
+                    TempData["ErrorMessage"] = "沒有編輯權限";
+                }
+                else
+                {
+                    // 更新欄位
+                    replyId.Content = new Ganss.Xss.HtmlSanitizer()
+                        .Sanitize(editReply.Content);
+
+                    replyId.ReplierId = memberInfo.Id;
+                    replyId.UpdatedDate = DateTime.Now;
+
+                    db.SaveChanges();
+
+                    TempData["SuccessMessage"] = "編輯成功！";
+
+                    // 把要導向的 URL 給 View
+                    ViewBag.RedirectUrl = Url.Action("Details", new { id = replyId.PostId });
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
+            }
+
+            return View(editReply);
         }
 
         [HttpPost]
