@@ -2,6 +2,13 @@
 
 @{
     ViewBag.Title = "訊息發布";
+    ViewBag.Breadcrumb = new List<Tuple<string, string>>()
+{
+     // Tuple<顯示文字, 連結URL>
+        new Tuple<string, string>("訊息發布",null),
+        new Tuple<string, string>("訊息發布", Url.Action("Details", "News", new { id=Model.Id }))
+    };
+    // --- 麵包屑設定結束 ---  
 }
 
 <!-- Banner area end -->
@@ -13,7 +20,7 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>訊息發布</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li class="active"><a href="#">訊息發布</a></li>
+                            <li class="active"><a href="@Url.Action("Index", "News")">最新消息</a></li>
                         </ul>
                     </div>
                     <!-- Categories end -->
