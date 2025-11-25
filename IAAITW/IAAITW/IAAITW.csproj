@@ -339,6 +339,10 @@
     <Compile Include="Migrations\202511240648244_fix.Designer.cs">
       <DependentUpon>202511240648244_fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511251311316_fix index page.cs" />
+    <Compile Include="Migrations\202511251311316_fix index page.Designer.cs">
+      <DependentUpon>202511251311316_fix index page.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -1042,6 +1046,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511240648244_fix.resx">
       <DependentUpon>202511240648244_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511251311316_fix index page.resx">
+      <DependentUpon>202511251311316_fix index page.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
