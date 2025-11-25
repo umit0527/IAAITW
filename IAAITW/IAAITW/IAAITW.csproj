@@ -184,7 +184,7 @@
     <Compile Include="Areas\Back\Controllers\SurveysController.cs" />
     <Compile Include="Areas\Back\Controllers\ViewHelper.cs" />
     <Compile Include="Areas\Front\Controllers\AboutController.cs" />
-    <Compile Include="Areas\Front\Controllers\CalendarsController.cs" />
+    <Compile Include="Areas\Front\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
     <Compile Include="Areas\Front\Controllers\DeclareController.cs" />
     <Compile Include="Areas\Front\Controllers\HomeController.cs" />
@@ -194,7 +194,6 @@
     <Compile Include="Areas\Front\Controllers\MemberDiscussionController.cs" />
     <Compile Include="Areas\Front\Controllers\NewsController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -475,11 +474,11 @@
     <Content Include="Areas\Front\Views\web.config" />
     <Content Include="Areas\Front\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Front\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Front\Views\Contacts\Contacts.cshtml" />
+    <Content Include="Areas\Front\Views\Contacts\Index.cshtml" />
     <Content Include="Areas\Back\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Back\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Back\Views\Contacts\Index.cshtml" />
-    <Content Include="Areas\Front\Views\Calendars\Index.cshtml" />
+    <Content Include="Areas\Front\Views\Calendar\Index.cshtml" />
     <Content Include="Areas\Back\Views\Calendars\Index.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Create.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Delete.cshtml" />
@@ -905,14 +904,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Back\Data\" />
     <Folder Include="Areas\Front\Data\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

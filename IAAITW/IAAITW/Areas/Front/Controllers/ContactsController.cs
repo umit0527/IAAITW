@@ -18,8 +18,8 @@ namespace IAAITW.Areas.Front.Controllers
     {
         private DBMdoelContext db = new DBMdoelContext();
 
-        // GET: Front/Contacts/Contacts
-        public ActionResult Contacts()
+        // GET: Front/Contacts/Index
+        public ActionResult Index()
         {
             return View();
         }

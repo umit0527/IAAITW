@@ -44,16 +44,16 @@
                                     </a>
                                 </div>
                             </li>
-                            <li>
-                                <div class="info-box">
-                                    <a href="english/" title="English">
-                                        <i class="fa fa-globe">&nbsp;</i>
-                                        <div class="info-box-content">
-                                            <p class="info-box-title">English</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
+                            @*<li>
+                                    <div class="info-box">
+                                        <a href="english/" title="English">
+                                            <i class="fa fa-globe">&nbsp;</i>
+                                            <div class="info-box-content">
+                                                <p class="info-box-title">English</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>*@
                         </ul>
                     </div><!-- header right end -->
                 </div><!-- Row end -->
@@ -76,52 +76,52 @@
 
                                 <ul class="nav navbar-nav">
                                     <li class="dropdown">
-                                        <a href="about.html" class="dropdown-toggle" data-toggle="dropdown" title="關於我們">關於我們 <i class="fa fa-angle-down"></i></a>
+                                        <a href="@Url.Action("About", "About", new { area = "Front" })" class="dropdown-toggle" data-toggle="dropdown" title="關於我們">關於我們 <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="about.html">關於我們</a></li>
-                                            <li><a href="master.html">組織架構</a></li>
-                                            <li><a href="master.html">沿格</a></li>
-                                            <li><a href="master.html">配證會員</a></li>
-                                            <li><a href="master.html">專家介紹</a></li>
+                                            <li><a href="@Url.Action("About", "About", new { area = "Front" })">關於我們</a></li>
+                                            <li><a href="@Url.Action("Organization", "About", new { area = "Front" })">組織架構</a></li>
+                                            <li><a href="@Url.Action("History", "About", new { area = "Front" })">沿革</a></li>
+                                            <li><a href="@Url.Action("Member", "About", new { area = "Front" })">配證會員</a></li>
+                                            <li><a href="@Url.Action("Expert", "About", new { area = "Front" })">專家介紹</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="news.html" class="dropdown-toggle" data-toggle="dropdown" title="訊息發佈">訊息發佈 <i class="fa fa-angle-down"></i></a>
+                                        <a href="@Url.Action("Index", "News", new { area = "Front" })" class="dropdown-toggle" data-toggle="dropdown" title="訊息發佈">訊息發佈 <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="news.html">最新消息</a></li>
+                                            <li><a href="@Url.Action("Index", "News", new { area = "Front" })">最新消息</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="member.html" class="dropdown-toggle" data-toggle="dropdown" title="會員專區">會員專區 <i class="fa fa-angle-down"></i></a>
+                                        <a href="@Url.Action("Login", "Member", new { area = "Front" })" class="dropdown-toggle" data-toggle="dropdown" title="會員專區">會員專區 <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="member_login.html">討論區</a></li>
+                                            <li><a href="@Url.Action("Login", "Member", new { area = "Front" })">討論區</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="business.html" class="dropdown-toggle" data-toggle="dropdown" title="協會業務">協會業務 <i class="fa fa-angle-down"></i></a>
+                                        <a href="@Url.Action("Job", "Job", new { area = "Front" })" class="dropdown-toggle" data-toggle="dropdown" title="協會業務">協會業務 <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="business.html">協會業務</a></li>
-                                            <li><a href="business.html">訓練、認證、發照</a></li>
-                                            <li><a href="business.html">諮詢、顧問</a></li>
-                                            <li><a href="business.html">縱火調查</a></li>
+                                            <li><a href="@Url.Action("Job", "Job", new { area = "Front" })">協會業務</a></li>
+                                            <li><a href="@Url.Action("Lisences", "Job", new { area = "Front" })">訓練、認證、發照</a></li>
+                                            <li><a href="@Url.Action("Refer", "Job", new { area = "Front" })">諮詢、顧問</a></li>
+                                            <li><a href="@Url.Action("Survey", "Job", new { area = "Front" })">縱火調查</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="knowledge.html" class="dropdown-toggle" data-toggle="dropdown" title="知識庫">知識庫 <i class="fa fa-angle-down"></i></a>
+                                        <a href="@Url.Action("Index", "Knowledges", new { area = "Front" })" class="dropdown-toggle" data-toggle="dropdown" title="知識庫">知識庫 <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="knowledge.html">知識庫下載</a></li>
+                                            <li><a href="@Url.Action("Index", "Knowledges", new { area = "Front" })">知識庫下載</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="calendar.html" class="dropdown-toggle" data-toggle="dropdown" title="行事曆">行事曆 <i class="fa fa-angle-down"></i></a>
+                                        <a href="@Url.Action("Index", "Calendar", new { area = "Front" })" class="dropdown-toggle" data-toggle="dropdown" title="行事曆">行事曆 <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="calendar.html">協會行事曆</a></li>
+                                            <li><a href="@Url.Action("Index", "Calendar", new { area = "Front" })">協會行事曆</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="contact.html" class="dropdown-toggle" data-toggle="dropdown" title="聯絡我們">聯絡我們 <i class="fa fa-angle-down"></i></a>
+                                        <a href="@Url.Action("Index", "Contacts", new { area = "Front" })" class="dropdown-toggle" data-toggle="dropdown" title="聯絡我們">聯絡我們 <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="contact.html">聯絡我們</a></li>
+                                            <li><a href="@Url.Action("Index", "Contacts", new { area = "Front" })">聯絡我們</a></li>
                                         </ul>
                                     </li>
                                 </ul><!--/ Nav ul end -->
@@ -203,22 +203,22 @@
             </div>
         </div>
     </div>
-        <!-- Javascript Files -->
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/Front")
-        @Scripts.Render("~/bundles/ckeditor")
+    <!-- Javascript Files -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/Front")
+    @Scripts.Render("~/bundles/ckeditor")
 
-        <!-- Google Map API -->
-        <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
+    <!-- Google Map API -->
+    <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
 
-        @* CKEditor *@
-        <style>
-            .cke_notification_warning {
-                display: none !important;
-            }
-        </style>
+    @* CKEditor *@
+    <style>
+        .cke_notification_warning {
+            display: none !important;
+        }
+    </style>
 
-        @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
 </body>
 </html>
