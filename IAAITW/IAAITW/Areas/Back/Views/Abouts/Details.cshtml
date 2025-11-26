@@ -9,12 +9,12 @@
 
     <div>
         @Html.AntiForgeryToken()
-        <h4>About</h4>
+        <h4>關於我們</h4>
         <hr />
         @if (ViewBag.HasData == false)
         {
             <p>
-                @Html.ActionLink("Create New", "Create", null, new { @class = "" })
+                @Html.ActionLink("新 增", "Create", null, new { @class = "" })
             </p>
         }
         @if (ViewBag.HasData == true)
@@ -71,8 +71,8 @@
     @if (ViewBag.HasData == true)
     {
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            <button class="delete-btn" data-id="@Model.Id">刪除</button>
+            @Html.ActionLink("編 輯", "Edit", new { id = Model.Id }) |
+            <button class="delete-btn" data-id="@Model.Id">刪 除</button>
         </p>
     }
 </div>

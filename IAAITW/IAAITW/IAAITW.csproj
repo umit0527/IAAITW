@@ -342,6 +342,10 @@
     <Compile Include="Migrations\202511251311316_fix index page.Designer.cs">
       <DependentUpon>202511251311316_fix index page.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511260900392_rename createdat feild in contact.cs" />
+    <Compile Include="Migrations\202511260900392_rename createdat feild in contact.Designer.cs">
+      <DependentUpon>202511260900392_rename createdat feild in contact.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -481,13 +485,10 @@
     <Content Include="Areas\Front\Views\Calendar\Index.cshtml" />
     <Content Include="Areas\Back\Views\Calendars\Index.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Knowledges\Delete.cshtml" />
-    <Content Include="Areas\Back\Views\Knowledges\Details.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Index.cshtml" />
     <Content Include="Areas\Front\Views\Knowledges\Index.cshtml" />
     <Content Include="Areas\Back\Views\Jobs\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Jobs\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Jobs\Details.cshtml" />
     <Content Include="Areas\Back\Views\Jobs\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Jobs\Index.cshtml" />
@@ -510,13 +511,11 @@
     <Content Include="Areas\Back\Views\Lisences\Index.cshtml" />
     <Content Include="Areas\Front\Views\Job\Lisences.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Refers\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Details.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Refers\Index.cshtml" />
     <Content Include="Areas\Front\Views\Job\Refer.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Surveys\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Details.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Surveys\Index.cshtml" />
@@ -526,12 +525,10 @@
     <Content Include="Areas\Front\Views\Member\Login.cshtml" />
     <Content Include="key.config" />
     <Content Include="Areas\Back\Views\Abouts\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Abouts\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Abouts\Details.cshtml" />
     <Content Include="Areas\Back\Views\Abouts\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Abouts\Index.cshtml" />
     <Content Include="Areas\Back\Views\Organizationes\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Organizationes\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Organizationes\Details.cshtml" />
     <Content Include="Areas\Back\Views\Organizationes\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Organizationes\Index.cshtml" />
@@ -557,7 +554,6 @@
     <Content Include="Areas\Front\Views\MemberDiscussion\Index.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\CreateRe.cshtml" />
     <Content Include="Areas\Back\Views\News\Create.cshtml" />
-    <Content Include="Areas\Back\Views\News\Delete.cshtml" />
     <Content Include="Areas\Back\Views\News\Details.cshtml" />
     <Content Include="Areas\Back\Views\News\Edit.cshtml" />
     <Content Include="Areas\Back\Views\News\Index.cshtml" />
@@ -568,6 +564,7 @@
     <Content Include="Areas\Front\Views\News\Index.cshtml" />
     <Content Include="Areas\Front\Views\Home\Index.cshtml" />
     <Content Include="Areas\Front\Views\Shared\_LayoutIndex.cshtml" />
+    <Content Include="Areas\Back\Views\Contact\Details.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -1046,6 +1043,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511251311316_fix index page.resx">
       <DependentUpon>202511251311316_fix index page.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511260900392_rename createdat feild in contact.resx">
+      <DependentUpon>202511260900392_rename createdat feild in contact.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

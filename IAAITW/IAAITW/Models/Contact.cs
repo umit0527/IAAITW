@@ -36,9 +36,6 @@ namespace IAAITW.Models
         public string Content { get; set; }
 
         [Display(Name = "建立時間")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        [Display(Name = "最後更新時間")]
-        public DateTime UpdatedDate { get; set; } = DateTime.Now;
+        public DateTime SentDate { get; set; } = DateTime.Now;
     }
 }

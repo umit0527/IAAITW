@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IAAITW.Models;
+using MvcPaging;
 
 namespace IAAITW.Areas.Back.Controllers
 {
@@ -15,113 +16,55 @@ namespace IAAITW.Areas.Back.Controllers
         private DBMdoelContext db = new DBMdoelContext();
 
         // GET: Back/Contact
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.Contacts.ToList());
+            //指令化
+            var contact = db.Contacts.AsQueryable();
+
+            //一頁幾筆資料
+            var pageSize = 10;
+
+            //目前第幾頁
+            ///避免page是null的時候
+            ///page-1是為了與後端的值對齊
+            ///當前端是第一頁 value=1、後端value應該要是0，從0開始計算
+            if (page.HasValue)
+            {
+                page = page - 1;
+            }
+            else
+            {
+                page = 0;
+            }
+
+            //用套件一定要有 orderby 排序
+            var result = contact.OrderByDescending(x => x.SentDate)
+                                   .ToPagedList(page.Value, pageSize);
+
+            return View(result);
         }
 
-        //// GET: Back/Contacts/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Contact contact = db.Contacts.Find(id);
-        //    if (contact == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(contact);
-        //}
+        // GET: Back/Contact/Details/5
+        public ActionResult Details(int id)
+        {
+            var data = db.Contacts.FirstOrDefault();
 
-        //// GET: Back/Contacts/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+            if (data == null)
+            {
+                // 沒資料，給 View 顯示空畫面
+                ViewBag.HasData = false;
+                return View();
+            }
 
-        //// POST: Back/Contacts/Create
-        //// 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        //// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,Name,Gender,PhoneNumber,Email,Title,Content,CreatedAt")] Contact contact)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Contacts.Add(contact);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+            ViewBag.HasData = true;
+            return View(data);
 
-        //    return View(contact);
-        //}
-
-        //// GET: Back/Contacts/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Contact contact = db.Contacts.Find(id);
-        //    if (contact == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(contact);
-        //}
-
-        //// POST: Back/Contacts/Edit/5
-        //// 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        //// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Name,Gender,PhoneNumber,Email,Title,Content,CreatedAt")] Contact contact)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(contact).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(contact);
-        //}
-
-        //// GET: Back/Contacts/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Contact contact = db.Contacts.Find(id);
-        //    if (contact == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(contact);
-        //}
-
-        //// POST: Back/Contacts/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Contact contact = db.Contacts.Find(id);
-        //    db.Contacts.Remove(contact);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+            //var contact = db.Contacts.Find(id);
+            //if (contact == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(contact);
+        }
     }
 }

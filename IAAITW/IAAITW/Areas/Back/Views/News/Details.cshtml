@@ -1,74 +1,76 @@
 ﻿@model IAAITW.Models.News
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "詳情 | 訊息發布";
 }
-
-<h2>Details</h2>
-
-<div class="row">
-
-    <!-- 左半部欄位 -->
-    <div class="col-md-6">
+<div>
+    <h2>詳 情</h2>
+    <div>
+        <h4>訊息發布</h4>
+        <hr />
         <div class="row">
+            <!-- 左半部欄位 -->
             <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Title, new { @class = "col-sm-2 control-label" })
+                            <div>@Html.DisplayFor(m => m.Title, new { @class = "form-control" })</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.IsPinned, new { @class = "col-sm-2 control-label" })
+                            <div>@Html.DisplayFor(m => m.IsPinned, new { @class = "form-control" })</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mb-3">
-                    @Html.LabelFor(m => m.Title, new { @class = "col-sm-2 control-label" })
-                    <div>@Html.DisplayFor(m => m.Title, new { @class = "form-control" })</div>
+                    @Html.LabelFor(m => m.Content, new { @class = "col-sm-2 control-label" })
+                    <div class="from-control">@Html.Raw(Model.Content)</div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="col-md-6 mb-3">
+                        發布人員
+                        <div>@Model.Publisher.Name</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        @Html.LabelFor(m => m.CreatedDate)
+                        <div>@Html.DisplayFor(m => m.CreatedDate, new { @class = "form-control" })</div>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="col-md-6 mb-3">
+                        最後更新人員
+                        <div>@Model.LastUpdater.Name</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        @Html.LabelFor(m => m.UpdatedDate)
+                        <div>@Html.DisplayFor(m => m.UpdatedDate, new { @class = "form-control" })</div>
+                    </div>
                 </div>
             </div>
+
+            <!-- 右半部欄位 -->
             <div class="col-md-6">
                 <div class="mb-3">
-                    @Html.LabelFor(m => m.IsPinned, new { @class = "col-sm-2 control-label" })
-                    <div>@Html.DisplayFor(m => m.IsPinned, new { @class = "form-control" })</div>
+                    @Html.LabelFor(m => m.CoverImage, new { @class = "col-sm-2 control-label" })
+                    <div>
+                        <img src="@Url.Content(Model.CoverImage)" style="width:100%;height:auto;border-radius:0;" />
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(m => m.Content, new { @class = "col-sm-2 control-label" })
-            <div class="from-control">@Html.Raw(Model.Content)</div>
-        </div>
-
-        <div class="d-flex">
-            <div class="col-md-6 mb-3">
-                發布人員
-                <div>@Model.Publisher.Name</div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                @Html.LabelFor(m => m.CreatedDate)
-                <div>@Html.DisplayFor(m => m.CreatedDate, new { @class = "form-control" })</div>
-            </div>
-        </div>
-
-        <div class="d-flex">
-            <div class="col-md-6 mb-3">
-                最後更新人員
-                <div >@Model.LastUpdater.Name</div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                @Html.LabelFor(m => m.UpdatedDate)
-                <div>@Html.DisplayFor(m => m.UpdatedDate, new { @class = "form-control" })</div>
             </div>
         </div>
     </div>
-
-        <!-- 右半部欄位 -->
-        <div class="col-md-6">
-            <div class="mb-3">
-                @Html.LabelFor(m => m.CoverImage, new { @class = "col-sm-2 control-label" })
-                <div>
-                    <img src="@Url.Content(Model.CoverImage)" style="width:100%;height:auto;border-radius:0;" />
-                </div>
-            </div>
-        </div>
-
-    </div>
+</div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("編 輯", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("返 回", "Index")
 </p>
 

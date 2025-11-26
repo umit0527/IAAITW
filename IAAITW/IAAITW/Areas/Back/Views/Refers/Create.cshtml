@@ -1,17 +1,17 @@
 ﻿@model IAAITW.Models.Refer
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新增 | 協會業務";
 }
 
-<h2>Create</h2>
+<h2>新 增</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Refer</h4>
+        <h4>諮詢、顧問</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -27,14 +27,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="送 出" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("返 回", "Index")
 </div>
 
 @section Scripts {

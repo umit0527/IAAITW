@@ -1,17 +1,17 @@
 ﻿@model IAAITW.Models.News
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新增 | 訊息發布";
 }
 
-<h2>Create</h2>
+<h2>新 增</h2>
 
 @using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>消息</h4>
+        <h4>訊息發布</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group d-flex">
@@ -48,14 +48,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="送 出" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("返 回", "Index")
 </div>
 
 @section Scripts {

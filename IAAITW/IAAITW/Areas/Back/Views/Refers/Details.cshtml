@@ -20,47 +20,32 @@
         @if (ViewBag.HasData == true)
         {
             <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Content)
-                </dt>
-
-                <dd>
-                    @Html.Raw(Model.Content)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
-                </dt>
-
-                <dd>
-                    @Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")
-                </dd>
-
-                <dt>
-                    建立人員
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Admin.Name)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.UpdatedDate)
-                </dt>
-
-                <dd>
-                    @Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")
-
-                </dd>
-
-                <dt>
-                    最後更新人員
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.UpdatedAdmin.Name)
-                </dd>
+                <dt>@Html.DisplayNameFor(m => m.Content)</dt>
+                <dd>@Html.Raw(Model.Content)</dd>
             </dl>
+
+            <div class="row mt-3">
+                <div class="col-md-2">
+                    <dl class="dl-horizontal">
+                        <dt>@Html.DisplayNameFor(m => m.CreatedDate)</dt>
+                        <dd>@Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")</dd>
+
+                        <dt>建立人員</dt>
+                        <dd>@Html.DisplayFor(m => m.Admin.Name)</dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-2">
+                    <dl class="dl-horizontal">
+                        <dt>@Html.DisplayNameFor(m => m.UpdatedDate)</dt>
+                        <dd>@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</dd>
+
+                        <dt>最後更新人員</dt>
+                        <dd>@Html.DisplayFor(m => m.UpdatedAdmin.Name)</dd>
+                    </dl>
+                </div>
+            </div>
+
         }
         else
         {
@@ -70,8 +55,8 @@
     @if (ViewBag.HasData == true)
     {
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            <button class="delete-btn" data-id="@Model.Id">刪除</button>
+            @Html.ActionLink("編 輯", "Edit", new { id = Model.Id }) |
+            <button class="delete-btn" data-id="@Model.Id">刪 除</button>
         </p>
     }
 </div>
