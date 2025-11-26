@@ -172,7 +172,7 @@
     <Compile Include="Areas\Back\BackAreaRegistration.cs" />
     <Compile Include="Areas\Back\Controllers\AboutsController.cs" />
     <Compile Include="Areas\Back\Controllers\CalendarsController.cs" />
-    <Compile Include="Areas\Back\Controllers\ContactsController.cs" />
+    <Compile Include="Areas\Back\Controllers\ContactController.cs" />
     <Compile Include="Areas\Back\Controllers\ExpertsController.cs" />
     <Compile Include="Areas\Back\Controllers\HistoriesController.cs" />
     <Compile Include="Areas\Back\Controllers\JobsController.cs" />
@@ -477,7 +477,7 @@
     <Content Include="Areas\Front\Views\Contacts\Index.cshtml" />
     <Content Include="Areas\Back\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Back\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Back\Views\Contacts\Index.cshtml" />
+    <Content Include="Areas\Back\Views\Contact\Index.cshtml" />
     <Content Include="Areas\Front\Views\Calendar\Index.cshtml" />
     <Content Include="Areas\Back\Views\Calendars\Index.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Create.cshtml" />
