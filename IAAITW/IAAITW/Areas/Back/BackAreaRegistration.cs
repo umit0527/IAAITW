@@ -17,7 +17,8 @@ namespace IAAITW.Areas.Back
             context.MapRoute(
                 "Back_default",
                 "Back/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { area = "Back", controller = "Abouts", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "IAAITW.Areas.Back.Controllers" }
             );
         }
     }

@@ -16,8 +16,8 @@ namespace IAAITW.Areas.Front
         {
             context.MapRoute(
                 "Front_default",
-                "{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                "Front/{controller}/{action}/{id}",
+                new { area = "Front", controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "IAAITW.Areas.Front.Controllers" }
             );
         }
