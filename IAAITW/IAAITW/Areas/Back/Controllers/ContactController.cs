@@ -10,11 +10,11 @@ using IAAITW.Models;
 
 namespace IAAITW.Areas.Back.Controllers
 {
-    public class ContactsController : Controller
+    public class ContactController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
 
-        // GET: Back/Contacts
+        // GET: Back/Contact
         public ActionResult Index()
         {
             return View(db.Contacts.ToList());
