@@ -1,0 +1,79 @@
+﻿@model IAAITW.Models.Contact
+
+@{
+    ViewBag.Title = "詳情 | 聯絡我們";
+}
+<h2>詳 情</h2>
+<div>
+    <h4>聯絡我們</h4>
+    <hr />
+    @if (ViewBag.HasData == true)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SentDate)
+            </dt>
+
+            <dd>
+                @Model.SentDate.ToString("yyyy/MM/dd HH:mm")
+            </dd>
+
+        </dl>
+    }
+    else
+    {
+        <p>目前沒有資料</p>
+    }
+</div>
+<p>
+    @Html.ActionLink("返 回", "Index")
+</p>
+

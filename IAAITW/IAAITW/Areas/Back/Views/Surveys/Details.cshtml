@@ -1,7 +1,7 @@
 ﻿@model IAAITW.Models.Survey
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "協會業務";
 }
 
 <div>
@@ -70,7 +70,7 @@
     @if (ViewBag.HasData == true)
     {
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("編 輯", "Edit", new { id = Model.Id }) |
             <button class="delete-btn" data-id="@Model.Id">刪除</button>
         </p>
     }

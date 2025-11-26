@@ -11,6 +11,7 @@ using MvcPaging;
 
 namespace IAAITW.Areas.Back.Controllers
 {
+    [Authorize]
     public class KnowledgesController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();

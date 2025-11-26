@@ -39,51 +39,58 @@
                     最後更新人員
                 <th></th>
             </tr>
-
-            @foreach (var item in Model)
+            @if (!Model.Any())
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsTop)
-                    </td>
-                    <td>
-                        @item.Title.TruncateWithChinese(30)
-                    </td>
-                    <td>
-                        @(Path.GetFileName(item.FilePath)?.TruncateWithChinese(20) ?? "")
-                    </td>
-                    <td>
-                        @item.UploadDate.ToString("yyyy/MM/dd HH:mm")
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.Admin.Name)*@
-                        @item.Admin.Name.TruncateWithChinese(12)
-                    </td>
-                    <td>
-                        @item.UpdatedDate.ToString("yyyy/MM/dd HH:mm")
-                    </td>
-                    <td>
-                        @item.UpdatedAdmin.Name.TruncateWithChinese(12)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-
-                        <button class="delete-btn" data-id="@item.Id">刪除</button>
-                    </td>
+                    <td colspan="12" style="text-align:center;">目前沒有任何資料</td>
                 </tr>
             }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsTop)
+                        </td>
+                        <td>
+                            @item.Title.TruncateWithChinese(30)
+                        </td>
+                        <td>
+                            @(Path.GetFileName(item.FilePath)?.TruncateWithChinese(20) ?? "")
+                        </td>
+                        <td>
+                            @item.UploadDate.ToString("yyyy/MM/dd HH:mm")
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Admin.Name)*@
+                            @item.Admin.Name.TruncateWithChinese(12)
+                        </td>
+                        <td>
+                            @item.UpdatedDate.ToString("yyyy/MM/dd HH:mm")
+                        </td>
+                        <td>
+                            @item.UpdatedAdmin.Name.TruncateWithChinese(12)
+                        </td>
+                        <td>
+                            @Html.ActionLink("編 輯", "Edit", new { id = item.Id }) |
 
-        </table>
+                            <button class="delete-btn" data-id="@item.Id">刪 除</button>
+                        </td>
+                    </tr>
+                }
+            }
+            </table>
 
     }
 </div>
-    <div class="pager text-center pt-5">
-        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
-    </div>
+<div class="pager text-center pt-5">
+    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+</div>
 
-    @section scripts {
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
         $(function () {
             $('.delete-btn').on('click', function () {
                 if (!confirm('確定要刪除這筆資料嗎？')) return;
@@ -141,5 +148,5 @@
                 alert("@TempData["ErrorMessage"]");
             </text>
         }
-        </script>
-    }
+    </script>
+}

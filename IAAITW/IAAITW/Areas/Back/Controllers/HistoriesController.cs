@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace IAAITW.Areas.Back.Controllers
 {
+    [Authorize]
     public class HistoriesController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();

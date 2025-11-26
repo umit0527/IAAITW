@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace IAAITW.Areas.Back.Controllers
 {
+    [Authorize]
     public class CalendarsController : Controller
     {
         // GET: Back/Calendar

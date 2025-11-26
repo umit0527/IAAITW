@@ -14,6 +14,7 @@ using System.Web.UI;
 
 namespace IAAITW.Areas.Back.Controllers
 {
+    [Authorize]
     public class NewsController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();

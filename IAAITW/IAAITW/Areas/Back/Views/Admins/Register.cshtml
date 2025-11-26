@@ -1,0 +1,209 @@
+﻿@model IAAITW.Models.AdminRegisterViewModel
+
+@using GoogleRecaptchaMvc
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>註冊 - 後台</title>
+
+    <!-- 保持與 DashBoard 範本一致的樣式 -->
+    <link rel="stylesheet" href="@Url.Content("~/DashBoard/dist/assets/vendors/css/vendor.bundle.base.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/DashBoard/dist/assets/vendors/font-awesome/css/font-awesome.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/DashBoard/dist/assets/css/style.css")" />
+    <style>
+        body {
+            background: #f4f7fa;
+        }
+
+        .auth-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-card {
+            width: 840px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 1rem;
+        }
+
+        .small-muted {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="logo">
+                <img src="@Url.Content("~/DashBoard/dist/assets/images/logo.svg")" alt="logo" style="height:40px" />
+            </div>
+
+            @using (Html.BeginForm("Register", "Admins", new { area = "Back" }, FormMethod.Post, new { id = "registerForm", @class = "mt-2" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-2">
+                            @Html.LabelFor(m => m.Account)@Html.ValidationMessageFor(m => m.Account, "", new { @class = "text-danger ms-2", style = "font-size:12px;" })
+                            @Html.TextBoxFor(m => m.Account, new { @class = "form-control", placeholder = "請輸入帳號" })
+
+                        </div>
+
+                        <div class="form-group mb-2">
+                            @Html.LabelFor(m => m.Password)
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger ms-1", style = "font-size:12px;" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "請輸入密碼" })
+
+                        </div>
+
+                        <div class="form-group mb-2">
+                            @Html.LabelFor(m => m.ConfirmPassword)
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger ms-1", style = "font-size:12px;" })
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "再次輸入密碼" })
+                            <small id="pwHelp" class="small-muted">密碼需至少 4 個字元。</small>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group mb-2">
+                            @Html.LabelFor(m => m.Name)
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger ms-1", style = "font-size:12px;" })
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "王小明" })
+
+                        </div>
+
+                        <div class="form-group mb-2">
+                            @Html.LabelFor(m => m.Email)
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger ms-1", style = "font-size:12px;" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "請輸入電子郵件" })
+
+                        </div>
+
+                        @* 驗證碼 *@
+                        <div class="form-group">
+                            <label class="control-label">驗證碼</label>
+                            @Html.ValidationMessage("ReCaptcha", "", new { @class = "text-danger", style = "font-size:12px;" })
+                            <div class="col-sm-5">
+                                @Html.RecaptchaV2("6LevbPArAAAAAFy0-tvdGQ0kcxmiCnQjKSBS36EF")
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="btnRegister" type="submit" class="btn btn-primary" style="width:150px;">註 冊</button>
+                    <a href="@Url.Action("Login","Admins", new { area = "Back" })" class="text-muted align-self-center btn btn-warning" style="width:150px;">登 入</a>
+                </div>
+
+                if (ViewBag.Error != null)
+                {
+                    <div class="mt-3 text-danger">@ViewBag.Error</div>
+                }
+            }
+
+            <hr />
+
+            <div class="text-center small-muted">
+                註冊代表您同意使用條款
+            </div>
+        </div>
+    </div>
+
+    @* 驗證碼JS *@
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script src="@Url.Content("~/DashBoard/dist/assets/vendors/js/vendor.bundle.base.js")"></script>
+
+    @* 客戶端 DataAnnotations 驗證 (若專案未包含，使用 CDN) *@
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @* 處理錯誤訊息 *@
+    <script>
+        $(function () {
+            // 專門處理錯誤圖示邏輯
+            function updateValidationIcons() {
+                $('span.field-validation-error').each(function () {
+                    if (!$(this).find('i.fa-exclamation-circle').length) {
+                        $(this).prepend('<i class="fa fa-exclamation-circle text-danger me-1"></i>');
+                    }
+                });
+                $('span.field-validation-valid i.fa-exclamation-circle').remove();
+            }
+
+            // 初始載入檢查一次（避免第一次送出後不更新）
+            updateValidationIcons();
+
+            // 綁定輸入事件（keyup/change/blur 都觸發）
+            $('form').on('keyup change blur', 'input, textarea, select', function () {
+                updateValidationIcons();
+            });
+
+            // 綁定 jQuery Validate 的全域事件
+            $('form').on('invalid-form.validate', function () {
+                updateValidationIcons();
+            });
+
+            $('form').on('submit', function () {
+                setTimeout(updateValidationIcons, 100); // 延遲讓驗證更新完再加 icon
+            });
+        });
+    </script>
+
+    @* 通知訊息 *@
+    <script>
+    // 顯示成功訊息並跳轉
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+            setTimeout(function () {
+                alert("@TempData["SuccessMessage"]");
+                setTimeout(function () {
+                    window.location.href = "@ViewBag.RedirectUrl";
+                }, 800); // 延遲 0.8 秒跳轉
+            });
+        </text>
+    }
+
+    // 顯示錯誤訊息
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <text>
+            alert("@TempData["ErrorMessage"]");
+        </text>
+    }
+    </script>
+
+</body>
+</html>
