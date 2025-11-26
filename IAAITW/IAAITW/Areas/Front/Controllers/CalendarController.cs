@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace IAAITW.Areas.Front.Controllers
 {
-    public class CalendarsController : Controller
+    public class CalendarController : Controller
     {
         // GET: Front/Calendar
         public ActionResult Index()

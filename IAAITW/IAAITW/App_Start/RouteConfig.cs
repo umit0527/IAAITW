@@ -16,7 +16,9 @@ namespace IAAITW
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", area = "Front", id = UrlParameter.Optional },
+                namespaces: new[] { "IAAITW.Areas.Front.Controllers" }
+
             );
         }
     }

@@ -2,22 +2,23 @@
 
 namespace IAAITW.Areas.Front
 {
-    public class FrontAreaRegistration : AreaRegistration 
+    public class FrontAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Front";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "Front_default",
-                "Front/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                "{controller}/{action}/{id}",
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "IAAITW.Areas.Front.Controllers" }
             );
         }
     }
