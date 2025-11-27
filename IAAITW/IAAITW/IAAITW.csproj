@@ -1720,8 +1720,6 @@
     <EmbeddedResource Include="Migrations\202511260900392_rename createdat feild in contact.resx">
       <DependentUpon>202511260900392_rename createdat feild in contact.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
-=======
     <EmbeddedResource Include="Migrations\202511270453015_adjust requier feild in admin table.resx">
       <DependentUpon>202511270453015_adjust requier feild in admin table.cs</DependentUpon>
     </EmbeddedResource>
@@ -1734,7 +1732,6 @@
     <EmbeddedResource Include="Migrations\202511271021178_adjust passwordSalt requier in admin table.resx">
       <DependentUpon>202511271021178_adjust passwordSalt requier in admin table.cs</DependentUpon>
     </EmbeddedResource>
->>>>>>> feature/backend-admin-login
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
