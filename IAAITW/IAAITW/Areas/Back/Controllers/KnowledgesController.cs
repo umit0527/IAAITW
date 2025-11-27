@@ -1,4 +1,7 @@
-﻿using System;
+﻿using IAAITW.Filter;
+using IAAITW.Models;
+using MvcPaging;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,12 +9,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using IAAITW.Models;
-using MvcPaging;
 
 namespace IAAITW.Areas.Back.Controllers
 {
-    [Authorize]
+    [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
     public class KnowledgesController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();

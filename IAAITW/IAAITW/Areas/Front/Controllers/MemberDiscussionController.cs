@@ -1,4 +1,5 @@
 ﻿using Ganss.Xss;
+using IAAITW.Filter;
 using IAAITW.Models;
 using Microsoft.Ajax.Utilities;
 using MvcPaging;
@@ -20,7 +21,7 @@ using System.Web.UI;
 
 namespace IAAITW.Areas.Front.Controllers
 {
-    [Authorize]
+    [CustomAuthorize(LoginUrl = "~/Front/Member/Login")]
     public class MemberDiscussionController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();

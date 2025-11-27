@@ -1,5 +1,7 @@
 ﻿using AngleSharp.Text;
 using GoogleRecaptcha;
+using IAAITW.Filter;
+
 //using GoogleRecaptchaMvc;
 using IAAITW.Models;
 using Newtonsoft.Json;
@@ -93,6 +95,12 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Admins
         public ActionResult Login()
         {
+            // 如果已經登入
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Abouts", new { area = "Back" });
+            }
+
             return View();
         }
 
@@ -163,7 +171,7 @@ namespace IAAITW.Areas.Back.Controllers
             return admin;
         }
 
-        [Authorize]
+        [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();

@@ -183,7 +183,6 @@
     <Compile Include="Areas\Back\Controllers\OrganizationesController.cs" />
     <Compile Include="Areas\Back\Controllers\RefersController.cs" />
     <Compile Include="Areas\Back\Controllers\SurveysController.cs" />
-    <Compile Include="Areas\Back\Controllers\ViewHelper.cs" />
     <Compile Include="Areas\Front\Controllers\AboutController.cs" />
     <Compile Include="Areas\Front\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Front\Controllers\ContactsController.cs" />
@@ -195,6 +194,7 @@
     <Compile Include="Areas\Front\Controllers\MemberDiscussionController.cs" />
     <Compile Include="Areas\Front\Controllers\NewsController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
+    <Compile Include="Filter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -969,7 +969,7 @@
     <Content Include="Areas\Front\Views\About\Member.cshtml" />
     <Content Include="Areas\Front\Views\About\Expert.cshtml" />
     <Content Include="Areas\Front\Views\Declare\Index.cshtml" />
-    <Content Include="Areas\Front\Views\MemberDiscussion\Create.cshtml" />
+    <Content Include="Areas\Front\Views\MemberDiscussion\CreatePost.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Details.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\EditPost.cshtml" />
     <Content Include="Areas\Front\Views\MemberDiscussion\Index.cshtml" />

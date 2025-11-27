@@ -39,7 +39,7 @@
 
                     <div class="col-md-6 mb-3">
                         @Html.LabelFor(m => m.CreatedDate)
-                        <div>@Html.DisplayFor(m => m.CreatedDate, new { @class = "form-control" })</div>
+                        <div>@Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")</div>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
 
                     <div class="col-md-6 mb-3">
                         @Html.LabelFor(m => m.UpdatedDate)
-                        <div>@Html.DisplayFor(m => m.UpdatedDate, new { @class = "form-control" })</div>
+                        <div>@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</div>
                     </div>
                 </div>
             </div>
