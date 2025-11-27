@@ -119,34 +119,5 @@ namespace IAAITW.Models
         public List<MemberServiceExp> MemberServiceExps { get; set; } = new List<MemberServiceExp>();
 
         public int MemberId { get; set; }
-    }
-
-    //public class ServiceExpViewModel
-    //{
-    //    public int Id { get; set; }
-
-    //    [StringLength(100)]
-    //    [Display(Name = "服務單位")]
-    //    public string Company { get; set; }
-
-    //    [StringLength(50)]
-    //    [Display(Name = "職  稱")]
-    //    public string ExperienceJobTitle { get; set; }
-
-    //    [Range(1900, 2100)]
-    //    public int? StartYear { get; set; }
-
-    //    [Range(1, 12)]
-    //    public int? StartMonth { get; set; }
-
-    //    [Range(1900, 2100)]
-    //    public int? EndYear { get; set; }
-
-    //    [Range(1, 12)]
-    //    public int? EndMonth { get; set; }
-
-    //    public int? TotalYears { get; set; }
-
-    //    public int? TotalMonths { get; set; }
-    //}
+    }    
 }

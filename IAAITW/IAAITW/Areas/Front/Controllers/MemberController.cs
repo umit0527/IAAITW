@@ -1,4 +1,5 @@
 ﻿using GoogleRecaptcha;
+using IAAITW.Filter;
 using IAAITW.Models;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
@@ -28,6 +29,11 @@ namespace IAAITW.Areas.Front.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            // 如果已經登入，直接導向會員討論區
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "MemberDiscussion", new { area = "Front" });
+            }
 
             return View();
         }
@@ -93,7 +99,7 @@ namespace IAAITW.Areas.Front.Controllers
             return member;
         }
 
-        [Authorize]
+        [CustomAuthorize(LoginUrl = "~/Front/Member/Login")]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
@@ -267,8 +273,8 @@ namespace IAAITW.Areas.Front.Controllers
             return View(model);
         }
 
+        [CustomAuthorize(LoginUrl = "~/Front/Member/Login")]
         // GET: Front/Member/Edit
-        [Authorize]
         public ActionResult Edit()
         {
             // 取得登入者帳號
@@ -325,7 +331,7 @@ namespace IAAITW.Areas.Front.Controllers
         // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
-        [Authorize]
+        [CustomAuthorize(LoginUrl = "~/Front/Member/Login")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MemberEditViewModel model, string newPassword)
         {

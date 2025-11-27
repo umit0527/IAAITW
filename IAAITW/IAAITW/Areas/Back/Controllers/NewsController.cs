@@ -1,4 +1,5 @@
 ﻿using Ganss.Xss;
+using IAAITW.Filter;
 using IAAITW.Models;
 using MvcPaging;
 using System;
@@ -14,6 +15,7 @@ using System.Web.UI;
 
 namespace IAAITW.Areas.Back.Controllers
 {
+    [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
     public class NewsController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();

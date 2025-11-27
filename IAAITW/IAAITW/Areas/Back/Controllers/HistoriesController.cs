@@ -1,4 +1,5 @@
 ﻿using Ganss.Xss;
+using IAAITW.Filter;
 using IAAITW.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace IAAITW.Areas.Back.Controllers
 {
+    [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
     public class HistoriesController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
