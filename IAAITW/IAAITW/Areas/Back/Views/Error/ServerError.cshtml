@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>其他錯誤 - 後台</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/Back/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/Back/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/Back/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/Back/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Back/vendors/mdi/css/materialdesignicons.min.css">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/Back/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/Back/images/favicon.png" />
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center text-center error-page bg-danger">
+                <div class="row flex-grow">
+                    <div class="col-md-7 mx-auto text-white">
+                        <div class="row align-items-center d-flex flex-row">
+                            <div class="col-md-6 text-md-right pr-md-4">
+                                <h1 class="display-1 mb-0">500</h1>
+                            </div>
+                            <div class="col-md-6 error-page-divider text-md-left pl-md-4">
+                                <h2>抱歉！</h2>
+                                <h3 class="font-weight-light">發生了未預期的錯誤，我們的系統遇到問題或您要求的資源無法正確處理。請稍後重試，或聯絡我們以協助排查。</h3>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-12 text-center mt-xl-2">
+                                <a class="btn btn-warning text-white font-weight-medium" href="@Url.Action("Index","Abouts")">返回後台首頁</a>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-12 mt-xl-2">
+                                <p class="text-white font-weight-medium text-center">若錯誤持續發生，請聯絡系統管理員。<br />Copyright &copy; 2021 All rights reserved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+</body>
+</html>
