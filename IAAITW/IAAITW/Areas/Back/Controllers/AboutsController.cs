@@ -67,6 +67,11 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
                 about.Content = sanitizer.Sanitize(about.Content);
+                
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                about.AdminId = loginUser.Id;
+                about.UpdatedAdminId = loginUser.Id;
 
                 db.Abouts.Add(about);
                 db.SaveChanges();
@@ -83,7 +88,7 @@ namespace IAAITW.Areas.Back.Controllers
                 TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
             }
 
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", about.AdminId);
+            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", about.AdminId);
             return View(about);
         }
 
@@ -124,7 +129,10 @@ namespace IAAITW.Areas.Back.Controllers
 
                 // 設定最後更新時間
                 existingAbout.UpdatedDate = DateTime.Now;
-                existingAbout.UpdatedAdminId=about.UpdatedAdminId;
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                // 更新編輯者
+                existingAbout.UpdatedAdminId = loginUser.Id;
 
                 db.Entry(existingAbout).State = EntityState.Modified;
                 db.SaveChanges();

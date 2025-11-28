@@ -69,6 +69,11 @@ namespace IAAITW.Areas.Back.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 organization.Content = sanitizer.Sanitize(organization.Content);
 
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                organization.AdminId = loginUser.Id;
+                organization.UpdatedAdminId = loginUser.Id;
+
                 db.Organizationes.Add(organization);
                 db.SaveChanges();
 
@@ -126,7 +131,9 @@ namespace IAAITW.Areas.Back.Controllers
 
                 // 設定最後更新時間
                 existingOrganization.UpdatedDate = DateTime.Now;
-                existingOrganization.UpdatedAdminId = organization.UpdatedAdminId;
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                existingOrganization.UpdatedAdminId = loginUser.Id;
 
                 db.Entry(existingOrganization).State = EntityState.Modified;
                 db.SaveChanges();

@@ -127,9 +127,10 @@ namespace IAAITW.Areas.Back.Controllers
                     return View(model);
                 }
                 // 登入成功，產生表單驗證
+                Session["AdminLogin"] = user;
                 string userData = JsonConvert.SerializeObject(user);
                 Utility.SetAuthenTicket(userData, model.Account);
-
+                
                 TempData["SuccessMessage"] = "登入成功！";
 
                 // 把要導向的 URL 給 View 跳轉到關於我們頁面
