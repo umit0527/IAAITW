@@ -133,6 +133,7 @@ namespace IAAITW.Areas.Back.Controllers
                 existingOrganization.UpdatedDate = DateTime.Now;
                 // 從 Session 取登入者
                 var loginUser = Session["AdminLogin"] as Admin;
+                // 更新編輯者
                 existingOrganization.UpdatedAdminId = loginUser.Id;
 
                 db.Entry(existingOrganization).State = EntityState.Modified;

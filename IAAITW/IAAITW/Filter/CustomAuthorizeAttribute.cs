@@ -20,7 +20,7 @@ namespace IAAITW.Filter
             else
             {
                 // 未登入 → 導向指定的登入頁
-                filterContext.Result = new RedirectResult(LoginUrl ?? "~/Front/Member/Login");
+                filterContext.Result = new RedirectResult(LoginUrl);
             }
         }
     }

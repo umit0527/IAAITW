@@ -127,6 +127,7 @@ namespace IAAITW.Areas.Back.Controllers
                     return View(model);
                 }
                 // 登入成功，產生表單驗證
+                //ViewBag.UserName = user.Name;
                 Session["AdminLogin"] = user;
                 string userData = JsonConvert.SerializeObject(user);
                 Utility.SetAuthenTicket(userData, model.Account);
