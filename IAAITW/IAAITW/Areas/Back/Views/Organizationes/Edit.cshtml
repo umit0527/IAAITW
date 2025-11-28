@@ -4,40 +4,45 @@
     ViewBag.Title = "編輯 | 關於我們";
 }
 
-<h2>編 輯</h2>
+<div class="row">
+    <h3>組織架構</h3>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">編 輯</h4>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                @using (Html.BeginForm("Edit", "Organizationes", new { area = "Back" }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
 
-    <div class="form-horizontal">
-        <h4>組織架構</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            <div class="d-flex">
-                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2", style = "width:40px" })
-                <p>(上限1000個字)</p>
-            </div>
-            <div class="col-md-10">
-                @Html.TextAreaFor(m => m.Content, new { @class = "form-control", id = "editor" })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="送 出" class="btn btn-primary" />
+                    <div class="row">
+                        <!-- 左欄：內容編輯器（較寬）-->
+                        <div class="col-12">
+                            <div class="form-group mb-3">
+                                <label for="editor" class="control-label">內容 <small class="text-muted">(上限1000個字)</small></label>
+                                @Html.TextAreaFor(m => m.Content, new { @class = "form-control", id = "editor" })
+                                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div style="width:120px;">
+                            <div class="d-flex flex-column gap-2">
+                                <button type="submit" class="btn btn-primary">送 出</button>
+                            </div>
+                        </div>
+                        <div style="width:120px;">
+                            <div class="d-flex flex-column gap-2">
+                                <a class="btn btn-secondary" href="@Url.Action("Index", "Organizationes", new { area = "Back" })">返 回</a>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("返 回", "Index")
 </div>
+
 
 @section Scripts {
     <script>
