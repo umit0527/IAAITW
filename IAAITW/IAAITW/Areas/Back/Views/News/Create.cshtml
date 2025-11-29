@@ -4,58 +4,101 @@
     ViewBag.Title = "新增 | 訊息發布";
 }
 
-<h2>新 增</h2>
-
-@using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>訊息發布</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group d-flex">
-        <div class="col-md-5">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-md-5">
-            @Html.LabelFor(model => model.CoverImageFile, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.CoverImageFile, new { @class = "form-control", type = "file", accept = ".jpg,.jpeg,.png,.gif" })
-                @Html.ValidationMessageFor(model => model.CoverImageFile, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.IsPinned, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="checkbox">
-                @Html.EditorFor(model => model.IsPinned)
-                @Html.ValidationMessageFor(model => model.IsPinned, "", new { @class = "text-danger" })
+<div class="">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="font-weight-bold">訊息發布</h3>
+                </div>
             </div>
         </div>
     </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Content,  new { @class = "form-control" , id = "editor" })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    @using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="送 出" class="btn btn-default" />
+                        <h4 class="card-title">新 增</h4>
+
+                        if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>驗證錯誤</strong>
+                                @Html.ValidationSummary(false, "", new { @class = "" })
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+
+                        <!-- 標題和置頂 -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Title, new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入訊息標題" } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger small d-block mt-1" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold">置頂</label>
+                                    <div class="form-switch">
+                                        @Html.EditorFor(model => model.IsPinned, new { htmlAttributes = new { @class = "form-check-input" } })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.IsPinned, "", new { @class = "text-danger small d-block mt-1" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 封面圖片 -->
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CoverImageFile, "封面", new { @class = "form-label fw-bold" })
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="CoverImageFile" name="CoverImageFile" accept=".jpg,.jpeg,.png,.gif">
+                                    </div>
+                                    <small class="text-muted d-block mt-1">支援格式：JPG、JPEG、PNG、GIF</small>
+                                    @Html.ValidationMessageFor(model => model.CoverImageFile, "", new { @class = "text-danger small d-block mt-1" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 內容 -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.Content, new { @class = "form-label fw-bold" })
+                                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control", id = "editor", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger small d-block mt-1" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 按鈕 -->
+                        <div class="row">
+                            <div style="width:120px;">
+                                <div class="d-flex flex-column gap-2">
+                                    <button type="submit" class="btn btn-primary">送 出</button>
+                                </div>
+                            </div>
+                            <div style="width:120px;">
+                                <div class="d-flex flex-column gap-2">
+                                    <a class="btn btn-secondary" href="@Url.Action("Index", "Abouts", new { area = "Back" })">返 回</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("返 回", "Index")
 </div>
 
 @section Scripts {
