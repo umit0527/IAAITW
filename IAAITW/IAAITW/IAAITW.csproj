@@ -1039,12 +1039,10 @@
     <Content Include="Areas\Back\Views\Organizationes\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Organizationes\Index.cshtml" />
     <Content Include="Areas\Back\Views\Histories\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Histories\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Histories\Details.cshtml" />
     <Content Include="Areas\Back\Views\Histories\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Histories\Index.cshtml" />
     <Content Include="Areas\Back\Views\Experts\Create.cshtml" />
-    <Content Include="Areas\Back\Views\Experts\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Experts\Details.cshtml" />
     <Content Include="Areas\Back\Views\Experts\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Experts\Index.cshtml" />

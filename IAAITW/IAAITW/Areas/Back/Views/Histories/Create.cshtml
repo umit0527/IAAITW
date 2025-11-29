@@ -1,44 +1,49 @@
 ﻿@model IAAITW.Models.History
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新增 | 沿革";
 }
 
-<h2>Create</h2>
+<div class="row">
+    <h3>沿革</h3>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">新 增</h4>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                @using (Html.BeginForm("Create", "Histories", new { area = "Back" }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-horizontal">
-        <h4>History</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="d-flex">
-                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2", style = "width:40px" })
-                <p>(上限1000個字)</p>
-            </div>
-            <div class="col-md-10">
-                @Html.TextAreaFor(m => m.Content, new { @class = "form-control", id = "editor" })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="row">
+                        <!-- 左欄：內容編輯器（較寬）-->
+                        <div class="col-12">
+                            <div class="form-group mb-3">
+                                <label for="editor" class="control-label">內容 <small class="text-muted">(上限1000個字)</small></label>
+                                @Html.TextAreaFor(m => m.Content, new { @class = "form-control", id = "editor" })
+                                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                        <div style="width:120px;">
+                            <div class="d-flex flex-column gap-2">
+                                <button type="submit" class="btn btn-primary">送 出</button>
+                            </div>
+                        </div>
+                        <div style="width:120px;">
+                            <div class="d-flex flex-column gap-2">
+                                <a class="btn btn-secondary" href="@Url.Action("Details", "Histories", new { area = "Back" })">返 回</a>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Details")
 </div>
 
 @section Scripts {
-    @* 文字編輯器 *@
     <script>
         $(document).ready(function () {
             if (typeof CKEDITOR !== 'undefined') {
@@ -46,9 +51,7 @@
                     height: 500,
                     language: 'zh'
                 });
-            }
-            else
-            {
+            } else {
                 console.error('CKEditor is not loaded!');
             }
 
@@ -60,8 +63,8 @@
                         alert("@TempData["SuccessMessage"]");
                         setTimeout(function () {
                             window.location.href = "@ViewBag.RedirectUrl";
-                        }, 800); // 再延遲 0.8 秒跳轉
-                    }, 500); // 先等 CKEditor 載完 0.5 秒
+                        }, 800);
+                    }, 500);
                 </text>
             }
 
