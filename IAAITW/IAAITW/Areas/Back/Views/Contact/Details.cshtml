@@ -3,77 +3,121 @@
 @{
     ViewBag.Title = "詳情 | 聯絡我們";
 }
-<h2>詳 情</h2>
-<div>
-    <h4>聯絡我們</h4>
-    <hr />
+
+<div class="">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="font-weight-bold">聯絡我們</h3>
+        </div>
+    </div>
+
+
     @if (ViewBag.HasData == true)
     {
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">詳 情</h4>
 
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
+                        <div class="row mb-4">
+                            <!-- 左邊欄 -->
+                            <div class="col-md-7">
+                                <!-- 主旨 -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">主 旨</label>
+                                    <div class="form-control" style="background-color: #f8f9fa;">@Model.Title</div>
+                                </div>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Gender)
-            </dt>
+                                <!-- 內容 -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">內 容</label>
+                                    <div class="form-control" style="background-color: #f8f9fa; ">
+                                        @Model.Content
+                                    </div>
+                                </div>
+                            </div>
 
-            <dd>
-                @Html.DisplayFor(model => model.Gender)
-            </dd>
+                            <!-- 右邊欄 -->
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!-- 聯絡人名稱 -->
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">聯絡人名稱</label>
+                                            <p class="form-control-plaintext">@Model.Name</p>
+                                        </div>
+                                    </div>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </dt>
+                                    <div class="col-md-2">
+                                        <!-- 性別 -->
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">性 別</label>
+                                            <p class="form-control-plaintext">@Model.Gender</p>
+                                        </div>
+                                    </div>
 
-            <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>
+                                    <div class="col-md-4">
+                                        <!-- 提交日期 -->
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">提交日期</label>
+                                            <p class="form-control-plaintext">@Model.SentDate.ToString("yyyy/MM/dd HH:mm")</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
+                                <div class="row">
+                                    <!-- 電話號碼 -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">電話號碼</label>
+                                            <p class="form-control-plaintext">
+                                                <a href="tel:@Model.PhoneNumber">@Model.PhoneNumber</a>
+                                            </p>
+                                        </div>
+                                    </div>
 
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Content)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Content)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.SentDate)
-            </dt>
-
-            <dd>
-                @Model.SentDate.ToString("yyyy/MM/dd HH:mm")
-            </dd>
-
-        </dl>
+                                    <!-- 電子郵件 -->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">電子郵件</label>
+                                            <p class="form-control-plaintext">
+                                                <a href="mailto:@Model.Email">@Model.Email</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
     else
     {
-        <p>目前沒有資料</p>
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-warning" role="alert">
+                            <i class="mdi mdi-alert-circle me-2"></i>目前沒有資料
+                        </div>
+                        <a href="@Url.Action("Index", "Contact")" class="btn btn-secondary">
+                            <i class="mdi mdi-arrow-left me-2"></i>返 回
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
+    <!-- 按鈕 -->
+    <div class="row">
+        <div style="width:120px;">
+            <div class="d-flex flex-column gap-2">
+                <a class="btn btn-secondary" href="@Url.Action("Index", "Contact", new { area = "Back" })">返 回</a>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("返 回", "Index")
-</p>
-
