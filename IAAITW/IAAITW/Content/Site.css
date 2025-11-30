@@ -32,7 +32,7 @@ textarea {
         padding: 6px 12px;
         margin-left: -1px;
         line-height: 1.42857143;
-        color: #428bca;
+        color: #4B49AC;
         text-decoration: none;
         background-color: #fff;
         border: 1px solid #ddd;
@@ -41,9 +41,9 @@ textarea {
 
         /* 當前頁面樣式 */
         .pager span.current {
-            background-color: #428bca;
+            background-color: #4B49AC;
             color: #fff;
-            border-color: #428bca;
+            border-color: #4B49AC;
         }
 
         /* 滑鼠移上去的效果 */
