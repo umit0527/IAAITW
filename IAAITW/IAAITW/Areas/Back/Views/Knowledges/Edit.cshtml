@@ -4,100 +4,103 @@
     ViewBag.Title = "編輯 | 知識庫下載";
 }
 
-<h2>編 輯</h2>
-
-@using (Html.BeginForm("Edit", "Knowledges", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>知識庫下載</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsTop, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.IsTop, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+<div class="">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="font-weight-bold mb-4">知識庫下載</h3>
                 </div>
-            </div>*@
-
-        <div class="form-group">
-            原檔案
-            <div class="col-md-10">
-                @Html.TextBox("FilePath", Path.GetFileName(Model.FilePath), new { @class = "form-control text-secondary", @readonly = "readonly" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FileUpload, new { @class = "form-control", type = "file" })
-                @Html.ValidationMessageFor(model => model.FileUpload, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.UploadDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UploadDate, new { htmlAttributes = new { @class = "form-control text-secondary", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.UploadDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Admin.Name, "上傳人員", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBox("AdminName", Model.Admin.Name, htmlAttributes: new { @class = "form-control text-secondary", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.AdminId, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.AdminId)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control text-secondary", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Admin.Name, "最後更新人員", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBox("AdminName", Model.Admin.Name, htmlAttributes: new { @class = "form-control text-secondary", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.AdminId, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.AdminId)
-                </div>
-            </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="送 出" class="btn btn-default" />
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("返 回", "Index")
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    @using (Html.BeginForm("Create", "Knowledges", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+
+                        <h4 class="card-title">編 輯</h4>
+
+                        if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>驗證錯誤</strong>
+                                @Html.ValidationSummary(false, "", new { @class = "" })
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+
+
+                        <div class="row mb-3">
+                            <!-- 左邊欄 -->
+                            <div class="col-md-6">
+                                <!-- 標題 -->
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Title, new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入標題" } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger small d-block mt-1" })
+                                </div>
+
+                                <!-- 描述 -->
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, "描述", new { @class = "form-label fw-bold" })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "3", placeholder = "請輸入描述" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <!-- 右邊欄 -->
+                                <!-- 置頂 -->
+                                <div class="form-group">
+                                    <label class="form-label fw-bold">置頂</label>
+                                    <div class="form-switch">
+                                        @Html.EditorFor(model => model.IsTop, new { htmlAttributes = new { @class = "form-check-input" } })
+
+                                    </div>
+                                </div>
+
+                                <!-- 原檔案 -->
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FilePath, "原檔案", new { @class = "form-label fw-bold" })
+                                    <input type="text"
+                                           class="form-control text-secondary"
+                                           value="@Path.GetFileName(Model.FilePath)"
+                                           readonly />
+                                </div>
+
+                                <!-- 檔案上傳 -->
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FilePath, "檔案上傳", new { @class = "form-label fw-bold" })
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="FileUpload" name="FileUpload">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 按鈕 -->
+                        <div class="row">
+                            <div style="width:120px;">
+                                <div class="d-flex flex-column gap-2">
+                                    <button type="submit" class="btn btn-primary">送 出</button>
+                                </div>
+                            </div>
+                            <div style="width:120px;">
+                                <div class="d-flex flex-column gap-2">
+                                    <a class="btn btn-secondary" href="@Url.Action("Index", "Knowledges", new { area = "Back" })">返 回</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
