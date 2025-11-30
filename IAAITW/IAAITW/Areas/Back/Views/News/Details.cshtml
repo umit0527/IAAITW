@@ -3,73 +3,117 @@
 @{
     ViewBag.Title = "詳情 | 訊息發布";
 }
-<div>
-    <h2 class="mb-3">詳 情</h2>
-    <div>
-        <h4>訊息發布</h4>
-        <hr />
-        <div class="row mb-4">
-            <!-- 左半部欄位 -->
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            @Html.LabelFor(m => m.Title, new { @class = "col-sm-2 control-label" })
-                            <div>@Html.DisplayFor(m => m.Title, new { @class = "form-control" })</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-switch">
-                            @Html.EditorFor(model => model.IsPinned, new { htmlAttributes = new { @class = "form-check-input", disabled = "disabled" } })
 
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.Content, new { @class = "col-sm-2 control-label" })
-                    <div class="from-control">@Html.Raw(Model.Content)</div>
-                </div>
-
-                <div class="d-flex">
-                    <div class="col-md-6 mb-3">
-                        發布人員
-                        <div>@Model.Publisher.Name</div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        @Html.LabelFor(m => m.CreatedDate)
-                        <div>@Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")</div>
-                    </div>
-                </div>
-
-                <div class="d-flex">
-                    <div class="col-md-6 mb-3">
-                        最後更新人員
-                        <div>@Model.LastUpdater.Name</div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        @Html.LabelFor(m => m.UpdatedDate)
-                        <div>@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</div>
-                    </div>
+<div class="">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="font-weight-bold">訊息詳情</h3>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- 右半部欄位 -->
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <div>
-                        <img src="@Url.Content(Model.CoverImage)" style="width:100%;height:auto;border-radius:0;" />
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">詳 情</h4>
+                    <div class="row mb-4">
+                        <!-- 左邊欄 -->
+                        <div class="col-md-6">
+
+                            <div class="row">
+                                <!-- 標題 -->
+                                <div class="col-md-10">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">標 題</label>
+                                        <div class="form-control text-secondary" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">@Model.Title</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <!-- 置頂 -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">置頂</label>
+                                        <div class="form-switch">
+                                            @Html.EditorFor(model => model.IsPinned, new { htmlAttributes = new { @class = "form-check-input", disabled = "disabled" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 內容 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">內 容</label>
+                                <div class="form-control text-secondary" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                                    @Html.Raw(Model.Content)
+                                </div>
+                            </div>
+
+                            <!-- 發布人員和日期 -->
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">發布人員</label>
+                                        <p class="form-control-plaintext">@Model.Publisher.Name</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">建立日期</label>
+                                        <p class="form-control-plaintext">@Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 最後更新人員和日期 -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">最後更新人員</label>
+                                        <p class="form-control-plaintext">@Model.LastUpdater.Name</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">更新日期</label>
+                                        <p class="form-control-plaintext">@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右邊欄 -->
+                        <div class="col-md-6">
+                            <!-- 封面圖片 -->
+                            <div class="mb-3">
+                                <div class="mt-2">
+                                    <img src="@Url.Content(Model.CoverImage)" class="img-fluid" style="width: 100%; height: auto; border-radius: 4px; border: 1px solid #e0e0e0;" alt="封面圖片" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- 按鈕 -->
+                    <div class="row">
+                        <div style="width:120px;">
+                            <div class="d-flex flex-column gap-2">
+                                <button type="submit" class="btn btn-primary">送 出</button>
+                            </div>
+                        </div>
+                        <div style="width:120px;">
+                            <div class="d-flex flex-column gap-2">
+                                <a class="btn btn-secondary" href="@Url.Action("Index", "News", new { area = "Back" })">返 回</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<p>
-    @Html.ActionLink("編 輯", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("返 回", "Index")
-</p>
-

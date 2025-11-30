@@ -1327,6 +1327,7 @@
     <Content Include="Areas\Front\Views\Error\Error500.cshtml" />
     <Content Include="Areas\Back\Views\Error\ServerError.cshtml" />
     <Content Include="Areas\Front\Views\Error\ServerError.cshtml" />
+    <Content Include="Areas\Back\Views\Knowledges\Details.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
