@@ -7,7 +7,7 @@
 }
 
 <div class="">
-    <div class="row mb-2">
+    <div class="row mb-3">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
@@ -55,7 +55,10 @@
                                     {
                                         <tr id="row-@item.Id">
                                             <td>
-                                                @Html.CheckBoxFor(m => item.IsPinned, new { @disabled = "disabled" })
+                                                <div class="form-switch">
+                                                    @Html.EditorFor(model => item.IsPinned, new { htmlAttributes = new { @class = "form-check-input", disabled = "disabled" } })
+
+                                                </div>
                                             </td>
                                             <td>
                                                 <img src="@Url.Content(item.CoverImage)" style="width: 60px; height: auto; border-radius: 4px;"/>
