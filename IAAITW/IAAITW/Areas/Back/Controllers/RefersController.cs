@@ -68,6 +68,13 @@ namespace IAAITW.Areas.Back.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 refer.Content = sanitizer.Sanitize(refer.Content);
 
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                refer.AdminId = loginUser.Id;
+                refer.UpdatedAdminId = loginUser.Id;
+                refer.CreatedDate = DateTime.Now;
+                refer.UpdatedDate = DateTime.Now;
+
                 db.Refers.Add(refer);
                 db.SaveChanges();
 
@@ -89,10 +96,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Refers/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
             Refer refer = db.Refers.Find(id);
             if (refer == null)
             {
@@ -120,8 +123,10 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 existingRefer.Content = sanitizer.Sanitize(refer.Content);
-
-                // 設定最後更新時間
+                
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                existingRefer.UpdatedAdminId = loginUser.Id;
                 existingRefer.UpdatedDate = DateTime.Now;
 
                 db.Entry(existingRefer).State = EntityState.Modified;

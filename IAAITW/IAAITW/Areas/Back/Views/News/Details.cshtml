@@ -75,7 +75,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">最後更新人員</label>
-                                        <p class="form-control-plaintext">@Model.LastUpdater.Name</p>
+                                        <p class="form-control-plaintext">@Model.Updater.Name</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -103,7 +103,7 @@
                     <div class="row">
                         <div style="width:120px;">
                             <div class="d-flex flex-column gap-2">
-                                <button type="submit" class="btn btn-primary">送 出</button>
+                                <a class="btn btn-primary" href="@Url.Action("Edit", "News", new { area = "Back",id=Model.Id })">編 輯</a>
                             </div>
                         </div>
                         <div style="width:120px;">

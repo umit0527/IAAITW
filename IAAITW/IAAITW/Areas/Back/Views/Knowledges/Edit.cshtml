@@ -19,7 +19,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    @using (Html.BeginForm("Create", "Knowledges", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("Edit", "Knowledges", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)

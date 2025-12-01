@@ -35,11 +35,11 @@ namespace IAAITW.Models
 
         //上傳人員
         [Display(Name = "上傳人員")]
-        public int AdminId { get; set; } = 1;
+        public int AdminId { get; set; } 
         public virtual Admin Admin { get; set; }  //讓view可以直接使用admin的name
 
         [Display(Name = "最後更新人員")]
-        public int UpdatedAdminId { get; set; } = 1;
+        public int UpdatedAdminId { get; set; } 
         public virtual Admin UpdatedAdmin { get; set; }  //讓view可以直接使用admin的name
     }
 }

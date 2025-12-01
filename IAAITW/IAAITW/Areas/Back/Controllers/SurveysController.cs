@@ -67,6 +67,13 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
                 survey.Content = sanitizer.Sanitize(survey.Content);
+                
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                survey.AdminId = loginUser.Id;
+                survey.UpdatedAdminId = loginUser.Id;
+                survey.CreatedDate = DateTime.Now;
+                survey.UpdatedDate = DateTime.Now;
 
                 db.Surveys.Add(survey);
                 db.SaveChanges();
@@ -89,10 +96,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Surveys/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
             Survey survey = db.Surveys.Find(id);
             if (survey == null)
             {
@@ -116,12 +119,15 @@ namespace IAAITW.Areas.Back.Controllers
                 {
                     return HttpNotFound();
                 }
+
                 // 安全過濾 HTML 並更新內容
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 existingSurvey.Content = sanitizer.Sanitize(survey.Content);
-
-                // 設定最後更新時間
+                
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                existingSurvey.UpdatedAdminId = loginUser.Id;
                 existingSurvey.UpdatedDate = DateTime.Now;
 
                 db.Entry(existingSurvey).State = EntityState.Modified;

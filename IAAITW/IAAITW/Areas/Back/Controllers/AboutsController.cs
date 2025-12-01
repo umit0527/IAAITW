@@ -107,10 +107,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Abouts/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
             About about = db.Abouts.Find(id);
             if (about == null)
             {

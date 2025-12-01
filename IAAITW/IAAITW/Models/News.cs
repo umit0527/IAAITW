@@ -45,11 +45,11 @@ namespace IAAITW.Models
 
         // 發布人員（MemberAccount / MemberInfo FK）
         [Display(Name = "發布人員")]
-        public int PublisherId { get; set; } = 2;
+        public int PublisherId { get; set; } 
 
         // 最後更新人員
         [Display(Name = "最後更新人員")]
-        public int LastUpdaterId { get; set; } = 2;
+        public int UpdaterId { get; set; } 
 
         // 是否置頂
         [Display(Name = "置頂")]
@@ -59,7 +59,7 @@ namespace IAAITW.Models
         [ForeignKey("PublisherId")]
         public virtual Admin Publisher { get; set; } 
 
-        [ForeignKey("LastUpdaterId")]
-        public virtual Admin LastUpdater { get; set; }
+        [ForeignKey("UpdaterId")]
+        public virtual Admin Updater { get; set; }
     }
 }

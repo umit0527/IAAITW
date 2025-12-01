@@ -106,10 +106,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Histories/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
             History history = db.Histories.Find(id);
             if (history == null)
             {

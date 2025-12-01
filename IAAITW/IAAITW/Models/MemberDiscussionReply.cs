@@ -38,8 +38,5 @@ namespace IAAITW.Models
 
         [Display(Name = "最後更新時間")]
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
-
-
-
     }
 }

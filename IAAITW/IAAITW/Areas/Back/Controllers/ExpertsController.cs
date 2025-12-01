@@ -34,12 +34,12 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Experts/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
+            //if (id == null)
+            //{
+            //    return RedirectToAction("Error404", "Error");
+            //}
 
-                var data = db.Experts.FirstOrDefault();
+            var data = db.Experts.FirstOrDefault();
 
             if (data == null)
             {
@@ -55,8 +55,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Experts/Create
         public ActionResult Create()
         {
-            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
-            //ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account");
             return View();
         }
 
@@ -73,11 +71,13 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 expert.Content = sanitizer.Sanitize(expert.Content);
-                
+
                 // 從 Session 取登入者
                 var loginUser = Session["AdminLogin"] as Admin;
                 expert.AdminId = loginUser.Id;
                 expert.UpdatedAdminId = loginUser.Id;
+                expert.CreatedDate = DateTime.Now;
+                expert.UpdatedDate = DateTime.Now;
 
                 db.Experts.Add(expert);
                 db.SaveChanges();
@@ -94,23 +94,18 @@ namespace IAAITW.Areas.Back.Controllers
                 TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
             }
 
-            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", expert.AdminId);
             return View(expert);
         }
 
         // GET: Back/Experts/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
             Expert expert = db.Experts.Find(id);
             if (expert == null)
             {
                 return HttpNotFound();
             }
-            
+
             return View(expert);
         }
 
@@ -132,10 +127,10 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 existingExpert.Content = sanitizer.Sanitize(expert.Content);
-                
+
                 // 設定最後更新時間
                 existingExpert.UpdatedDate = DateTime.Now;
-                
+
                 // 從 Session 取登入者
                 var loginUser = Session["AdminLogin"] as Admin;
                 existingExpert.UpdatedAdminId = loginUser.Id;

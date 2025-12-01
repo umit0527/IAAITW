@@ -129,6 +129,10 @@ namespace IAAITW.Areas.Back.Controllers
                         return View(news);
                     }
 
+                    // 從 Session 取登入者
+                    var loginUser = Session["AdminLogin"] as Admin;
+                    news.PublisherId = loginUser.Id;
+                    news.UpdaterId = loginUser.Id;
                     news.CreatedDate = DateTime.Now;
                     news.UpdatedDate = DateTime.Now;
 
@@ -164,11 +168,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/News/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
-
             var news = db.News.Include(k => k.Publisher)
                               .FirstOrDefault(k => k.Id == id);
             if (news == null)
@@ -183,7 +182,7 @@ namespace IAAITW.Areas.Back.Controllers
                 Content = news.Content,
                 CoverImage = news.CoverImage,
                 IsPinned = news.IsPinned,
-                LastUpdaterId = news.LastUpdaterId,
+                UpdaterId = news.UpdaterId,
             };
 
             //ViewBag.PublisherId = new SelectList(db.Admins, "Id", "Account", news.PublisherId);
@@ -202,19 +201,21 @@ namespace IAAITW.Areas.Back.Controllers
                 try
                 {
                     var existingNews = db.News
-                        .Include(k => k.LastUpdater)
+                        .Include(k => k.Updater)
                         .FirstOrDefault(k => k.Id == news.Id);
 
                     if (existingNews == null)
                     {
                         return HttpNotFound();
                     }
-
+                    
                     // 更新基本欄位
                     existingNews.Title = news.Title;
                     existingNews.Content = news.Content;
                     existingNews.IsPinned = news.IsPinned;
-                    existingNews.LastUpdaterId = news.LastUpdaterId;
+                    // 從 Session 取登入者
+                    var loginUser = Session["AdminLogin"] as Admin;
+                    existingNews.UpdaterId = loginUser.Id;
 
                     // 處理封面上傳
                     if (news.CoverImageFile != null && news.CoverImageFile.ContentLength > 0)
@@ -269,7 +270,7 @@ namespace IAAITW.Areas.Back.Controllers
                 TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
             }
 
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", news.LastUpdaterId);
+            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", news.UpdaterId);
             return View(news);
         }
 

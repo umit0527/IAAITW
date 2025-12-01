@@ -80,15 +80,19 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (ModelState.IsValid)
             {
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                
                 var knowledge = new Knowledge
                 {
                     Title = model.Title,
-                    //Description = model.Description,
+                    Description = model.Description,
                     IsTop= model.IsTop,
                     FilePath = model.FilePath,
-                    AdminId = model.AdminId,
-                    UploadDate = model.UploadDate,
-                    UpdatedDate = model.UpdatedDate,
+                    AdminId = loginUser.Id,
+                    UpdatedAdminId = loginUser.Id,
+                    UpdatedDate = DateTime.Now,
+                    UploadDate = DateTime.Now
                 };
 
                 // 檔案上傳
@@ -129,12 +133,12 @@ namespace IAAITW.Areas.Back.Controllers
 
                 db.Knowledges.Add(knowledge);
                 db.SaveChanges();
+                ViewBag.RedirectUrl = Url.Action("Index");
                 return View(model);
             }
             else
             {
                 TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
-                //ModelState.AddModelError("", "未收到檔案或檔案為空");
             }
 
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
@@ -144,11 +148,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Knowledges/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
-
             var knowledge = db.Knowledges
                               .Include(k => k.Admin)
                               .FirstOrDefault(k => k.Id == id);
@@ -198,7 +197,11 @@ namespace IAAITW.Areas.Back.Controllers
                     existingKnowledge.Title = model.Title;
                     existingKnowledge.Description = model.Description;
                     existingKnowledge.IsTop = model.IsTop;
-                    existingKnowledge.AdminId = model.AdminId;
+                    
+                    // 從 Session 取登入者
+                    var loginUser = Session["AdminLogin"] as Admin;
+                    existingKnowledge.UpdatedAdminId = loginUser.Id;
+                    existingKnowledge.UpdatedDate = DateTime.Now;
 
                     // 處理檔案上傳
                     if (model.FileUpload != null && model.FileUpload.ContentLength > 0)
@@ -221,9 +224,6 @@ namespace IAAITW.Areas.Back.Controllers
                         model.FileUpload.SaveAs(path);
                         existingKnowledge.FilePath = "/Uploads/Knowledge/" + fileName;
                     }
-
-                    // 更新修改時間
-                    existingKnowledge.UpdatedDate = DateTime.Now;
 
                     db.Entry(existingKnowledge).State = EntityState.Modified;
                     db.SaveChanges();

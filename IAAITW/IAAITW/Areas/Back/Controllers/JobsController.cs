@@ -67,6 +67,13 @@ namespace IAAITW.Areas.Back.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 job.Content = sanitizer.Sanitize(job.Content);
 
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                job.AdminId = loginUser.Id;
+                job.UpdatedAdminId = loginUser.Id;
+                job.CreatedDate = DateTime.Now;
+                job.UpdatedDate = DateTime.Now;
+
                 db.Jobs.Add(job);
                 db.SaveChanges();
 
@@ -89,10 +96,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Jobs/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
             Job job = db.Jobs.Find(id);
             if (job == null)
             {
@@ -120,9 +123,9 @@ namespace IAAITW.Areas.Back.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 existingJob.Content = sanitizer.Sanitize(job.Content);
 
-                // 設定最後更新時間
-                existingJob.UpdatedDate = DateTime.Now;
-                existingJob.UpdatedAdminId = job.UpdatedAdminId;
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                existingJob.UpdatedAdminId = loginUser.Id;
 
                 db.Entry(existingJob).State = EntityState.Modified;
                 db.SaveChanges();

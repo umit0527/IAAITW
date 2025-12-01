@@ -36,7 +36,7 @@ namespace IAAITW.Areas.Front.Controllers
             }
 
             //用套件一定要有 orderby 排序
-            var news = db.News.Include(n => n.LastUpdater).Include(n => n.Publisher);
+            var news = db.News.Include(n => n.Updater).Include(n => n.Publisher);
             var result = news.OrderBy(x => x.Id).ToPagedList(page.Value, pageSize);
             
             return View(result);
@@ -60,7 +60,7 @@ namespace IAAITW.Areas.Front.Controllers
         // GET: Front/News/Create
         public ActionResult Create()
         {
-            ViewBag.LastUpdaterId = new SelectList(db.Admins, "Id", "Account");
+            ViewBag.UpdaterId = new SelectList(db.Admins, "Id", "Account");
             ViewBag.PublisherId = new SelectList(db.Admins, "Id", "Account");
             return View();
         }
@@ -79,7 +79,7 @@ namespace IAAITW.Areas.Front.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.LastUpdaterId = new SelectList(db.Admins, "Id", "Account", news.LastUpdaterId);
+            ViewBag.UpdaterId = new SelectList(db.Admins, "Id", "Account", news.UpdaterId);
             ViewBag.PublisherId = new SelectList(db.Admins, "Id", "Account", news.PublisherId);
             return View(news);
         }
@@ -96,7 +96,7 @@ namespace IAAITW.Areas.Front.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.LastUpdaterId = new SelectList(db.Admins, "Id", "Account", news.LastUpdaterId);
+            ViewBag.UpdaterId = new SelectList(db.Admins, "Id", "Account", news.UpdaterId);
             ViewBag.PublisherId = new SelectList(db.Admins, "Id", "Account", news.PublisherId);
             return View(news);
         }
@@ -106,7 +106,7 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,CoverImage,CreatedDate,UpdatedDate,PublisherId,LastUpdaterId,IsPinned")] News news)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content,CoverImage,CreatedDate,UpdatedDate,PublisherId,UpdaterId,IsPinned")] News news)
         {
             if (ModelState.IsValid)
             {
@@ -114,7 +114,7 @@ namespace IAAITW.Areas.Front.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.LastUpdaterId = new SelectList(db.Admins, "Id", "Account", news.LastUpdaterId);
+            ViewBag.UpdaterId = new SelectList(db.Admins, "Id", "Account", news.UpdaterId);
             ViewBag.PublisherId = new SelectList(db.Admins, "Id", "Account", news.PublisherId);
             return View(news);
         }

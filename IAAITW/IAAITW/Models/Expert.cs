@@ -26,7 +26,7 @@ namespace IAAITW.Models
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
 
         [Display(Name = "建立人員")]
-        public int AdminId { get; set; } = 1;
+        public int AdminId { get; set; } 
         [ForeignKey("AdminId")]
         public virtual Admin Admin { get; set; }
 

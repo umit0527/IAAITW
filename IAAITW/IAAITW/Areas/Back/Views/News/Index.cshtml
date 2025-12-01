@@ -65,7 +65,7 @@
                                             </td>
                                             <td>
                                                 @{
-                                                    var shortTitle = item.Title.TruncateWithChinese(24);
+                                                    var shortTitle = item.Title.TruncateWithChinese(22);
                                                 }
                                                 <span title="@item.Title">@shortTitle</span>
                                             </td>
@@ -80,7 +80,7 @@
                                             </td>
                                             <td>
                                                 @{
-                                                    var shortUpdater = item.LastUpdater.Name.TruncateWithChinese(6);
+                                                    var shortUpdater = item.Updater.Name.TruncateWithChinese(6);
                                                 }
                                                 @shortUpdater
                                             </td>
