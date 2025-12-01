@@ -53,7 +53,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
             News news = db.News.Find(id);
             if (news == null)
@@ -166,7 +166,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
 
             var news = db.News.Include(k => k.Publisher)
@@ -278,7 +278,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
             News news = db.News.Find(id);
             if (news == null)
@@ -291,9 +291,13 @@ namespace IAAITW.Areas.Back.Controllers
         // POST: Back/News/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
             var news = db.News.Find(id);
+            if (id == null)
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
             if (news == null)
             {
                 return Json(new { success = false, message = "找不到資料" });

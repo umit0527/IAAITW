@@ -32,7 +32,7 @@ namespace IAAITW.Areas.Back.Controllers
         }
 
         // GET: Back/Abouts/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             var data = db.Abouts.FirstOrDefault();
 
@@ -97,7 +97,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
             About about = db.Abouts.Find(id);
             if (about == null)
@@ -152,26 +152,15 @@ namespace IAAITW.Areas.Back.Controllers
             return View(about);
         }
 
-        // GET: Back/Abouts/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            About about = db.Abouts.Find(id);
-            if (about == null)
-            {
-                return HttpNotFound();
-            }
-            return View(about);
-        }
-
         // POST: Back/Abouts/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
+            if (id ==null)
+            {
+                return Json(new { success = false, message = "無效的請求" });
+            }
             var about = db.Abouts.Find(id);
             if (about == null)
             {

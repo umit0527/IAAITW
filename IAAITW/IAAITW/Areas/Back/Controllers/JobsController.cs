@@ -91,7 +91,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
             Job job = db.Jobs.Find(id);
             if (job == null)
@@ -145,8 +145,12 @@ namespace IAAITW.Areas.Back.Controllers
         // POST: Back/Jobs/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
             var job = db.Jobs.Find(id);
             if (job == null)
             {

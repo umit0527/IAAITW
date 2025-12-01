@@ -34,7 +34,12 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Experts/Details/5
         public ActionResult Details(int? id)
         {
-            var data = db.Experts.FirstOrDefault();
+            if (id == null)
+            {
+                return RedirectToAction("Error404", "Error");
+            }
+
+                var data = db.Experts.FirstOrDefault();
 
             if (data == null)
             {
@@ -93,7 +98,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
             Expert expert = db.Experts.Find(id);
             if (expert == null)
@@ -149,8 +154,12 @@ namespace IAAITW.Areas.Back.Controllers
         // POST: Back/Experts/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                return Json(new { success = false, message = "無效的請求" });
+            }
             var expert = db.Experts.Find(id);
             if (expert == null)
             {

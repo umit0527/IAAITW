@@ -53,8 +53,9 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
+
             Knowledge knowledge = db.Knowledges.Find(id);
             if (knowledge == null)
             {
@@ -145,7 +146,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
 
             var knowledge = db.Knowledges
@@ -246,26 +247,16 @@ namespace IAAITW.Areas.Back.Controllers
             return View(model);
         }
 
-        // GET: Back/Knowledges/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Knowledge knowledge = db.Knowledges.Find(id);
-            if (knowledge == null)
-            {
-                return HttpNotFound();
-            }
-            return View(knowledge);
-        }
-
         //POST: Back/Knowledges/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
+            if (id == null) 
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
+
             var knowledge = db.Knowledges.Find(id);
             if (knowledge == null)
             {

@@ -98,7 +98,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
             Organization organization = db.Organizationes.Find(id);
             if (organization == null)
@@ -157,8 +157,13 @@ namespace IAAITW.Areas.Back.Controllers
         // POST: Back/Organizations/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
+            if (id==null)
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
+
             var organization = db.Organizationes.Find(id);
             if (organization == null)
             {

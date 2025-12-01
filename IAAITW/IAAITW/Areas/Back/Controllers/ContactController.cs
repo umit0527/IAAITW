@@ -47,8 +47,12 @@ namespace IAAITW.Areas.Back.Controllers
         }
 
         // GET: Back/Contact/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Error404", "Error");
+            }
             var data = db.Contacts.FirstOrDefault();
 
             if (data == null)
@@ -60,13 +64,6 @@ namespace IAAITW.Areas.Back.Controllers
 
             ViewBag.HasData = true;
             return View(data);
-
-            //var contact = db.Contacts.Find(id);
-            //if (contact == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(contact);
         }
     }
 }

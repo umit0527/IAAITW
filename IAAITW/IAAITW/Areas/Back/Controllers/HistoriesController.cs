@@ -50,8 +50,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Histories/Create
         public ActionResult Create()
         {
-            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
-            //ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account");
             return View();
         }
 
@@ -94,7 +92,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
             History history = db.Histories.Find(id);
             if (history == null)
@@ -150,8 +148,13 @@ namespace IAAITW.Areas.Back.Controllers
         // POST: Back/Histories/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                return Json(new { success = false, message = "無效的請求" });
+            }
+
             var history = db.Histories.Find(id);
             if (history == null)
             {

@@ -91,7 +91,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Error404", "Error");
             }
             Survey survey = db.Surveys.Find(id);
             if (survey == null)
@@ -144,8 +144,13 @@ namespace IAAITW.Areas.Back.Controllers
         // POST: Back/Surveys/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                return Json(new { success = false, message = "找不到資料" });
+            }
+
             var survey = db.Surveys.Find(id);
             if (survey == null)
             {
