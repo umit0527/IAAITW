@@ -1,17 +1,117 @@
-﻿
+﻿@model IAAITW.Models.Knowledge
+
 @{
-    Layout = null;
+    ViewBag.Title = "詳情 | 知識庫下載";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div> 
+<div class="">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="font-weight-bold">知識庫下載</h3>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">詳 情</h4>
+                    <div class="row mb-4">
+                        <!-- 左邊欄 -->
+                        <div class="col-md-6">
+
+                            <div class="row">
+                                <!-- 標題 -->
+                                <div class="col-md-10">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">標 題</label>
+                                        <div class="form-control text-secondary" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">@Model.Title</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <!-- 置頂 -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">置頂</label>
+                                        <div class="form-switch">
+                                            @Html.EditorFor(model => model.IsTop, new { htmlAttributes = new { @class = "form-check-input", disabled = "disabled" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 內容 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">描 述</label>
+                                <div class="form-control text-secondary" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                                    @Model.Description
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右邊欄 -->
+                        <div class="col-md-6">
+                            <!-- 原檔案 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">原檔案</label>
+                                <p class="form-control-plaintext">@Path.GetFileName(Model.FilePath)</p>
+                            </div>
+                            <!-- 檔案上傳 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">更新檔案</label>
+                                <input type="file" class="form-control" id="FilePath" name="FilePath">
+                            </div>
+                            <!-- 發布人員和日期 -->
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">上傳人員</label>
+                                        <p class="form-control-plaintext">@Model.Admin.Name</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">上傳日期</label>
+                                        <p class="form-control-plaintext">@Model.UploadDate.ToString("yyyy/MM/dd HH:mm")</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 最後更新人員和日期 -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">最後更新人員</label>
+                                        <p class="form-control-plaintext">@Model.UpdatedAdmin.Name</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">更新日期</label>
+                                        <p class="form-control-plaintext">@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- 按鈕 -->
+                    <div class="row">
+                        <div style="width:120px;">
+                            <div class="d-flex flex-column gap-2">
+                                <a class="btn btn-secondary" href="@Url.Action("Index", "Knowledges", new { area = "Back" })">返 回</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
