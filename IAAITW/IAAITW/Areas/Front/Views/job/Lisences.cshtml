@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<IAAITW.Models.Job>*@
+﻿@model IEnumerable<IAAITW.Models.Lisences>
 
 @{
     ViewBag.Title = "訓練、認證、發照";
@@ -20,7 +20,7 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>協會業務</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li ><a href="#">協會業務</a></li>
+                            <li><a href="#">協會業務</a></li>
                             <li class="active"><a href="#">訓練、認證、發照</a></li>
                             <li><a href="#">諮詢、顧問</a></li>
                             <li><a href="#">縱火調查</a></li>
@@ -36,9 +36,17 @@
                 <hr class="botmargin-min">
                 <!-- 內容開始 -->
                 <div>
-                    <p>目前不開放此業務</p>
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="mb-4">
+                            @Html.Raw(Model.FirstOrDefault().Content)
+                        </div>
+                    }
+                    else
+                    {
+                        <p>目前不開放此業務</p>
+                    }
                 </div>
-
 
             </div>
             <!-- Content Col end -->

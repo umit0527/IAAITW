@@ -24,7 +24,8 @@ namespace IAAITW.Areas.Front.Controllers
         // GET: Front/Job/Lisences
         public ActionResult Lisences()
         {
-            return View();
+            var lisences = db.Lisences.Include(j => j.Admin).Include(j => j.UpdatedAdmin);
+            return View(lisences.ToList());
         }
 
         // GET: Front/Job/Refers
