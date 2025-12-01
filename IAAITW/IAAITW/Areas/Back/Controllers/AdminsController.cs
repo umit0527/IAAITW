@@ -117,27 +117,35 @@ namespace IAAITW.Areas.Back.Controllers
 
             if (ModelState.IsValid)
             {
-                // 驗證帳號密碼
-                var user = ValidateUser(model.Account, model.Password);
-
-                if (user == null)
+                try
                 {
-                    // 帳號或密碼錯誤
-                    TempData["ErrorMessage"] = "帳號或密碼錯誤。";
+                    // 驗證帳號密碼
+                    var user = ValidateUser(model.Account, model.Password);
+
+                    if (user == null)
+                    {
+                        // 帳號或密碼錯誤
+                        TempData["ErrorMessage"] = "帳號或密碼錯誤。";
+                        return View(model);
+                    }
+                    // 登入成功，產生表單驗證
+                    //ViewBag.UserName = user.Name;
+                    Session["AdminLogin"] = user;
+                    string userData = JsonConvert.SerializeObject(user);
+                    Utility.SetAuthenTicket(userData, model.Account);
+
+                    TempData["SuccessMessage"] = "登入成功！";
+
+                    // 把要導向的 URL 給 View 跳轉到關於我們頁面
+                    ViewBag.RedirectUrl = Url.Action("Index", "Abouts", new { area = "Back" });
+
                     return View(model);
                 }
-                // 登入成功，產生表單驗證
-                //ViewBag.UserName = user.Name;
-                Session["AdminLogin"] = user;
-                string userData = JsonConvert.SerializeObject(user);
-                Utility.SetAuthenTicket(userData, model.Account);
-                
-                TempData["SuccessMessage"] = "登入成功！";
+                catch (Exception)
+                {
+                    return RedirectToAction("Error500", "Error", new { area = "Back" });
+                }
 
-                // 把要導向的 URL 給 View 跳轉到關於我們頁面
-                ViewBag.RedirectUrl = Url.Action("Index", "Abouts", new { area = "Back" });
-
-                return View(model);
             }
             // 驗證失敗或登入失敗，回傳原頁面
             return View(model);

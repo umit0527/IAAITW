@@ -60,12 +60,28 @@ namespace IAAITW.Areas.Back.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(History history)
         {
+            // 從 Session 取登入者
+            var loginUser = Session["AdminLogin"] as Admin;
+            if (loginUser == null)
+            {
+                // 設定錯誤訊息與跳轉網址
+                TempData["LoginMessage"] = "請先登入！";
+                // 把要導向的 URL 給 View
+                ViewBag.RedirectUrl = Url.Action("Login", "Admins");
+
+                return View(history);
+            }
+
             if (ModelState.IsValid)
             {
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 history.Content = sanitizer.Sanitize(history.Content);
+                history.AdminId = loginUser.Id;
+                history.UpdatedAdminId = loginUser.Id;
+                history.CreatedDate= DateTime.Now;
+                history.UpdatedDate= DateTime.Now;
 
                 db.Histories.Add(history);
                 db.SaveChanges();

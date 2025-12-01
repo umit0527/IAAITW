@@ -1,4 +1,5 @@
-﻿using Ganss.Xss;
+﻿using AngleSharp.Browser.Dom;
+using Ganss.Xss;
 using IAAITW.Filter;
 using IAAITW.Models;
 using System;
@@ -32,7 +33,7 @@ namespace IAAITW.Areas.Back.Controllers
         }
 
         // GET: Back/Abouts/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
             var data = db.Abouts.FirstOrDefault();
 
@@ -61,17 +62,29 @@ namespace IAAITW.Areas.Back.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(About about)
         {
+            // 從 Session 取登入者
+            var loginUser = Session["AdminLogin"] as Admin;
+            if (loginUser == null)
+            {
+                // 設定錯誤訊息與跳轉網址
+                TempData["LoginMessage"] = "請先登入！";
+                // 把要導向的 URL 給 View
+                ViewBag.RedirectUrl = Url.Action("Login", "Admins");
+
+                return View(about);
+            }
+
             if (ModelState.IsValid)
             {
                 // 安全過濾 HTML
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
                 about.Content = sanitizer.Sanitize(about.Content);
-                
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
+                     
                 about.AdminId = loginUser.Id;
                 about.UpdatedAdminId = loginUser.Id;
+                about.CreatedDate = DateTime.Now;
+                about.UpdatedDate = DateTime.Now;
 
                 db.Abouts.Add(about);
                 db.SaveChanges();
@@ -88,7 +101,6 @@ namespace IAAITW.Areas.Back.Controllers
                 TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
             }
 
-            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", about.AdminId);
             return View(about);
         }
 

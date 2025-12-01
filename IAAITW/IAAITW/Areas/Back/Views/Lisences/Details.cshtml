@@ -1,23 +1,22 @@
-﻿@model IAAITW.Models.Job
+﻿@model IAAITW.Models.Expert
 
 @{
-    ViewBag.Title = "協會業務";
+    ViewBag.Title = "專家介紹";
 }
 
-
 <div class="row">
-    <h3 class="mb-4">協會業務</h3>
+    <h3 class="mb-4">關於我們</h3>
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">協會業務</h4>
+                <h4 class="card-title">專家介紹</h4>
 
                 @Html.AntiForgeryToken()
 
                 @if (ViewBag.HasData == false)
                 {
                     <p>
-                        <a class="btn btn-primary" href="@Url.Action("Create", "Jobs", new { area = "Back" })">新 增</a>
+                        <a class="btn btn-primary" href="@Url.Action("Create", "Experts", new { area = "Back" })">新 增</a>
                     </p>
                 }
 
@@ -36,9 +35,9 @@
 
                         <!-- 右欄：其他欄位（較窄）-->
                         <div class="col-lg-4 col-md-5 col-12">
-                            <div class="mb-3">
+                            <div class="table-responsive mb-3">
                                 <h6 class="text-muted">詳細資訊</h6>
-                                <table class="table mb-3">
+                                <table class="table mb-0">
                                     <tbody>
                                         <tr>
                                             <th scope="row" class="col-sm-5">建立時間</th>
@@ -61,11 +60,11 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
 
-                                <div class="d-flex gap-2">
-                                    <a class="btn btn-sm btn-outline-info" href="@Url.Action("Edit", "Jobs", new { area = "Back", id = Model.Id })">編 輯</a>
-                                    <button class="btn btn-sm btn-outline-danger delete-btn" data-id="@Model.Id">刪 除</button>
-                                </div>
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-sm btn-outline-info" href="@Url.Action("Edit", "Experts", new { area = "Back", id = Model.Id })">編 輯</a>
+                                <button class="btn btn-sm btn-outline-danger delete-btn" data-id="@Model.Id">刪 除</button>
                             </div>
                         </div>
                     </div>
@@ -89,7 +88,7 @@
                 var token = $('input[name="__RequestVerificationToken"]').val();
 
                 $.ajax({
-                    url: '@Url.Action("DeleteConfirmed", "Jobs", new { area = "Back" })',
+                    url: '@Url.Action("DeleteConfirmed", "Experts", new { area = "Back" })',
                     type: 'POST',
                     dataType: 'json',
                     data: {

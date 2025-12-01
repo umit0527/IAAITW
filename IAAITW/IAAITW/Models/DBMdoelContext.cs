@@ -29,6 +29,7 @@ namespace IAAITW.Models
         public virtual DbSet<MemberDiscussionPost> MemberDiscussionPosts { get; set; }
         public virtual DbSet<MemberDiscussionReply> MemberDiscussionReplies { get; set; }
         public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<Lisences> Lisences { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

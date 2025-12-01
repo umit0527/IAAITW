@@ -8,14 +8,13 @@ using System.Web.Mvc;
 
 namespace IAAITW.Models
 {
-    public class History
+    public class Lisences
     {
         [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "請輸入內容")]
         [Display(Name = "內容")]
-        //[StringLength(1000, ErrorMessage = "內容長度不能超過1000個字")]
         [AllowHtml]
         public string Content { get; set; }
 
@@ -33,6 +32,6 @@ namespace IAAITW.Models
         [Display(Name = "最後更新人員")]
         public int UpdatedAdminId { get; set; } 
         [ForeignKey("UpdatedAdminId")]
-        public virtual Admin UpdatedAdmin { get; set; } 
+        public virtual Admin UpdatedAdmin { get; set; }
     }
 }

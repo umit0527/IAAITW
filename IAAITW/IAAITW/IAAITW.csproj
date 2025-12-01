@@ -197,6 +197,7 @@
     <Compile Include="Areas\Front\Controllers\NewsController.cs" />
     <Compile Include="Areas\Front\FrontAreaRegistration.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Filter\FilterConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -365,6 +366,10 @@
     <Compile Include="Migrations\202511271021178_adjust passwordSalt requier in admin table.Designer.cs">
       <DependentUpon>202511271021178_adjust passwordSalt requier in admin table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202512011322478_add lisences table.cs" />
+    <Compile Include="Migrations\202512011322478_add lisences table.Designer.cs">
+      <DependentUpon>202512011322478_add lisences table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -379,6 +384,7 @@
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Knowledge.cs" />
     <Compile Include="Models\KnowledgeViewModel.cs" />
+    <Compile Include="Models\Lisences.cs" />
     <Compile Include="Models\MemberAccount.cs" />
     <Compile Include="Models\MemberDiscussionPost.cs" />
     <Compile Include="Models\MemberDiscussionReply.cs" />
@@ -1328,6 +1334,9 @@
     <Content Include="Areas\Back\Views\Error\ServerError.cshtml" />
     <Content Include="Areas\Front\Views\Error\ServerError.cshtml" />
     <Content Include="Areas\Back\Views\Knowledges\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Lisences\Create.cshtml" />
+    <Content Include="Areas\Back\Views\Lisences\Details.cshtml" />
+    <Content Include="Areas\Back\Views\Lisences\Edit.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -1821,6 +1830,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511271021178_adjust passwordSalt requier in admin table.resx">
       <DependentUpon>202511271021178_adjust passwordSalt requier in admin table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202512011322478_add lisences table.resx">
+      <DependentUpon>202512011322478_add lisences table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

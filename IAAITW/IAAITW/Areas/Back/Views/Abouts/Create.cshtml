@@ -72,9 +72,22 @@
             @if (TempData["ErrorMessage"] != null)
             {
                 <text>
-                    alert("@TempData["ErrorMessage"]");
+            alert("@TempData["ErrorMessage"]");
                 </text>
             }
-        });
+
+            //顯示請先登入訊息
+            @if (TempData["LoginMessage"] != null)
+            {
+                <text>
+                    setTimeout(function () {
+                        alert("@TempData["LoginMessage"]");
+                        setTimeout(function () {
+                            window.location.href = "@ViewBag.RedirectUrl";
+                        }, 800);
+                    }, 500);
+                </text>
+                }
+            });
     </script>
 }

@@ -1,91 +1,91 @@
 ﻿@model IAAITW.Models.Survey
 
 @{
-    ViewBag.Title = "協會業務";
+    ViewBag.Title = "縱火調查";
 }
 
-<div>
-    @Html.AntiForgeryToken()
-    <h2>協會業務</h2>
 
-    <div>
-        <h4>縱火調查</h4>
-        <hr />
-        @if (ViewBag.HasData == false)
-        {
-            <p>
-                @Html.ActionLink("Create New", "Create", null, new { @class = "" })
-            </p>
-        }
-        @if (ViewBag.HasData == true)
-        {
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Content)
-                </dt>
+<div class="row">
+    <h3 class="mb-4">協會業務</h3>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">縱火調查</h4>
 
-                <dd>
-                    @Html.Raw(Model.Content)
-                </dd>
+                @Html.AntiForgeryToken()
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
-                </dt>
+                @if (ViewBag.HasData == false)
+                {
+                    <p>
+                        <a class="btn btn-primary" href="@Url.Action("Create", "Surveys", new { area = "Back" })">新 增</a>
+                    </p>
+                }
 
-                <dd>
-                    @Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")
-                </dd>
+                @if (ViewBag.HasData == true)
+                {
+                    <div class="row">
+                        <!-- 左欄：內容（寬度較大）-->
+                        <div class="col-lg-8 col-md-7 col-12">
+                            <div class="mb-3">
+                                <h6 class="text-muted">內容</h6>
+                                <div class="border p-3 form-control" style="min-height:200px;">
+                                    @Html.Raw(Model.Content)
+                                </div>
+                            </div>
+                        </div>
 
-                <dt>
-                    建立人員
-                </dt>
+                        <!-- 右欄：其他欄位（較窄）-->
+                        <div class="col-lg-4 col-md-5 col-12">
+                            <div class="mb-3">
+                                <h6 class="text-muted">詳細資訊</h6>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row" class="col-sm-5">建立時間</th>
+                                            <td class="col-sm-7">@Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")</td>
+                                        </tr>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Admin.Name)
-                </dd>
+                                        <tr>
+                                            <th scope="row" class="col-sm-5">建立人員</th>
+                                            <td class="col-sm-7">@Html.DisplayFor(model => model.Admin.Name)</td>
+                                        </tr>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.UpdatedDate)
-                </dt>
+                                        <tr>
+                                            <th scope="row" class="col-sm-5">最後更新</th>
+                                            <td class="col-sm-7">@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</td>
+                                        </tr>
 
-                <dd>
-                    @Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")
+                                        <tr>
+                                            <th scope="row" class="col-sm-5">最後更新人員</th>
+                                            <td class="col-sm-7">@Html.DisplayFor(model => model.UpdatedAdmin.Name)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                </dd>
-
-                <dt>
-                    最後更新人員
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.UpdatedAdmin.Name)
-                </dd>
-            </dl>
-        }
-        else
-        {
-            <p>目前沒有資料</p>
-        }
+                                <div class="d-flex gap-2">
+                                    <a class="btn btn-sm btn-outline-info" href="@Url.Action("Edit", "Surveys", new { area = "Back", id = Model.Id })">編 輯</a>
+                                    <button class="btn btn-sm btn-outline-danger delete-btn" data-id="@Model.Id">刪 除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p>目前沒有資料</p>
+                }
+            </div>
+        </div>
     </div>
-    @if (ViewBag.HasData == true)
-    {
-        <p>
-            @Html.ActionLink("編 輯", "Edit", new { id = Model.Id }) |
-            <button class="delete-btn" data-id="@Model.Id">刪除</button>
-        </p>
-    }
 </div>
 
 @section scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(function () {
             $('.delete-btn').on('click', function () {
                 if (!confirm('確定要刪除這筆資料嗎？')) return;
 
                 var id = $(this).data('id');
-                var row = $('#row-' + id);
-                // 讀取 AntiForgery token（由 @Html.AntiForgeryToken() 產生）
                 var token = $('input[name="__RequestVerificationToken"]').val();
 
                 $.ajax({
@@ -98,8 +98,6 @@
                     },
                     success: function (res) {
                         if (res && res.success) {
-                            row.fadeOut(300, function () { $(this).remove(); });
-                            // 可改成更漂亮的提示元件（toast）
                             alert('刪除成功！');
                             location.reload();
                         } else {
@@ -108,7 +106,6 @@
                         }
                     },
                     error: function (xhr, status, err) {
-                        // 更完整的錯誤資訊，有助 debug
                         console.error('刪除錯誤', status, err, xhr.responseText);
                         alert('刪除時發生錯誤，請稍後再試。');
                     }

@@ -1,24 +1,24 @@
-﻿@model IAAITW.Models.Survey
+﻿@model IAAITW.Models.Expert
 
 @{
-    ViewBag.Title = "編輯 | 縱火調查";
+    ViewBag.Title = "編輯 | 專家介紹";
 }
 
 <div class="row">
-    <h3 class="mb-4">縱火調查</h3>
+    <h3 class=" mb-4">專家介紹</h3>
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">編 輯</h4>
 
-                @using (Html.BeginForm("Edit", "Surveys", new { area = "Back" }, FormMethod.Post, new { @class = "form-horizontal" }))
+                @using (Html.BeginForm("Edit", "Experts", new { area = "Back" }, FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
 
                     <div class="row">
-
+                        <!-- 內容編輯器 -->
                         <div class="col-12">
                             <div class="form-group mb-3">
                                 <label for="editor" class="control-label">內容 <small class="text-muted">(上限1000個字)</small></label>
@@ -33,7 +33,7 @@
                         </div>
                         <div style="width:120px;">
                             <div class="d-flex flex-column gap-2">
-                                <a class="btn btn-secondary" href="@Url.Action("Index", "Surveys", new { area = "Back" })">返 回</a>
+                                <a class="btn btn-secondary" href="@Url.Action("Index", "Experts", new { area = "Back" })">返 回</a>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                 window.location.href = "@ViewBag.RedirectUrl";
                             } else {
                                 // fallback to index
-                                window.location.href = "@Url.Action("Index", "Abouts", new { area = "Back" })";
+                                window.location.href = "@Url.Action("Index", "Experts", new { area = "Back" })";
                             }
                         }, 800);
                     }, 500);
