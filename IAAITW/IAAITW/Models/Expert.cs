@@ -31,7 +31,7 @@ namespace IAAITW.Models
         public virtual Admin Admin { get; set; }
 
         [Display(Name = "最後更新人員")]
-        public int UpdatedAdminId { get; set; } = 1;
+        public int UpdatedAdminId { get; set; } 
         [ForeignKey("UpdatedAdminId")]
         public virtual Admin UpdatedAdmin { get; set; }
     }

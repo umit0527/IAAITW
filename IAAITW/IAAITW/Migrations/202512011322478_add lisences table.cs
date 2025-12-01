@@ -16,11 +16,11 @@
                         CreatedDate = c.DateTime(nullable: false),
                         UpdatedDate = c.DateTime(nullable: false),
                         AdminId = c.Int(nullable: false),
-                        UpdatedAdminId = c.Int(nullable: true),
+                        UpdatedAdminId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Admins", t => t.AdminId, cascadeDelete: true)
-                .ForeignKey("dbo.Admins", t => t.UpdatedAdminId, cascadeDelete: true)
+                .ForeignKey("dbo.Admins", t => t.UpdatedAdminId, cascadeDelete: false)
                 .Index(t => t.AdminId)
                 .Index(t => t.UpdatedAdminId);
             

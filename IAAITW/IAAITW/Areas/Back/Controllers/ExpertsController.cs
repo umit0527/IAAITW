@@ -73,6 +73,11 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 expert.Content = sanitizer.Sanitize(expert.Content);
+                
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                expert.AdminId = loginUser.Id;
+                expert.UpdatedAdminId = loginUser.Id;
 
                 db.Experts.Add(expert);
                 db.SaveChanges();
@@ -105,8 +110,7 @@ namespace IAAITW.Areas.Back.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", expert.AdminId);
-            //ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account", expert.UpdatedAdminId);
+            
             return View(expert);
         }
 
@@ -128,10 +132,13 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 existingExpert.Content = sanitizer.Sanitize(expert.Content);
-
+                
                 // 設定最後更新時間
                 existingExpert.UpdatedDate = DateTime.Now;
-                existingExpert.UpdatedAdminId = expert.UpdatedAdminId;
+                
+                // 從 Session 取登入者
+                var loginUser = Session["AdminLogin"] as Admin;
+                existingExpert.UpdatedAdminId = loginUser.Id;
 
                 db.Entry(existingExpert).State = EntityState.Modified;
                 db.SaveChanges();

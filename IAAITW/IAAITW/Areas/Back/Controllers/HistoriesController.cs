@@ -80,8 +80,8 @@ namespace IAAITW.Areas.Back.Controllers
                 history.Content = sanitizer.Sanitize(history.Content);
                 history.AdminId = loginUser.Id;
                 history.UpdatedAdminId = loginUser.Id;
-                history.CreatedDate= DateTime.Now;
-                history.UpdatedDate= DateTime.Now;
+                history.CreatedDate = DateTime.Now;
+                history.UpdatedDate = DateTime.Now;
 
                 db.Histories.Add(history);
                 db.SaveChanges();
@@ -129,29 +129,42 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingHistory = db.Histories.Find(history.Id);
-                if (existingHistory == null)
+                try
                 {
-                    return HttpNotFound();
+                    var existingHistory = db.Histories.Find(history.Id);
+                    if (existingHistory == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    // 安全過濾 HTML 並更新內容
+                    var sanitizer = new HtmlSanitizer();
+                    sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
+                    existingHistory.Content = sanitizer.Sanitize(history.Content);
+
+                    // 設定最後更新時間
+                    existingHistory.UpdatedDate = DateTime.Now;
+                    // 從 Session 取登入者
+                    var loginUser = Session["AdminLogin"] as Admin;
+                    // 更新編輯者
+                    existingHistory.UpdatedAdminId = loginUser.Id;
+
+                    db.Entry(existingHistory).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    // 設定成功訊息與跳轉網址
+                    TempData["SuccessMessage"] = "編輯成功！";
+                    // 把要導向的 URL 給 View
+                    ViewBag.RedirectUrl = Url.Action("Index");
+
+                    return View(history);
                 }
-                // 安全過濾 HTML 並更新內容
-                var sanitizer = new HtmlSanitizer();
-                sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
-                existingHistory.Content = sanitizer.Sanitize(history.Content);
+                catch (Exception ex)
+                {
+                    //
 
-                // 設定最後更新時間
-                existingHistory.UpdatedDate = DateTime.Now;
-                existingHistory.UpdatedAdminId = history.UpdatedAdminId;
-
-                db.Entry(existingHistory).State = EntityState.Modified;
-                db.SaveChanges();
-
-                // 設定成功訊息與跳轉網址
-                TempData["SuccessMessage"] = "編輯成功！";
-                // 把要導向的 URL 給 View
-                ViewBag.RedirectUrl = Url.Action("Index");
-
-                return View(history);
+                    return HttpNotFound();
+                    //return RedirectToAction("Error500", "Error", new { area = "Back" });
+                }
             }
             else
             {
