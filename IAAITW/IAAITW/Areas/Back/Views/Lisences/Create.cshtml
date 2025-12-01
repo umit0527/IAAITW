@@ -1,17 +1,17 @@
-﻿@model IAAITW.Models.Expert
+﻿@model IAAITW.Models.Lisences
 
 @{
-    ViewBag.Title = "新增 | 專家介紹";
+    ViewBag.Title = "新增 | 訓練、認證、發照";
 }
 
 <div class="row">
-    <h3 class="mb-4">專家介紹</h3>
+    <h3 class="mb-4">訓練、認證、發照</h3>
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">新 增</h4>
 
-                @using (Html.BeginForm("Create", "Experts", new { area = "Back" }, FormMethod.Post, new { @class = "form-horizontal" }))
+                @using (Html.BeginForm("Create", "Lisences", new { area = "Back" }, FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -33,7 +33,7 @@
                         </div>
                         <div style="width:120px;">
                             <div class="d-flex flex-column gap-2">
-                                <a class="btn btn-secondary" href="@Url.Action("Details", "Experts", new { area = "Back" })">返 回</a>
+                                <a class="btn btn-secondary" href="@Url.Action("Details", "Lisences", new { area = "Back" })">返 回</a>
                             </div>
                         </div>
                     </div>
