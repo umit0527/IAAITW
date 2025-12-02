@@ -377,6 +377,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\AdminEditViewModel.cs" />
     <Compile Include="Models\AdminLoginViewModel.cs" />
     <Compile Include="Models\AdminRegisterViewModel.cs" />
     <Compile Include="Models\Contact.cs" />

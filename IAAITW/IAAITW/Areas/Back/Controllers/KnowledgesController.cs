@@ -112,6 +112,12 @@ namespace IAAITW.Areas.Back.Controllers
                     {
                         // 儲存檔案
                         model.FileUpload.SaveAs(path);
+                        // 存到資料庫
+                        knowledge.FilePath = "/Uploads/Knowledge/" + fileName; // 可存相對路徑
+                        
+                        db.Knowledges.Add(knowledge);
+                        db.SaveChanges();
+                        
                         // 設定成功訊息與跳轉網址
                         TempData["SuccessMessage"] = "新增成功！";
                         ViewBag.RedirectUrl = Url.Action("Index");
@@ -122,18 +128,13 @@ namespace IAAITW.Areas.Back.Controllers
                         ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", model.AdminId);
                         TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
                         return View(model);
-                    }
-                    // 存到資料庫
-                    knowledge.FilePath = "/Uploads/Knowledge/" + fileName; // 可存相對路徑
+                    }   
                 }
                 else
                 {
                     TempData["ErrorMessage"] = "請上傳檔案";
                 }
 
-                db.Knowledges.Add(knowledge);
-                db.SaveChanges();
-                ViewBag.RedirectUrl = Url.Action("Index");
                 return View(model);
             }
             else

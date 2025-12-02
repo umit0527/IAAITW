@@ -1,85 +1,140 @@
-﻿@model IAAITW.Models.Admin
+﻿@model IAAITW.Models.AdminEditViewModel
 
 @{
-    Layout = null;
+    ViewBag.Title = "編輯 | 會員資料";
 }
 
-<!DOCTYPE html>
+<div class="row">
+    <h3 class=" mb-4">會員資料</h3>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">編 輯</h4>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>Admin</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Permission, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Permission, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Permission, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
+                @using (Html.BeginForm("Edit", "Admins", new { area = "Back" }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(m => m.Password)
+                        @Html.HiddenFor(m => m.PasswordSalt)
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入帳號" } })
+                                        @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NewPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.PasswordFor(model => model.NewPassword, new { @class = "form-control", placeholder = "請輸入密碼" })
+                                        <p>(不修改密碼請保持空白)</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "請輸入確認密碼" })
+                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入姓名" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入電子郵件" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- 建立 -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label mb-2" })
+                                            <p class="control-label">@Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- 更新 -->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label mb-2" })
+                                            <p class="control-label">@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- 按鈕 -->
+                        <div class="row">
+                            <div style="width:120px;">
+                                <div class="d-flex flex-column gap-2">
+                                    <button type="submit" class="btn btn-primary">送 出</button>
+                                </div>
+                            </div>
+                            <div style="width:120px;">
+                                <div class="d-flex flex-column gap-2">
+                                    <a class="btn btn-secondary" href="@Url.Action("Index", "Admins", new { area = "Back" })">返 回</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
     </div>
-</body>
-</html>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // 顯示成功訊息並跳轉
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                    setTimeout(function () {
+                        alert("@TempData["SuccessMessage"]");
+                        setTimeout(function () {
+                            if ("@(ViewBag.RedirectUrl ?? "")".length > 0) {
+                                window.location.href = "@ViewBag.RedirectUrl";
+                            } else {
+                                // fallback to index
+                                window.location.href = "@Url.Action("Index", "Experts", new { area = "Back" })";
+                            }
+                        }, 800);
+                    }, 500);
+                </text>
+            }
+
+            // 顯示錯誤訊息
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    alert("@TempData["ErrorMessage"]");
+                </text>
+            }
+        });
+    </script>
+}

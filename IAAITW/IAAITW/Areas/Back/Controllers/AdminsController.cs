@@ -4,6 +4,7 @@ using IAAITW.Filter;
 
 //using GoogleRecaptchaMvc;
 using IAAITW.Models;
+using MvcPaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,23 @@ namespace IAAITW.Areas.Back.Controllers
     public class AdminsController : Controller
     {
         private DBMdoelContext db = new DBMdoelContext();
+
+        // GET: Back/Admins/Index
+        [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
+        public ActionResult Index()
+        {
+            // 從session取登入者
+            var loginUser = Session["AdminLogin"] as Admin;
+
+            // 若沒有資料，導向 Details（會讓它顯示「Create New」）
+            if (loginUser == null)
+            {
+                return RedirectToAction("Details"); // 不帶 id，讓 Details 自行判斷
+            }
+            //導轉到 Details
+            return RedirectToAction("Details", new { id = loginUser.Id });
+        }
+
 
         // GET: Back/Admins/Register
         public ActionResult Register()
@@ -188,6 +206,115 @@ namespace IAAITW.Areas.Back.Controllers
             // 放入一次性提示訊息
             TempData["LogoutMessage"] = "登出成功！";
             return RedirectToAction("Login", "Admins", new { area = "Back" });
+        }
+
+        // GET: Back/Admins/Details
+        [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
+        public ActionResult Details(int? id)
+        {
+            // 從 Session 取登入者
+            var loginUser = Session["AdminLogin"] as Admin;
+            
+            var data = db.Admins.Find(loginUser.Id);
+            if (data == null)
+            {
+                return RedirectToAction("Error404", "Error", new { area = "Back" });
+            }
+
+            var viewModel = new AdminEditViewModel
+            {
+                Id = data.Id,
+                Account = data.Account,
+                Name = data.Name,
+                Email = data.Email,
+                CreatedDate = data.CreatedDate,
+                UpdatedDate = data.UpdatedDate
+            };
+
+            return View(viewModel);
+        }
+
+        // GET: Back/Admins/Edit/5
+        [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error404", "Error", new { area = "Back" });
+            }
+
+            // 從 Session 取登入者
+            // 如果登入的使用者不是正在編輯的使用者，則導向登入頁面
+            var loginUser = Session["AdminLogin"] as Admin;
+            if (loginUser == null || loginUser.Id != id)
+            {
+                return RedirectToAction("Error404", "Error", new { area = "Back" });
+            }
+
+            var viewModel = new AdminEditViewModel
+            {
+                Id = loginUser.Id,
+                Account = loginUser.Account,
+                Name = loginUser.Name,
+                Email = loginUser.Email,
+                CreatedDate = loginUser.CreatedDate,
+                UpdatedDate = loginUser.UpdatedDate
+            };
+
+            return View(viewModel);
+        }
+
+        // POST: Back/Admins/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
+        public ActionResult Edit(AdminEditViewModel model, string newPassword)
+        {
+            // 從 Session 取登入者
+            var loginUser = Session["AdminLogin"] as Admin;
+            if (loginUser == null || loginUser.Id != model.Id)
+            {
+                return RedirectToAction("Login", "Admins", new { area = "Back" });
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var existingAdmin = db.Admins.Find(model.Id);
+                    if (existingAdmin == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    // 如果有輸入密碼，則更新密碼
+                    if (!string.IsNullOrWhiteSpace(newPassword))
+                    {
+                        existingAdmin.Password = Utility.GenerateHashWithSalt(newPassword, existingAdmin.PasswordSalt);
+                    }
+
+                    existingAdmin.Account = model.Account;
+                    existingAdmin.Name = model.Name;
+                    existingAdmin.Email = model.Email;
+                    existingAdmin.UpdatedDate = DateTime.Now;
+
+                    db.Entry(existingAdmin).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    TempData["SuccessMessage"] = "編輯成功！";
+                    ViewBag.RedirectUrl = Url.Action("Index", "Abouts", new { area = "Back" });
+                    return View(model);
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Error500", "Error", new { area = "Back" });
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
+            }
+            return View(model);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     
@@ -201,6 +199,14 @@
                             <span class="menu-title">聯絡我們</span>
                         </a>
                     </li>
+
+                    @* 會員專區 *@
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Admins", new { area = "Back" })">
+                        <i class="mdi mdi-account menu-icon"></i>
+                        <span class="menu-title">會員資料</span>
+                    </a>
+                </li>
 
                     <li class="nav-item">
                         <hr />

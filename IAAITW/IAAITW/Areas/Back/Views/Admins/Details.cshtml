@@ -1,74 +1,72 @@
-﻿@model IAAITW.Models.Admin
+﻿@model IAAITW.Models.AdminEditViewModel
 
 @{
-    Layout = null;
+    ViewBag.Title = "詳情 | 基本資料";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>Admin</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Account)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Account)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Password)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Password)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Permission)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Permission)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.CreateDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreateDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.UpdatedDate)
-            </dd>
-    
-        </dl>
+<div class="">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="font-weight-bold">基本資料</h3>
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">詳 情</h4>
+                    <hr />
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <!-- 帳 號 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">帳 號</label>
+                                <div class="form-control text-secondary" style="background-color: #f8f9fa;">@Model.Account</div>
+                            </div>
+
+                            <!-- 姓 名 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">姓 名</label>
+                                <div class="form-control text-secondary" style="background-color: #f8f9fa; ">
+                                    @Model.Name
+                                </div>
+                            </div>
+
+                            <!-- 電子郵件 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Email</label>
+                                <p class="form-control" style="background-color: #f8f9fa; ">
+                                    <a href="mailto:@Model.Email">@Model.Email</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <!-- 建立日期 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">建立日期</label>
+                                <p class="form-control-plaintext">@Model.CreatedDate.ToString("yyyy/MM/dd HH:mm")</p>
+                            </div>
+
+                            <!-- 最後更新時間 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">最後更新時間</label>
+                                <p class="form-control-plaintext">@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 按鈕 -->
+    <div class="row">
+        <div style="width:120px;">
+            <div class="d-flex flex-column gap-2">
+                <a class="btn btn-primary" href="@Url.Action("Edit", "Admins", new { area = "Back",id=Model.Id })">編 輯</a>
+            </div>
+        </div>
+    </div>
+</div>
