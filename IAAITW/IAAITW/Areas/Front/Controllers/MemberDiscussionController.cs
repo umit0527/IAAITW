@@ -130,7 +130,7 @@ namespace IAAITW.Areas.Front.Controllers
         }
 
         // GET: Front/MemberDiscussion/Create
-        public ActionResult Create()
+        public ActionResult CreatePost()
         {
             ViewBag.PosterId = new SelectList(db.MemberAccounts, "Id", "Account");
             return View();
@@ -141,7 +141,7 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MemberDiscussionPost post)
+        public ActionResult CreatePost(MemberDiscussionPost post)
         {
             if (ModelState.IsValid)
             {
