@@ -20,12 +20,12 @@ namespace IAAITW.Models
         [ForeignKey("PostId")]
         public virtual MemberDiscussionPost Post { get; set; }  
 
-        [Required(ErrorMessage = "回覆內容為必填欄位")]
+        [Required(ErrorMessage = "請填寫回覆內容")]
         [Display(Name = "回覆內容")]
         [AllowHtml]
         public string Content { get; set; }
 
-        [Required(ErrorMessage = "回覆者為必填欄位")]
+        [Required(ErrorMessage = "請填寫回覆者")]
         [Display(Name = "回覆者")]
 
         public int ReplierId { get; set; } 

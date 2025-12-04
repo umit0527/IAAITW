@@ -8,7 +8,7 @@
 {
      // Tuple<顯示文字, 連結URL>
         new Tuple<string, string>("聯絡我們",null),
-        new Tuple<string, string>("聯絡我們", Url.Action("Contacts", "Contacts", new { area = "Front" }))
+        new Tuple<string, string>("聯絡我們", Url.Action("Index", "Contacts", new { area = "Front" }))
     };
     // --- 麵包屑設定結束 ---
 }
@@ -21,7 +21,7 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>聯絡我們</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li class="active"><a href="@Url.Action("Index", "Contact", new { area = "Front" })">聯絡我們</a></li>
+                            <li class="active"><a href="@Url.Action("Index", "Contacts", new { area = "Front" })">聯絡我們</a></li>
                         </ul>
                     </div>
                     <!-- Categories end -->

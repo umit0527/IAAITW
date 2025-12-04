@@ -7,7 +7,7 @@
 {
      // Tuple<顯示文字, 連結URL>
         new Tuple<string, string>("知識庫",null),
-        new Tuple<string, string>("知識庫下載", Url.Action("Index", "Knowledge", new { area = "Front" }))
+        new Tuple<string, string>("知識庫下載", Url.Action("Index", "Knowledges", new { area = "Front" }))
     };
     // --- 麵包屑設定結束 ---
 }
@@ -21,7 +21,7 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>知識庫</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li class="active"><a href="@Url.Action("Index", "Knowledge", new { area = "Front" })">知識庫下載</a></li>
+                            <li class="active"><a href="@Url.Action("Index", "Knowledges", new { area = "Front" })">知識庫下載</a></li>
                         </ul>
                     </div>
                     <!-- Categories end -->

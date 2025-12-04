@@ -1253,10 +1253,7 @@
     <Content Include="Areas\Back\Views\News\Details.cshtml" />
     <Content Include="Areas\Back\Views\News\Edit.cshtml" />
     <Content Include="Areas\Back\Views\News\Index.cshtml" />
-    <Content Include="Areas\Front\Views\News\Create.cshtml" />
-    <Content Include="Areas\Front\Views\News\Delete.cshtml" />
     <Content Include="Areas\Front\Views\News\Details.cshtml" />
-    <Content Include="Areas\Front\Views\News\Edit.cshtml" />
     <Content Include="Areas\Front\Views\News\Index.cshtml" />
     <Content Include="Areas\Front\Views\Home\Index.cshtml" />
     <Content Include="Areas\Front\Views\Shared\_LayoutIndex.cshtml" />

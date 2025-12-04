@@ -13,17 +13,17 @@ namespace IAAITW.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "標題為必填欄位")]
+        [Required(ErrorMessage = "請填寫標題")]
         [StringLength(200)]
         [Display(Name = "標題")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "內容為必填欄位")]
+        [Required(ErrorMessage = "請填寫內容")]
         [Display(Name = "內容")]
         [AllowHtml]
         public string Content { get; set; }
 
-        [Required(ErrorMessage = "發表人為必填欄位")]
+        [Required(ErrorMessage = "請填寫發表人")]
         [Display(Name = "發表人")]
         // 外鍵，對應 MemberInfo 的 Id
         public int PosterId { get; set; }

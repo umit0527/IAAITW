@@ -197,7 +197,7 @@ namespace IAAITW.Areas.Front.Controllers
         public ActionResult CreateRe(int? id)
         {
             if (id == null)
-                return HttpNotFound();
+                return RedirectToAction("Login", "Member");
 
             // 查詢主文章（用 id 來找）
             var post = db.MemberDiscussionPosts.FirstOrDefault(p => p.Id == id);
@@ -260,12 +260,6 @@ namespace IAAITW.Areas.Front.Controllers
 
                 return View(reply);
             }
-            else
-            {
-                TempData["ErrorMessage"] = "新增失敗，請檢查輸入的資料。";
-            }
-
-            // ViewBag.PosterId = new SelectList(db.MemberAccounts, "Id", "Account", memberDiscussionPost.PosterId);
 
             return View(reply);
         }
@@ -275,7 +269,7 @@ namespace IAAITW.Areas.Front.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Login", "Member");
             }
 
             MemberDiscussionPost memberDiscussionPost = db.MemberDiscussionPosts.Find(id);
