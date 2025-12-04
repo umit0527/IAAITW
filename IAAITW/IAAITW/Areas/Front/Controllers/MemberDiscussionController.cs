@@ -75,7 +75,7 @@ namespace IAAITW.Areas.Front.Controllers
         public ActionResult Details(int? id, int? page)
         {
             if (id == null)
-                return HttpNotFound();
+                return RedirectToAction("Index", "MemberDiscussion");
 
             // 取得登入會員的 MemberInfo
             var memberAccount = db.MemberAccounts
@@ -92,7 +92,7 @@ namespace IAAITW.Areas.Front.Controllers
                 .FirstOrDefault(p => p.Id == id);
 
             if (post == null)
-                return HttpNotFound();
+                return RedirectToAction("Index", "MemberDiscussion");
 
             // 分頁設定
             int pageSize = 5;
