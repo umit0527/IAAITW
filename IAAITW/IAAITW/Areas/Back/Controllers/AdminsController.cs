@@ -302,7 +302,7 @@ namespace IAAITW.Areas.Back.Controllers
                     db.SaveChanges();
 
                     TempData["SuccessMessage"] = "編輯成功！";
-                    ViewBag.RedirectUrl = Url.Action("Index", "Abouts", new { area = "Back" });
+                    ViewBag.RedirectUrl = Url.Action("Details", "Admins", new { area = "Back", id = model.Id });
                     return View(model);
                 }
                 catch (Exception)

@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">新 增</h4>
-
+                <hr />
                 @using (Html.BeginForm("Create", "Histories", new { area = "Back" }, FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
