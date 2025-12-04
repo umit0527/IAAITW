@@ -21,7 +21,7 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>知識庫</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li class="active"><a href="#">知識庫下載</a></li>
+                            <li class="active"><a href="@Url.Action("Index", "Knowledge", new { area = "Front" })">知識庫下載</a></li>
                         </ul>
                     </div>
                     <!-- Categories end -->
@@ -61,7 +61,7 @@
                                         @Html.DisplayFor(modelItem => item.Title)
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("Download", "Knowledge", new { fileName = item.FilePath })"
+                                        <a href="@Url.Action("Download", "Knowledges", new { fileName = item.FilePath })"
                                            class="btn btn-primary btn-sm">
                                             <i class="fa fa-download"></i> 下載
                                         </a>

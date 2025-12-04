@@ -21,11 +21,11 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>關於我們</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li><a href="#">關於我們</a></li>
-                            <li class="active"><a href="#">組織架構</a></li>
-                            <li><a href="#">沿革</a></li>
-                            <li><a href="#">配證會員</a></li>
-                            <li><a href="#">專家介紹</a></li>
+                            <li><a href="@Url.Action("About", "About", new { area = "Front" })">關於我們</a></li>
+                            <li class="active"><a href="@Url.Action("Organization", "About", new { area = "Front" })">組織架構</a></li>
+                            <li><a href="@Url.Action("History", "About", new { area = "Front" })">沿革</a></li>
+                            <li><a href="@Url.Action("Member", "About", new { area = "Front" })">配證會員</a></li>
+                            <li><a href="@Url.Action("Expert", "About", new { area = "Front" })">專家介紹</a></li>
                         </ul>
                     </div><!-- Categories end -->
 

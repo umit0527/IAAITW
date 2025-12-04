@@ -20,10 +20,10 @@
                     <div class="widget">
                         <h2 class="widget-title"><i class="fa fa-folder-open-o">&nbsp;</i>協會業務</h2>
                         <ul class="arrow nav nav-tabs nav-stacked">
-                            <li ><a href="#">協會業務</a></li>
-                            <li><a href="#">訓練、認證、發照</a></li>
-                            <li class="active"><a href="#">諮詢、顧問</a></li>
-                            <li><a href="#">縱火調查</a></li>
+                            <li><a href="@Url.Action("Job", "Job", new { area = "Front" })">協會業務</a></li>
+                            <li><a href="@Url.Action("Lisences", "Job", new { area = "Front" })">訓練、認證、發照</a></li>
+                            <li class="active"><a href="@Url.Action("Refer", "Job", new { area = "Front" })">諮詢、顧問</a></li>
+                            <li><a href="@Url.Action("Survey", "Job", new { area = "Front" })">縱火調查</a></li>
                         </ul>
                     </div>
                     <!-- Categories end -->

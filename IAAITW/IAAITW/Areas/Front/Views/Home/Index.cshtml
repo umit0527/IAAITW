@@ -24,9 +24,10 @@
                             </span>
                             <div class="post-text">
                                 <p>
+                                    @* 以防內容有圖，將標籤全拿掉純文字輸出 *@
                                     @{
                                         var plain = RemoveHtml(item.Content); // 移除所有 HTML 標籤
-                                        var decoded = System.Web.HttpUtility.HtmlDecode(plain); // 移除HTML Entities 
+                                        var decoded = System.Web.HttpUtility.HtmlDecode(plain); // 移除HTML Entities
                                         var shortText = decoded.Length > 60 ? decoded.Substring(0, 60) + "..." : decoded;
                                     }
                                     @shortText
