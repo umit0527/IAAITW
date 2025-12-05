@@ -151,6 +151,7 @@ namespace IAAITW.Areas.Back.Controllers
                     
                     string userData = JsonConvert.SerializeObject(user);
                     Utility.SetAuthenTicket(userData, model.Account);
+                    Session["AdminName"] = user.Name;  //給layout顯示登入者姓名
 
                     TempData["SuccessMessage"] = "登入成功！";
 

@@ -72,10 +72,12 @@ namespace IAAITW.Areas.Back.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 expert.Content = sanitizer.Sanitize(expert.Content);
 
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
-                expert.AdminId = loginUser.Id;
-                expert.UpdatedAdminId = loginUser.Id;
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                expert.AdminId = loginAdmin.Id;
+                expert.UpdatedAdminId = loginAdmin.Id;
                 expert.CreatedDate = DateTime.Now;
                 expert.UpdatedDate = DateTime.Now;
 
