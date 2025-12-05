@@ -133,9 +133,11 @@ namespace IAAITW.Areas.Back.Controllers
                 // 設定最後更新時間
                 existingExpert.UpdatedDate = DateTime.Now;
 
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
-                existingExpert.UpdatedAdminId = loginUser.Id;
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                existingExpert.UpdatedAdminId = loginAdmin.Id;
 
                 db.Entry(existingExpert).State = EntityState.Modified;
                 db.SaveChanges();
