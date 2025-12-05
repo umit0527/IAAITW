@@ -62,8 +62,11 @@ namespace IAAITW.Areas.Back.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(About about)
         {
-            // 從 Session 取登入者
-            var loginUser = Session["AdminLogin"] as Admin;
+            // 取得登入者帳號
+            var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+            // 比對目前登入的帳號是否存在於 Admins 資料表中
+            var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+
             if (loginUser == null)
             {
                 // 設定錯誤訊息與跳轉網址
@@ -81,8 +84,8 @@ namespace IAAITW.Areas.Back.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
                 about.Content = sanitizer.Sanitize(about.Content);
                      
-                about.AdminId = loginUser.Id;
-                about.UpdatedAdminId = loginUser.Id;
+                about.AdminId = loginAdmin.Id;
+                about.UpdatedAdminId = loginAdmin.Id;
                 about.CreatedDate = DateTime.Now;
                 about.UpdatedDate = DateTime.Now;
 
@@ -137,10 +140,12 @@ namespace IAAITW.Areas.Back.Controllers
 
                 // 設定最後更新時間
                 existingAbout.UpdatedDate = DateTime.Now;
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
                 // 更新編輯者
-                existingAbout.UpdatedAdminId = loginUser.Id;
+                existingAbout.UpdatedAdminId = loginAdmin.Id;
 
                 db.Entry(existingAbout).State = EntityState.Modified;
                 db.SaveChanges();
