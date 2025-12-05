@@ -128,10 +128,12 @@ namespace IAAITW.Areas.Back.Controllers
                         return View(news);
                     }
 
-                    // 從 Session 取登入者
-                    var loginUser = Session["AdminLogin"] as Admin;
-                    news.PublisherId = loginUser.Id;
-                    news.UpdaterId = loginUser.Id;
+                    // 取得登入者帳號
+                    var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                    // 比對目前登入的帳號是否存在於 Admins 資料表中
+                    var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                    news.PublisherId = loginAdmin.Id;
+                    news.UpdaterId = loginAdmin.Id;
                     news.CreatedDate = DateTime.Now;
                     news.UpdatedDate = DateTime.Now;
 
@@ -212,9 +214,11 @@ namespace IAAITW.Areas.Back.Controllers
                     existingNews.Title = news.Title;
                     existingNews.Content = news.Content;
                     existingNews.IsPinned = news.IsPinned;
-                    // 從 Session 取登入者
-                    var loginUser = Session["AdminLogin"] as Admin;
-                    existingNews.UpdaterId = loginUser.Id;
+                    // 取得登入者帳號
+                    var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                    // 比對目前登入的帳號是否存在於 Admins 資料表中
+                    var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                    existingNews.UpdaterId = loginAdmin.Id;
 
                     // 處理封面上傳
                     if (news.CoverImageFile != null && news.CoverImageFile.ContentLength > 0)
