@@ -44,7 +44,6 @@ namespace IAAITW.Areas.Back.Controllers
                                    .ThenByDescending(x => x.UpdatedDate)
                                    .ToPagedList(page.Value, pageSize);
 
-            //var news = db.News.Include(n => n.LastUpdater).Include(n => n.Publisher);
             return View(result);
         }
 

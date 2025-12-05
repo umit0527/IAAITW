@@ -53,9 +53,10 @@ namespace IAAITW.Areas.Back.Controllers
             {
                 return RedirectToAction("Error404", "Error");
             }
-            var data = db.Contacts.FirstOrDefault();
 
-            if (data == null)
+            var contact = db.Contacts.Find(id);
+
+            if (contact == null)
             {
                 // 沒資料，給 View 顯示空畫面
                 ViewBag.HasData = false;
@@ -63,7 +64,7 @@ namespace IAAITW.Areas.Back.Controllers
             }
 
             ViewBag.HasData = true;
-            return View(data);
+            return View(contact);
         }
     }
 }

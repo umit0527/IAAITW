@@ -37,7 +37,9 @@ namespace IAAITW.Areas.Front.Controllers
             }
 
             //用套件一定要有 orderby 排序
-            var result = knowledges.OrderBy(x => x.Id).ToPagedList(page.Value, pageSize);
+            var result = knowledges.OrderByDescending(x => x.Id)
+                                   .ThenByDescending(x => x.UpdatedDate)
+                                   .ToPagedList(page.Value, pageSize);
 
             return View(result);
         }

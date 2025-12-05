@@ -32,8 +32,8 @@
                             <table class="table table-striped table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>主 旨</th>
-                                        <th>內 容</th>
+                                        <th>詢問標題</th>
+                                        <th>詢問內容</th>
                                         <th>聯絡人名稱</th>
                                         <th>提交日期</th>
                                         <th>操 作</th>
@@ -45,18 +45,21 @@
                                         <tr id="row-@item.Id">
                                             <td>
                                                 @{
-                                                    var shortTitle = item.Title.TruncateWithChinese(40) + "...";
+                                                    var shortTitle = item.Title.TruncateWithChinese(40) ?? item.Title + "...";
                                                 }
                                                 <span title="@item.Title">@shortTitle</span>
                                             </td>
                                             <td>
                                                 @{
-                                                    var shortContent =  item.Content.TruncateWithChinese(54) + "...";
+                                                    var shortContent =  item.Content.TruncateWithChinese(54) ?? item.Content + "...";
                                                 }
                                                 <span title="@item.Content">@shortContent</span>
                                             </td>
                                             <td>
-                                                @item.Name
+                                                @{
+                                                    var shortName = item.Name.TruncateWithChinese(10) ?? item.Name + "...";
+                                                }
+                                                <span title="@item.Name">@shortName</span>
                                             </td>
                                             <td>
                                                 @item.SentDate.ToString("yyyy/MM/dd HH:mm")

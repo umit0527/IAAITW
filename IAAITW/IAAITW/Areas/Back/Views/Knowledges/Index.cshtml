@@ -41,7 +41,6 @@
                                     <tr>
                                         <th>置頂</th>
                                         <th>標題</th>
-                                        @*<th>檔案名稱</th>*@
                                         <th>上傳日期</th>
                                         <th>上傳人員</th>
                                         <th>更新日期</th>
@@ -54,40 +53,34 @@
                                     {
                                         <tr id="row-@item.Id">
                                             <td>
-
                                                 <div class="form-switch">
                                                     @Html.EditorFor(model => item.IsTop, new { htmlAttributes = new { @class = "form-check-input", disabled = "disabled" } })
                                                 </div>
-
                                             </td>
-                                            @* 標題 *@
                                             <td>
                                                 @{
-                                                    var shortTitle = item.Title.TruncateWithChinese(30);
+                                                    var shortTitle = item.Title.TruncateWithChinese(30) ?? item.Title+"...";
                                                 }
                                                 <span title="@item.Title">@shortTitle</span>
                                             </td>
-
-                                            @*<td>
-                                                @{
-                                                    var fileName = Path.GetFileName(item.FilePath);
-                                                    var shortFileName = fileName?.TruncateWithChinese(20) ?? "";
-                                                }
-                                                <span title="@fileName">
-                                                    @shortFileName
-                                                </span>
-                                            </td>*@
                                             <td>
                                                 @item.UploadDate.ToString("yyyy/MM/dd HH:mm")
                                             </td>
                                             <td>
-                                                @item.Admin.Name.TruncateWithChinese(12)
+                                                @{
+                                                    var shortAdminName = item.Admin.Name.TruncateWithChinese(12) ?? item.Admin.Name + "...";
+                                                }
+                                                <span adminName="@item.Admin.Name">@shortAdminName</span>
                                             </td>
                                             <td>
                                                 @item.UpdatedDate.ToString("yyyy/MM/dd HH:mm")
                                             </td>
                                             <td>
-                                                @item.UpdatedAdmin.Name.TruncateWithChinese(12)
+                                                @{
+                                                    var shortUpdatedAdmin = item.UpdatedAdmin.Name.TruncateWithChinese(12) ?? item.Title + "...";
+                                                }
+                                                <span updatedAdmin="@item.UpdatedAdmin.Name">@shortUpdatedAdmin</span>
+                                                
                                             </td>
                                             <td>
                                                 <div>
@@ -175,7 +168,19 @@
         @if (TempData["ErrorMessage"] != null)
         {
             <text>
-                alert("@TempData["ErrorMessage"]");
+        alert("@TempData["ErrorMessage"]");
+            </text>
+        }
+
+        @if (TempData["LoginMessage"] != null)
+        {
+            <text>
+                setTimeout(function () {
+                alert("@TempData["LoginMessage"]");
+                setTimeout(function () {
+                    window.location.href = "@ViewBag.RedirectUrl";
+                }, 800);
+            });
             </text>
         }
     </script>

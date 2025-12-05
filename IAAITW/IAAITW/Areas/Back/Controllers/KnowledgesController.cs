@@ -44,7 +44,6 @@ namespace IAAITW.Areas.Back.Controllers
                                    .ThenByDescending(x => x.UploadDate)
                                    .ToPagedList(page.Value, pageSize);
 
-            //var knowledges = db.Knowledges.Include(k => k.Admin);
             return View(result);
         }
 
@@ -53,7 +52,7 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Error404", "Error");
+                return RedirectToAction("Details", "Knowledges", new { area = "Back" });
             }
 
             Knowledge knowledge = db.Knowledges.Find(id);
@@ -80,17 +79,19 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (ModelState.IsValid)
             {
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
-                
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+
                 var knowledge = new Knowledge
                 {
                     Title = model.Title,
                     Description = model.Description,
                     IsTop= model.IsTop,
                     FilePath = model.FilePath,
-                    AdminId = loginUser.Id,
-                    UpdatedAdminId = loginUser.Id,
+                    AdminId = loginAdmin.Id,
+                    UpdatedAdminId = loginAdmin.Id,
                     UpdatedDate = DateTime.Now,
                     UploadDate = DateTime.Now
                 };
@@ -198,10 +199,11 @@ namespace IAAITW.Areas.Back.Controllers
                     existingKnowledge.Title = model.Title;
                     existingKnowledge.Description = model.Description;
                     existingKnowledge.IsTop = model.IsTop;
-                    
-                    // 從 Session 取登入者
-                    var loginUser = Session["AdminLogin"] as Admin;
-                    existingKnowledge.UpdatedAdminId = loginUser.Id;
+                    // 取得登入者帳號
+                    var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                    // 比對目前登入的帳號是否存在於 Admins 資料表中
+                    var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                    existingKnowledge.UpdatedAdminId = loginAdmin.Id;
                     existingKnowledge.UpdatedDate = DateTime.Now;
 
                     // 處理檔案上傳

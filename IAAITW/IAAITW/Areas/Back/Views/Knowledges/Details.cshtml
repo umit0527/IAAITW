@@ -52,15 +52,6 @@
                                     @Model.Description
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- 右邊欄 -->
-                        <div class="col-md-6">
-                            <!-- 檔案 -->
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">檔案</label>
-                                <p class="form-control-plaintext">@Path.GetFileName(Model.FilePath)</p>
-                            </div>
 
                             <!-- 發布人員和日期 -->
                             <div class="row">
@@ -94,6 +85,22 @@
                                         <p class="form-control-plaintext">@Model.UpdatedDate.ToString("yyyy/MM/dd HH:mm")</p>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- 右邊欄 -->
+                        <div class="col-md-6">
+                            <!-- 檔案 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">檔案</label>
+                                <p class="form-control-plaintext">@Path.GetFileName(Model.FilePath)</p>
+                                @* 如果檔案是圖片，則顯示圖片 *@
+                                @if (Model.FilePath != null && (Model.FilePath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || Model.FilePath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || Model.FilePath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || Model.FilePath.EndsWith(".gif", StringComparison.OrdinalIgnoreCase)))
+                                {
+                                    <div>
+                                        <img src="@Url.Content(Model.FilePath)" alt="Knowledge Image" class="img-fluid" />
+                                    </div>
+                                }
                             </div>
                         </div>
 

@@ -214,7 +214,11 @@ namespace IAAITW.Areas.Back.Controllers
         {
             // 從 Session 取登入者
             var loginUser = Session["AdminLogin"] as Admin;
-            
+            if (loginUser == null)
+            {
+                return RedirectToAction("Login", "Admins", new { area = "Back" });
+            }
+
             var data = db.Admins.Find(loginUser.Id);
             if (data == null)
             {
