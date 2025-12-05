@@ -29,7 +29,7 @@ namespace IAAITW.Areas.Front.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Contact contact)
+        public async Task<ActionResult> Index(Contact contact)
         {
             IRecaptcha<RecaptchaV2Result> recaptcha = new RecaptchaV2(new RecaptchaV2Data()
             {
@@ -91,7 +91,7 @@ namespace IAAITW.Areas.Front.Controllers
 
                     TempData["ToastMessage"] = "訊息已經送出，我們會盡快與您聯絡！";
                     TempData["ToastType"] = "success";
-                    return RedirectToAction("Create");
+                    return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {

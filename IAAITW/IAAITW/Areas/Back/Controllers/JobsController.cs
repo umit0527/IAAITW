@@ -126,6 +126,7 @@ namespace IAAITW.Areas.Back.Controllers
                 // 從 Session 取登入者
                 var loginUser = Session["AdminLogin"] as Admin;
                 existingJob.UpdatedAdminId = loginUser.Id;
+                existingJob.UpdatedDate = DateTime.Now;
 
                 db.Entry(existingJob).State = EntityState.Modified;
                 db.SaveChanges();
