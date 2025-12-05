@@ -29,16 +29,18 @@ namespace IAAITW.Areas.Back.Controllers
         [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
         public ActionResult Index()
         {
-            // 從session取登入者
-            var loginUser = Session["AdminLogin"] as Admin;
+            // 取得登入者帳號
+            var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+            // 比對目前登入的帳號是否存在於 Admins 資料表中
+            var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
 
             // 若沒有資料，導向 Details（會讓它顯示「Create New」）
-            if (loginUser == null)
+            if (loginAdmin == null)
             {
                 return RedirectToAction("Details"); // 不帶 id，讓 Details 自行判斷
             }
             //導轉到 Details
-            return RedirectToAction("Details", new { id = loginUser.Id });
+            return RedirectToAction("Details", new { id = loginAdmin.Id });
         }
 
 
@@ -146,9 +148,7 @@ namespace IAAITW.Areas.Back.Controllers
                         TempData["ErrorMessage"] = "帳號或密碼錯誤。";
                         return View(model);
                     }
-                    // 登入成功，產生表單驗證
-                    //ViewBag.UserName = user.Name;
-                    Session["AdminLogin"] = user;
+                    
                     string userData = JsonConvert.SerializeObject(user);
                     Utility.SetAuthenTicket(userData, model.Account);
 
@@ -212,14 +212,16 @@ namespace IAAITW.Areas.Back.Controllers
         [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
         public ActionResult Details(int? id)
         {
-            // 從 Session 取登入者
-            var loginUser = Session["AdminLogin"] as Admin;
+            // 取得登入者帳號
+            var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+            // 比對目前登入的帳號是否存在於 Admins 資料表中
+            var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
             if (loginUser == null)
             {
                 return RedirectToAction("Login", "Admins", new { area = "Back" });
             }
 
-            var data = db.Admins.Find(loginUser.Id);
+            var data = db.Admins.Find(id);
             if (data == null)
             {
                 return RedirectToAction("Error404", "Error", new { area = "Back" });
@@ -247,22 +249,23 @@ namespace IAAITW.Areas.Back.Controllers
                 return RedirectToAction("Error404", "Error", new { area = "Back" });
             }
 
-            // 從 Session 取登入者
-            // 如果登入的使用者不是正在編輯的使用者，則導向登入頁面
-            var loginUser = Session["AdminLogin"] as Admin;
-            if (loginUser == null || loginUser.Id != id)
+            // 取得登入者帳號
+            var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+            // 比對目前登入的帳號是否存在於 Admins 資料表中
+            var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+            if (loginUser == null )
             {
                 return RedirectToAction("Error404", "Error", new { area = "Back" });
             }
 
             var viewModel = new AdminEditViewModel
             {
-                Id = loginUser.Id,
-                Account = loginUser.Account,
-                Name = loginUser.Name,
-                Email = loginUser.Email,
-                CreatedDate = loginUser.CreatedDate,
-                UpdatedDate = loginUser.UpdatedDate
+                Id = loginAdmin.Id,
+                Account = loginAdmin.Account,
+                Name = loginAdmin.Name,
+                Email = loginAdmin.Email,
+                CreatedDate = loginAdmin.CreatedDate,
+                UpdatedDate = loginAdmin.UpdatedDate
             };
 
             return View(viewModel);
@@ -274,9 +277,11 @@ namespace IAAITW.Areas.Back.Controllers
         [CustomAuthorize(LoginUrl = "~/Back/Admins/Login")]
         public ActionResult Edit(AdminEditViewModel model, string newPassword)
         {
-            // 從 Session 取登入者
-            var loginUser = Session["AdminLogin"] as Admin;
-            if (loginUser == null || loginUser.Id != model.Id)
+            // 取得登入者帳號
+            var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+            // 比對目前登入的帳號是否存在於 Admins 資料表中
+            var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+            if (loginUser == null || loginAdmin.Id != model.Id)
             {
                 return RedirectToAction("Login", "Admins", new { area = "Back" });
             }
