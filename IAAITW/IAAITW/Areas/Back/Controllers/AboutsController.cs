@@ -110,7 +110,7 @@ namespace IAAITW.Areas.Back.Controllers
             About about = db.Abouts.Find(id);
             if (about == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error404", "Error");
             }
             
             return View(about);
@@ -154,7 +154,7 @@ namespace IAAITW.Areas.Back.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = "編輯失敗，請檢查輸入的資料。";
+                TempData["ErrorMessage"] = "編輯失敗，請輸入內容。";
             }
 
             return View(about);

@@ -23,7 +23,6 @@
                             <div class="form-group mb-3">
                                 <label for="editor" class="control-label">內容 <small class="text-muted">(上限1000個字)</small></label>
                                 @Html.TextAreaFor(m => m.Content, new { @class = "form-control", id = "editor" })
-                                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div style="width:120px;">
