@@ -69,10 +69,12 @@ namespace IAAITW.Areas.Back.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 organization.Content = sanitizer.Sanitize(organization.Content);
 
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
-                organization.AdminId = loginUser.Id;
-                organization.UpdatedAdminId = loginUser.Id;
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                organization.AdminId = loginAdmin.Id;
+                organization.UpdatedAdminId = loginAdmin.Id;
 
                 db.Organizationes.Add(organization);
                 db.SaveChanges();
@@ -127,10 +129,12 @@ namespace IAAITW.Areas.Back.Controllers
 
                 // 設定最後更新時間
                 existingOrganization.UpdatedDate = DateTime.Now;
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
                 // 更新編輯者
-                existingOrganization.UpdatedAdminId = loginUser.Id;
+                existingOrganization.UpdatedAdminId = loginAdmin.Id;
 
                 db.Entry(existingOrganization).State = EntityState.Modified;
                 db.SaveChanges();
