@@ -67,11 +67,13 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
                 survey.Content = sanitizer.Sanitize(survey.Content);
-                
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
-                survey.AdminId = loginUser.Id;
-                survey.UpdatedAdminId = loginUser.Id;
+
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                survey.AdminId = loginAdmin.Id;
+                survey.UpdatedAdminId = loginAdmin.Id;
                 survey.CreatedDate = DateTime.Now;
                 survey.UpdatedDate = DateTime.Now;
 
@@ -124,10 +126,12 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 existingSurvey.Content = sanitizer.Sanitize(survey.Content);
-                
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
-                existingSurvey.UpdatedAdminId = loginUser.Id;
+
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                existingSurvey.UpdatedAdminId = loginAdmin.Id;
                 existingSurvey.UpdatedDate = DateTime.Now;
 
                 db.Entry(existingSurvey).State = EntityState.Modified;
