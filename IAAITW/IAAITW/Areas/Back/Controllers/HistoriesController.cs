@@ -32,7 +32,7 @@ namespace IAAITW.Areas.Back.Controllers
         }
 
         // GET: Back/Histories/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
             var data = db.Histories.FirstOrDefault();
 
@@ -60,8 +60,11 @@ namespace IAAITW.Areas.Back.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(History history)
         {
-            // 從 Session 取登入者
-            var loginUser = Session["AdminLogin"] as Admin;
+            // 取得登入者帳號
+            var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+            // 比對目前登入的帳號是否存在於 Admins 資料表中
+            var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+
             if (loginUser == null)
             {
                 // 設定錯誤訊息與跳轉網址
@@ -78,8 +81,8 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 history.Content = sanitizer.Sanitize(history.Content);
-                history.AdminId = loginUser.Id;
-                history.UpdatedAdminId = loginUser.Id;
+                history.AdminId = loginAdmin.Id;
+                history.UpdatedAdminId = loginAdmin.Id;
                 history.CreatedDate = DateTime.Now;
                 history.UpdatedDate = DateTime.Now;
 
@@ -106,13 +109,18 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Histories/Edit/5
         public ActionResult Edit(int? id)
         {
+            //防止登入後打網址進來
+            if (id == null)
+            {
+                return RedirectToAction("Error404","Error");
+            }
+
             History history = db.Histories.Find(id);
             if (history == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", history.AdminId);
-            //ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account", history.UpdatedAdminId);
+            
             return View(history);
         }
 
@@ -139,10 +147,12 @@ namespace IAAITW.Areas.Back.Controllers
 
                     // 設定最後更新時間
                     existingHistory.UpdatedDate = DateTime.Now;
-                    // 從 Session 取登入者
-                    var loginUser = Session["AdminLogin"] as Admin;
+                    // 取得登入者帳號
+                    var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                                                        // 比對目前登入的帳號是否存在於 Admins 資料表中
+                    var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
                     // 更新編輯者
-                    existingHistory.UpdatedAdminId = loginUser.Id;
+                    existingHistory.UpdatedAdminId = loginAdmin.Id;
 
                     db.Entry(existingHistory).State = EntityState.Modified;
                     db.SaveChanges();
@@ -154,10 +164,8 @@ namespace IAAITW.Areas.Back.Controllers
 
                     return View(history);
                 }
-                catch (Exception ex)
-                {
-                    //
-
+                catch (Exception)
+                { 
                     return HttpNotFound();
                     //return RedirectToAction("Error500", "Error", new { area = "Back" });
                 }
