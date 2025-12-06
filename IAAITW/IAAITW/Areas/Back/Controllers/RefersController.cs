@@ -68,10 +68,12 @@ namespace IAAITW.Areas.Back.Controllers
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 refer.Content = sanitizer.Sanitize(refer.Content);
 
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
-                refer.AdminId = loginUser.Id;
-                refer.UpdatedAdminId = loginUser.Id;
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                refer.AdminId = loginAdmin.Id;
+                refer.UpdatedAdminId = loginAdmin.Id;
                 refer.CreatedDate = DateTime.Now;
                 refer.UpdatedDate = DateTime.Now;
 
@@ -123,10 +125,12 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
                 existingRefer.Content = sanitizer.Sanitize(refer.Content);
-                
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
-                existingRefer.UpdatedAdminId = loginUser.Id;
+
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                existingRefer.UpdatedAdminId = loginAdmin.Id;
                 existingRefer.UpdatedDate = DateTime.Now;
 
                 db.Entry(existingRefer).State = EntityState.Modified;
