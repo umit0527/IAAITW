@@ -52,13 +52,13 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Details", "Knowledges", new { area = "Back" });
+                return RedirectToAction("Index", "Knowledges", new { area = "Back" });
             }
 
             Knowledge knowledge = db.Knowledges.Find(id);
             if (knowledge == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error500", "Error");
             }
             return View(knowledge);
         }
@@ -150,12 +150,17 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Knowledges/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Error404", "Error");
+            }
+
             var knowledge = db.Knowledges
                               .Include(k => k.Admin)
                               .FirstOrDefault(k => k.Id == id);
             if (knowledge == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error500", "Error");
             }
 
             // 將 Knowledge 轉換為 KnowledgeViewModel
@@ -192,7 +197,7 @@ namespace IAAITW.Areas.Back.Controllers
 
                     if (existingKnowledge == null)
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Error500", "Error");
                     }
 
                     // 更新基本欄位

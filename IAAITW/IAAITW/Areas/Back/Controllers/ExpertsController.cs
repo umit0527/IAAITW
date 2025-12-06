@@ -32,13 +32,8 @@ namespace IAAITW.Areas.Back.Controllers
         }
 
         // GET: Back/Experts/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
-            //if (id == null)
-            //{
-            //    return RedirectToAction("Error404", "Error");
-            //}
-
             var data = db.Experts.FirstOrDefault();
 
             if (data == null)
@@ -55,6 +50,13 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Experts/Create
         public ActionResult Create()
         {
+            // 如果資料庫已經有資料，則跳轉到index，不允許再新增
+            var data = db.Experts.FirstOrDefault();
+            if (data != null)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View();
         }
 
@@ -102,10 +104,15 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Experts/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Error404","Error");
+            }
+
             Expert expert = db.Experts.Find(id);
             if (expert == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error500", "Error");
             }
 
             return View(expert);
@@ -123,7 +130,7 @@ namespace IAAITW.Areas.Back.Controllers
                 var existingExpert = db.Experts.Find(expert.Id);
                 if (existingExpert == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Error500", "Error");
                 }
                 // 安全過濾 HTML 並更新內容
                 var sanitizer = new HtmlSanitizer();

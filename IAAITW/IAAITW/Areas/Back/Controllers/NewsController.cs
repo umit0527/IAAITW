@@ -52,12 +52,13 @@ namespace IAAITW.Areas.Back.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Error404", "Error");
+                return RedirectToAction("Index");
             }
+
             News news = db.News.Find(id);
             if (news == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error500", "Error");
             }
             return View(news);
         }
@@ -65,8 +66,6 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/News/Create
         public ActionResult Create()
         {
-            ViewBag.LastUpdaterId = new SelectList(db.MemberInfoes, "Id", "Name");
-            ViewBag.PublisherId = new SelectList(db.MemberInfoes, "Id", "Name");
             return View();
         }
 
@@ -169,11 +168,16 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/News/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Error404", "Error");
+            }
+
             var news = db.News.Include(k => k.Publisher)
                               .FirstOrDefault(k => k.Id == id);
             if (news == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error500", "Error");
             }
 
             var viewModel = new News
@@ -186,7 +190,6 @@ namespace IAAITW.Areas.Back.Controllers
                 UpdaterId = news.UpdaterId,
             };
 
-            //ViewBag.PublisherId = new SelectList(db.Admins, "Id", "Account", news.PublisherId);
             return View(viewModel);
         }
 
@@ -207,7 +210,7 @@ namespace IAAITW.Areas.Back.Controllers
 
                     if (existingNews == null)
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Error500", "Error");
                     }
                     
                     // 更新基本欄位
@@ -274,21 +277,6 @@ namespace IAAITW.Areas.Back.Controllers
             }
 
             ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account", news.UpdaterId);
-            return View(news);
-        }
-
-        // GET: Back/News/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction("Error404", "Error");
-            }
-            News news = db.News.Find(id);
-            if (news == null)
-            {
-                return HttpNotFound();
-            }
             return View(news);
         }
 

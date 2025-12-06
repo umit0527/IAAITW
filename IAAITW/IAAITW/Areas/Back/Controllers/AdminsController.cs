@@ -294,7 +294,7 @@ namespace IAAITW.Areas.Back.Controllers
                     var existingAdmin = db.Admins.Find(model.Id);
                     if (existingAdmin == null)
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Error500", "Error", new { area = "Back" });    
                     }
 
                     // 如果有輸入密碼，則更新密碼

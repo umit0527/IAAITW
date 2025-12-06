@@ -50,6 +50,13 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Histories/Create
         public ActionResult Create()
         {
+            // 如果資料庫已經有資料，則跳轉到index，不允許再新增
+            var data = db.Histories.FirstOrDefault();
+            if (data != null)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View();
         }
 
@@ -118,7 +125,7 @@ namespace IAAITW.Areas.Back.Controllers
             History history = db.Histories.Find(id);
             if (history == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error500", "Error");
             }
             
             return View(history);
@@ -138,7 +145,7 @@ namespace IAAITW.Areas.Back.Controllers
                     var existingHistory = db.Histories.Find(history.Id);
                     if (existingHistory == null)
                     {
-                        return HttpNotFound();
+                        return RedirectToAction("Error500", "Error");
                     }
                     // 安全過濾 HTML 並更新內容
                     var sanitizer = new HtmlSanitizer();
@@ -166,8 +173,7 @@ namespace IAAITW.Areas.Back.Controllers
                 }
                 catch (Exception)
                 { 
-                    return HttpNotFound();
-                    //return RedirectToAction("Error500", "Error", new { area = "Back" });
+                    return RedirectToAction("Error500", "Error", new { area = "Back" });
                 }
             }
             else

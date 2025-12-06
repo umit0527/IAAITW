@@ -32,7 +32,7 @@ namespace IAAITW.Areas.Back.Controllers
         }
 
         // GET: Back/Refers/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
             var data = db.Refers.FirstOrDefault();
 
@@ -50,7 +50,13 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Refers/Create
         public ActionResult Create()
         {
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
+            // 如果資料庫已經有資料，則跳轉到index，不允許再新增
+            var data = db.Refers.FirstOrDefault();
+            if (data != null)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View();
         }
 
@@ -98,12 +104,16 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Refers/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Error404", "Error");
+            }
+
             Refer refer = db.Refers.Find(id);
             if (refer == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error500", "Error");
             }
-            ViewBag.UpdatedAdminId = new SelectList(db.Admins, "Id", "Account", refer.UpdatedAdminId);
             return View(refer);
         }
 
@@ -119,7 +129,7 @@ namespace IAAITW.Areas.Back.Controllers
                 var existingRefer = db.Refers.Find(refer.Id);
                 if (existingRefer == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Error500", "Error");
                 }
                 // 安全過濾 HTML 並更新內容
                 var sanitizer = new HtmlSanitizer();

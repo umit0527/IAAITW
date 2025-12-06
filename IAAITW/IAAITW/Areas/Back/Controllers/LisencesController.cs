@@ -48,7 +48,13 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Lisences/Create
         public ActionResult Create()
         {
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
+            // 如果資料庫已經有資料，則跳轉到index，不允許再新增
+            var data = db.Lisences.FirstOrDefault();
+            if (data != null)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View();
         }
 
@@ -59,8 +65,6 @@ namespace IAAITW.Areas.Back.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Lisences lisences)
         {
-            
-
             if (ModelState.IsValid)
             {
                 // 安全過濾 HTML
@@ -97,10 +101,15 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Lisences/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Error404", "Error");
+            }
+
             Lisences lisences = db.Lisences.Find(id);
             if (lisences == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Error500", "Error");
             }
 
             return View(lisences);
@@ -118,7 +127,7 @@ namespace IAAITW.Areas.Back.Controllers
                 var existingLisences = db.Lisences.Find(lisences.Id);
                 if (existingLisences == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Error500", "Error");
                 }
                 // 安全過濾 HTML 並更新內容
                 var sanitizer = new HtmlSanitizer();

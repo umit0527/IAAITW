@@ -51,7 +51,13 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Abouts/Create
         public ActionResult Create()
         {
-            ViewBag.AdminId = new SelectList(db.Admins, "Id", "Account");
+            // 如果資料庫已經有資料，則跳轉到index，不允許再新增
+            var data = db.Abouts.FirstOrDefault();
+            if (data != null)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View();
         }
 
@@ -131,8 +137,8 @@ namespace IAAITW.Areas.Back.Controllers
                 var existingAbout = db.Abouts.Find(about.Id);
                 if (existingAbout == null)
                 {
-                    return HttpNotFound();
-                }
+                    return RedirectToAction("Error500", "Error");
+                }   
                 // 安全過濾 HTML 並更新內容
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 保留顏色或字體
