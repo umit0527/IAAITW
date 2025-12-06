@@ -21,15 +21,8 @@ namespace IAAITW.Areas.Back.Controllers
         // GET: Back/Abouts/Index
         public ActionResult Index()
         {
-            var data = db.Abouts.FirstOrDefault();
-
-            // 若沒有資料，導向 Details（會讓它顯示「Create New」）
-            if (data == null)
-            {
-                return RedirectToAction("Details"); // 不帶 id，讓 Details 自行判斷
-            }
             //導轉到 Details
-            return RedirectToAction("Details", new { id = data.Id });
+            return RedirectToAction("Details");
         }
 
         // GET: Back/Abouts/Details/5
