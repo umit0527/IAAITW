@@ -59,17 +59,7 @@ namespace IAAITW.Areas.Back.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Lisences lisences)
         {
-            // 從 Session 取登入者
-            var loginUser = Session["AdminLogin"] as Admin;
-            if (loginUser == null)
-            {
-                // 設定錯誤訊息與跳轉網址
-                TempData["LoginMessage"] = "請先登入！";
-                // 把要導向的 URL 給 View
-                ViewBag.RedirectUrl = Url.Action("Login", "Admins");
-
-                return View(lisences);
-            }
+            
 
             if (ModelState.IsValid)
             {
@@ -77,9 +67,12 @@ namespace IAAITW.Areas.Back.Controllers
                 var sanitizer = new HtmlSanitizer();
                 sanitizer.AllowedAttributes.Add("style"); // 如果需要保留顏色或字體
                 lisences.Content = sanitizer.Sanitize(lisences.Content);
-
-                lisences.AdminId = loginUser.Id;
-                lisences.UpdatedAdminId = loginUser.Id;
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
+                lisences.AdminId = loginAdmin.Id;
+                lisences.UpdatedAdminId = loginAdmin.Id;
                 lisences.CreatedDate = DateTime.Now;
                 lisences.UpdatedDate = DateTime.Now;
 
@@ -134,10 +127,12 @@ namespace IAAITW.Areas.Back.Controllers
 
                 // 設定最後更新時間
                 existingLisences.UpdatedDate = DateTime.Now;
-                // 從 Session 取登入者
-                var loginUser = Session["AdminLogin"] as Admin;
+                // 取得登入者帳號
+                var loginUser = User.Identity.Name; // ASP.NET Identity 的登入名稱
+                // 比對目前登入的帳號是否存在於 Admins 資料表中
+                var loginAdmin = db.Admins.FirstOrDefault(a => a.Account == loginUser);
                 // 更新編輯者
-                existingLisences.UpdatedAdminId = loginUser.Id;
+                existingLisences.UpdatedAdminId = loginAdmin.Id;
 
                 db.Entry(existingLisences).State = EntityState.Modified;
                 db.SaveChanges();
