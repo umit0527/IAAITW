@@ -195,7 +195,6 @@ namespace IAAITW.Areas.Front.Controllers
                 db.SaveChanges();
 
                 // 若是國際會員
-
                 if (model.IsInternationalMember && model.FileUpload != null)
                 {
                     // 處理檔案上傳
@@ -353,6 +352,13 @@ namespace IAAITW.Areas.Front.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "請確認欄位是否正確填寫。";
+                return View(model);
+            }
+
+            // 檢查帳號是否重複
+            if (db.MemberAccounts.Any(m => m.Account == model.Account))
+            {
+                ModelState.AddModelError("Account", "此帳號已被註冊");
                 return View(model);
             }
 
