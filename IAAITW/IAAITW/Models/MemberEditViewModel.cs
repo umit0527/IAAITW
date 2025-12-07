@@ -17,21 +17,18 @@ namespace IAAITW.Models
         [Display(Name = "帳  號")]
         public string Account { get; set; }
 
-        //[Required(ErrorMessage = "密碼為必填")]
         [StringLength(255)]
         [Display(Name = "密  碼")] // 舊密碼
         public string Password { get; set; }
 
         [StringLength(255)]
-        [Display(Name = "密  碼")] 
+        [Display(Name = "密  碼")] // 新密碼
         public string NewPassword { get; set; }
 
-        //[Required(ErrorMessage = "確認密碼為必填")]
         [StringLength(255)]
         [Compare("NewPassword", ErrorMessage = "與密碼不一致")]
         public string ConfirmPassword { get; set; }
 
-        //[Required]
         [StringLength(255)]
         public string Salt { get; set; }
 

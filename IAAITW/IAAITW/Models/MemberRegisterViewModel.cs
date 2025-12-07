@@ -18,12 +18,11 @@ namespace IAAITW.Models
         [Display(Name = "帳  號")]
         public string Account { get; set; }
 
-        //[Required(ErrorMessage = "密碼為必填")]
         [StringLength(255)]
         [Display(Name = "密  碼")]
+        [MinLength(4, ErrorMessage = "密碼至少 4 個字元")]
         public string Password { get; set; }
 
-        //[Required(ErrorMessage = "確認密碼為必填")]
         [StringLength(255)]
         [Compare("Password", ErrorMessage = "與密碼不一致")]
         public string ConfirmPassword { get; set; }

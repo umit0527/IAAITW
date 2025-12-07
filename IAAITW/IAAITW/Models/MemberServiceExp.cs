@@ -37,8 +37,5 @@ namespace IAAITW.Models
 
         [ForeignKey("MemberId")]
         public virtual MemberInfo MemberInfo { get; set; }
-
-
-
     }
 }

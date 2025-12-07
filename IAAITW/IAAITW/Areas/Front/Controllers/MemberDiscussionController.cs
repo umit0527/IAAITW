@@ -84,7 +84,7 @@ namespace IAAITW.Areas.Front.Controllers
             var memberInfo = db.MemberInfoes
                 .FirstOrDefault(m => m.MemberId == memberAccount.Id);
 
-            ViewBag.LoginUser =  memberInfo.Id;  //給 view 判斷刪除與編輯用，是否為發文者
+            ViewBag.LoginUser =  memberInfo.Id;  //給 view 判斷刪除與編輯用，是否為發文者或回覆者
 
             // 查詢文章
             var post = db.MemberDiscussionPosts

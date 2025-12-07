@@ -416,15 +416,14 @@ namespace IAAITW.Areas.Front.Controllers
             // 更新服務經歷
             foreach (var expVM in model.MemberServiceExps)
             {
+                // 如果公司與職稱都沒有輸入
                 bool empty = string.IsNullOrWhiteSpace(expVM.Company)
                           && string.IsNullOrWhiteSpace(expVM.JobTitle);
 
-                // -------------------------------------------
                 // 1. 使用者沒有填任何內容 → 不做動作
-                // -------------------------------------------
                 if (empty)
                 {
-                    // 若是空白但原本有資料 → 刪除
+                    // 若原本有資料但改為空白 → 刪除
                     var original = existingExps.FirstOrDefault(x => x.Id == expVM.Id);
                     if (original != null)
                     {
@@ -433,9 +432,7 @@ namespace IAAITW.Areas.Front.Controllers
                     continue;
                 }
 
-                // -------------------------------------------
-                // 2. 有 ID → 修改原資料
-                // -------------------------------------------
+                // 2. 原本就有資料(有ID) → 修改原資料
                 if (expVM.Id > 0)
                 {
                     var original = existingExps.FirstOrDefault(x => x.Id == expVM.Id);
@@ -451,9 +448,7 @@ namespace IAAITW.Areas.Front.Controllers
                 }
                 else
                 {
-                    // -------------------------------------------
-                    // 3. ID == 0 且 有填內容 → 新增
-                    // -------------------------------------------
+                    // 3. 原本為空白(ID == 0)，但有填寫資料 → 新增
                     var newExp = new MemberServiceExp
                     {
                         MemberId = memberInfo.Id,

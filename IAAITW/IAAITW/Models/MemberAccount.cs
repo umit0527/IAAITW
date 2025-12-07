@@ -16,7 +16,6 @@ namespace IAAITW.Models
         [Display(Name ="帳  號")]
         public string Account { get; set; } // 帳號
 
-        //[Required(ErrorMessage = "密碼必填")]
         [StringLength(255)]
         [Display(Name ="密  碼")]
         public string Password { get; set; } // 密碼 
