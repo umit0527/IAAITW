@@ -287,6 +287,13 @@ namespace IAAITW.Areas.Back.Controllers
                 return RedirectToAction("Login", "Admins", new { area = "Back" });
             }
 
+            // 檢查帳號是否重複
+            if (db.Admins.Any(m => m.Account == model.Account))
+            {
+                TempData["ErrorMessage"] = "此帳號已被註冊";
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 try

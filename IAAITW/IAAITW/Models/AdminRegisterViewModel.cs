@@ -18,7 +18,7 @@ namespace IAAITW.Models
 
         [Required(ErrorMessage = "請輸入密碼")]
         [Display(Name = "密碼")]
-        //[MinLength(4, ErrorMessage = "密碼需至少 4 個字元")]
+        [MinLength(4, ErrorMessage = "密碼需至少 4 個字元")]
         public string Password { get; set; }
 
         [Display(Name = "密碼鹽")]
