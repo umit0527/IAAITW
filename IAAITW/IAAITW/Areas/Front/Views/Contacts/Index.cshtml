@@ -60,7 +60,8 @@
                                         @Html.RadioButtonFor(model => model.Gender, "女")女
                                     </label>
                                 </div>
-                            </div><div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-3">
                                 @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -87,18 +88,26 @@
                         </div>
 
                         @* 詢問標題 *@
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Title, "詢問標題：", htmlAttributes: new { @class = "control-label col-sm-2" })
-                            <div class="col-sm-7">
-                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入詢問標題" } })
-                            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, "詢問標題：", htmlAttributes: new { @class = "control-label col-sm-2" })
+                        <div class="col-sm-7">
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入詢問標題" } })
                         </div>
+                        <div class="col-sm-3">
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
                         @* 詢問內容 *@
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Content, "詢問內容：", htmlAttributes: new { @class = "control-label col-sm-2" })
-                            <div class="col-sm-10">
-                                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", rows = "10", placeholder = "請輸入詢問內容" ,style="max-width:701.25px"})
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Content, "詢問內容：", htmlAttributes: new { @class = "control-label col-sm-2" })
+                        <div class="col-sm-10">
+                            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", rows = "10", placeholder = "請輸入詢問內容", style = "max-width:701.25px" })
+                        </div>
+                        <div class="col-sm-2">
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                             </div>
                         </div>
 

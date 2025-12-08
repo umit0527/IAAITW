@@ -374,6 +374,10 @@
     <Compile Include="Migrations\202512011528452_rename updaterId feild in news table.Designer.cs">
       <DependentUpon>202512011528452_rename updaterId feild in news table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202512080721114_adjust feild in contact table.cs" />
+    <Compile Include="Migrations\202512080721114_adjust feild in contact table.Designer.cs">
+      <DependentUpon>202512080721114_adjust feild in contact table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -1506,7 +1510,6 @@
     <Content Include="DashBoard\src\assets\vendors\ti-icons\fonts\themify.ttf" />
     <Content Include="DashBoard\src\assets\vendors\ti-icons\fonts\themify.woff" />
     <Content Include="Areas\Back\Views\Admins\Register.cshtml" />
-    <Content Include="Areas\Back\Views\Admins\Delete.cshtml" />
     <Content Include="Areas\Back\Views\Admins\Details.cshtml" />
     <Content Include="Areas\Back\Views\Admins\Edit.cshtml" />
     <Content Include="Areas\Back\Views\Admins\Login.cshtml" />
@@ -2117,6 +2120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202512011528452_rename updaterId feild in news table.resx">
       <DependentUpon>202512011528452_rename updaterId feild in news table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202512080721114_adjust feild in contact table.resx">
+      <DependentUpon>202512080721114_adjust feild in contact table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
