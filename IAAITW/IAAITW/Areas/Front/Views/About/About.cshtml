@@ -38,12 +38,9 @@
                 <hr class="botmargin-min">
 
                 <!-- 內容開始 -->
-
-
-                <table class="table table-striped career-table about-table">
+                <div>
                     @Html.Raw(Model.FirstOrDefault()?.Content ?? "<p>目前尚無相關資料。</p>")
-                </table>
-                <!-- Content row 1 end -->
+                </div>
                 <!-- 內容結束 -->
             </div><!-- Content Col end -->
 

@@ -30,9 +30,9 @@
                     <p>
                         <a class="btn btn-primary" href="@Url.Action("Create", "Organizationes", new { area = "Back" })">新 增</a>
                     </p>
+                    <p>目前沒有資料</p>
                 }
-
-                @if (ViewBag.HasData == true)
+                else
                 {
                     <div class="row">
                         <!-- 左欄：內容（較寬） -->
@@ -78,10 +78,6 @@
                             </div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <p>目前沒有資料</p>
                 }
             </div>
         </div>

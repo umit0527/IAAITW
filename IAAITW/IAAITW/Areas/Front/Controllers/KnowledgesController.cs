@@ -37,7 +37,7 @@ namespace IAAITW.Areas.Front.Controllers
             }
 
             //用套件一定要有 orderby 排序
-            var result = knowledges.OrderByDescending(x => x.Id)
+            var result = knowledges.OrderByDescending(x => x.IsTop)
                                    .ThenByDescending(x => x.UpdatedDate)
                                    .ToPagedList(page.Value, pageSize);
 
