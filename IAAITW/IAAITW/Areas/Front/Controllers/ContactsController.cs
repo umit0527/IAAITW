@@ -52,7 +52,7 @@ namespace IAAITW.Areas.Front.Controllers
                     db.Contacts.Add(contact);
                     db.SaveChanges();
 
-                    // 非同步寄信給企業端
+                    // 非同步寄信給平台端
                     try
                     {
                         await SendEmailAsync(
